@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAMA ZENNEXT - AI Software Marketplace</title>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6249603944790814" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ================================
+        AI COMPARISON TABLE – HARD FIX
+        ================================ */
+        #ai-comparison-table table {
+            background: #ffffff;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        #ai-comparison-table th {
+            background: #eef2ff;
+            color: #1A1A2E !important;
+            font-weight: 600;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        #ai-comparison-table td {
+            background: #ffffff;
+            color: #1A1A2E !important;
+            font-weight: 500;
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+
+        #ai-comparison-table tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        /* ===== GLOBAL STYLES ===== */
+        :root {
+            --primary: #6366f1; --primary-dark: #4f46e5; --secondary: #22c55e;
+            --pink: #ec4899; --orange: #f97316; --dark: #020617;
+            --darker: #0F0F1A; --light: #F5F5F7; --gray: #8E8E93;
+            --success: #10B981; --warning: #F59E0B; --danger: #EF4444; --info: #3B82F6;
+            --card-bg: #24243D; --ai-color: #10B981; --finance-color: #8B5CF6; --security-color: #3B82F6;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--darker); color: var(--light); line-height: 1.6; overflow-x: hidden; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        
+        /* ===== HEADER ===== */
+        header {
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px);
+            position: sticky; top: 0; z-index: 1000; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        .header-container { 
+            display: flex; align-items: center; justify-content: space-between; 
+            gap: 30px; padding: 18px 0;
+        }
+        .logo { 
+            font-size: 2rem; font-weight: 800; 
+            background: linear-gradient(90deg, var(--primary), var(--pink));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            white-space: nowrap; display: flex; align-items: center; gap: 12px;
+        }
+        .logo i { color: var(--primary); font-size: 2.2rem; }
+        .search { flex: 1; max-width: 600px; }
+        .search input {
+            width: 100%; padding: 16px 24px; border-radius: 14px;
+            border: 1px solid #e5e7eb; font-size: 1rem;
+            color: #1A1A2E;
+        }
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav a {
+            color: #1A1A2E;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        nav a:hover { color: var(--primary); }
+        nav a::after { 
+            content: ''; position: absolute; bottom: 0; left: 0; 
+            width: 0; height: 2px; background: var(--primary); transition: width 0.3s;
+        }
+        nav a:hover::after { width: 100%; }
+        .cta-button {
+            background: var(--gradient); color: white;
+            padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;
+            transition: all 0.3s; border: none; cursor: pointer; display: inline-block;
+        }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4); }
+        .mobile-menu-btn { display: none; font-size: 1.5rem; background: none; border: none; color: white; cursor: pointer; }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #4f46e5, #9333ea, #ec4899);
+            color: #fff;
+        }
+        .hero::after {
+            content: ""; position: absolute; inset: 0;
+            background: radial-gradient(600px 300px at 20% 30%, rgba(255, 255, 255, 0.18), transparent 60%),
+                        radial-gradient(500px 300px at 80% 70%, rgba(255, 255, 255, 0.15), transparent 60%);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 { font-size: 3.8rem; margin-bottom: 1rem; line-height: 1.2; color: white; }
+        .hero-gradient { background: linear-gradient(90deg, var(--light), var(--primary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero p { font-size: 1.2rem; color: rgba(255,255,255,0.9); max-width: 700px; margin: 0 auto 2rem; }
+        .feature-badges { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 2rem 0; }
+        .badge {
+            padding: 0.5rem 1rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem;
+            display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.22); color: white;
+        }
+        .badge-ai { background: rgba(16, 185, 129, 0.15); color: var(--ai-color); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-finance { background: rgba(139, 92, 246, 0.15); color: var(--finance-color); border: 1px solid rgba(139, 92, 246, 0.3); }
+        .badge-security { background: rgba(59, 130, 246, 0.15); color: var(--security-color); border: 1px solid rgba(59, 130, 246, 0.3); }
+        
+        /* ===== AI ASSISTANT SECTION ===== */
+        .ai-assistant-section {
+            background: #f8f9ff; padding: 80px 0;
+        }
+        .ai-input-box {
+            background: white; padding: 25px; border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); max-width: 800px; margin: 0 auto;
+        }
+        .section-title { 
+            font-size: 2.8rem; 
+            margin-bottom: 0.5rem; 
+            color: #1A1A2E;
+            text-align: center;
+        }
+        .section-subtitle { 
+            color: var(--gray); 
+            margin-bottom: 2rem; 
+            text-align: center;
+            color: #6B7280;
+        }
+        textarea {
+            width: 100%; height: 120px; padding: 15px; border-radius: 12px;
+            border: 1px solid #d1d5db; font-size: 1rem; resize: vertical; margin-bottom: 15px;
+            color: #1A1A2E;
+            font-family: 'Inter', sans-serif;
+        }
+        textarea::placeholder {
+            color: #9CA3AF;
+        }
+        
+        .ai-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            font-size: 15px;
+            color: #1A1A2E;
+            margin-top: 15px;
+        }
+
+        .ai-card h3 {
+            margin-top: 14px;
+            color: #4f46e5;
+            font-size: 17px;
+        }
+
+        .ai-card ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .ai-card li {
+            margin-bottom: 6px;
+        }
+
+        .ai-cta {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .ai-cta button {
+            background: linear-gradient(135deg, #6366f1, #22c55e);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .ai-cta button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+        }
+        
+        /* ===== CATEGORIES ===== */
+        .categories { padding: 4rem 0; }
+        .category-filters { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; justify-content: center; }
+        .cat-filter {
+            padding: 0.75rem 1.5rem; background-color: var(--card-bg); border-radius: 50px;
+            cursor: pointer; transition: all 0.3s; font-weight: 500; border: 1px solid transparent;
+            color: white;
+        }
+        .cat-filter:hover { background-color: rgba(108, 99, 255, 0.1); border-color: rgba(108, 99, 255, 0.3); }
+        .cat-filter.active { background: var(--gradient); color: white; border: none; }
+        .software-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem; margin-bottom: 4rem;
+        }
+        .software-card {
+            background-color: var(--card-bg); border-radius: 12px; padding: 1.5rem;
+            transition: all 0.3s; border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; flex-direction: column; height: 100%; position: relative; overflow: hidden;
+        }
+        .software-card::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+            background: linear-gradient(90deg, #6366f1, #ec4899); border-radius: 12px 12px 0 0;
+        }
+        .software-card:hover {
+            transform: translateY(-8px); border-color: rgba(108, 99, 255, 0.3);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
+        }
+        .card-header { display: flex; align-items: flex-start; margin-bottom: 1.2rem; }
+        .software-icon {
+            width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            margin-right: 1rem; font-size: 1.8rem; color: white;
+        }
+        .finance-icon { background: linear-gradient(135deg, var(--finance-color), #A78BFA); }
+        .security-icon { background: linear-gradient(135deg, var(--security-color), #60A5FA); }
+        .ai-icon { background: linear-gradient(135deg, var(--ai-color), #34D399); }
+        .crm-icon { background: linear-gradient(135deg, #EC4899, #F472B6); }
+        .card-title h3 { font-size: 1.3rem; margin-bottom: 0.3rem; color: white; }
+        .software-category { 
+            font-size: 0.9rem; font-weight: 500; padding: 0.2rem 0.8rem; 
+            border-radius: 4px; display: inline-block; 
+        }
+        .finance-category { background: rgba(139, 92, 246, 0.15); color: var(--finance-color); }
+        .security-category { background: rgba(59, 130, 246, 0.15); color: var(--security-color); }
+        .ai-category { background: rgba(16, 185, 129, 0.15); color: var(--ai-color); }
+        .crm-category { background: rgba(236, 72, 153, 0.15); color: #EC4899; }
+        .software-description { color: var(--gray); margin-bottom: 1.5rem; flex-grow: 1; font-size: 0.95rem; }
+        .software-features { margin-bottom: 1.5rem; }
+        .feature { display: flex; align-items: center; margin-bottom: 0.5rem; font-size: 0.9rem; color: #CBD5E1; }
+        .feature i { color: var(--success); margin-right: 0.5rem; font-size: 0.8rem; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .free-badge { background-color: rgba(16, 185, 129, 0.15); color: var(--success); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
+        .trial-badge { background-color: rgba(245, 158, 11, 0.15); color: var(--warning); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
+        .paid-badge { background-color: rgba(239, 68, 68, 0.15); color: var(--danger); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
+        .visit-button {
+            background-color: rgba(108, 99, 255, 0.1); color: var(--primary); padding: 0.5rem 1.2rem;
+            border-radius: 6px; text-decoration: none; font-weight: 500; transition: all 0.3s;
+            border: 1px solid rgba(108, 99, 255, 0.3); font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .visit-button:hover { background-color: var(--primary); color: white; }
+        
+        /* ===== OPEN SOURCE AI BOT INFO ===== */
+        .bot-options { background: var(--dark); border-radius: 15px; padding: 2rem; margin-top: 3rem; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .bot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .bot-card {
+            background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s;
+        }
+        .bot-card:hover { border-color: var(--ai-color); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2); }
+        .bot-card h4 { color: var(--ai-color); margin-bottom: 0.5rem; }
+        .bot-card p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
+        .bot-tag { display: inline-block; background: rgba(108, 99, 255, 0.15); color: var(--primary); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; margin-right: 0.5rem; margin-bottom: 0.5rem; }
+        .deploy-box { margin-top: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 10px; border-left: 4px solid var(--ai-color); }
+        
+        /* ===== MONETIZATION & ADS ===== */
+        .ad-section {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(108, 99, 255, 0.1));
+            padding: 3rem; border-radius: 15px; margin: 3rem 0;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        .ad-placeholder {
+            background: rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 2rem;
+            text-align: center; margin: 1.5rem 0; border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        .ad-label { color: var(--info); font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }
+        
+        /* ===== STATS ===== */
+        .stats {
+            padding: 4rem 0; background-color: var(--dark); text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .stats-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem; max-width: 1200px; margin: 0 auto;
+        }
+        .stat-item { padding: 1.5rem; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem; }
+        .stat-label { color: var(--gray); font-size: 1rem; }
+        
+        /* ===== FOOTER ===== */
+        footer { 
+            padding: 3rem 0; text-align: center; color: var(--gray); font-size: 0.9rem; 
+            border-top: 1px solid rgba(255, 255, 255, 0.05); background: var(--dark);
+        }
+        .footer-logo { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 1rem; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; flex-wrap: wrap; }
+        .footer-links a { color: var(--gray); text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--primary); }
+        .copyright { margin-top: 1rem; font-size: 0.8rem; color: #6B7280; }
+        
+        /* ===== FLOATING AI BUTTON ===== */
+        #ai-chat-btn {
+            position: fixed; bottom: 25px; right: 25px;
+            background: linear-gradient(90deg, #6366f1, #ec4899);
+            width: 65px; height: 65px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 30px; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25); z-index: 1000;
+            transition: transform 0.3s ease; border: none;
+        }
+        #ai-chat-btn:hover { transform: scale(1.1); }
+        
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed; bottom: 2rem; left: 2rem; width: 50px; height: 50px;
+            background: rgba(108, 99, 255, 0.2); color: var(--primary); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+            cursor: pointer; z-index: 1000; border: 1px solid rgba(108, 99, 255, 0.3);
+            opacity: 0; visibility: hidden; transition: all 0.3s;
+        }
+        .scroll-top.show { opacity: 1; visibility: visible; }
+        .scroll-top:hover { background: rgba(108, 99, 255, 0.3); }
+        
+        /* ===== AI CHATBOX ===== */
+        #ai-chatbox {
+            position: fixed; bottom: 20px; right: 20px; width: 320px; height: 420px;
+            background: white; border-radius: 18px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            display: flex; flex-direction: column; overflow: hidden; z-index: 9999; display: none;
+        }
+        #ai-header {
+            background: linear-gradient(90deg, #6366f1, #ec4899);
+            padding: 12px;
+            color: white;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #ai-close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #ai-close-btn:hover {
+            opacity: 0.7;
+        }
+        #ai-messages {
+            flex: 1; padding: 10px; overflow-y: auto; font-size: 0.9rem;
+            background: #F9FAFB;
+        }
+        .ai-msg-user {
+            background: #eef2ff;
+            color: #1A1A2E;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 10px;
+            max-width: 80%;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .ai-msg-bot {
+            background: #fdf2f8;
+            color: #1A1A2E;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 10px;
+            max-width: 80%;
+            align-self: flex-start;
+        }
+
+        #ai-input-area {
+            display: flex; border-top: 1px solid #ddd; padding: 10px;
+            background: white;
+        }
+        #ai-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A2E;
+            border-radius: 8px 0 0 8px;
+            border: 1px solid #ddd;
+        }
+        #ai-send {
+            background: #6366f1; color: white; border: none;
+            padding: 10px 16px; cursor: pointer; border-radius: 0 8px 8px 0;
+            transition: background 0.3s;
+        }
+        #ai-send:hover {
+            background: #4f46e5;
+        }
+        
+        /* ===== MODALS & FORMS ===== */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1002; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--dark); padding: 2rem; border-radius: 15px; width: 90%; max-width: 500px;
+            border: 1px solid rgba(108, 99, 255, 0.3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; margin-bottom: 0.5rem; color: var(--light); font-weight: 500; }
+        .form-input {
+            width: 100%; padding: 0.8rem 1rem; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white;
+            font-size: 1rem; transition: border-color 0.3s;
+        }
+        .form-input:focus { outline: none; border-color: var(--primary); }
+        .form-select { width: 100%; padding: 0.8rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; font-size: 1rem; }
+        
+        /* ===== AD BLOCKER DETECTION ===== */
+        .ad-blocker-warning {
+            background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: center;
+            display: none;
+            color: #EF4444;
+        }
+        
+        /* ===== NOTIFICATIONS ===== */
+        .notification {
+            position: fixed; top: 1rem; right: 1rem; padding: 1rem 1.5rem; border-radius: 8px;
+            color: white; z-index: 1003; display: flex; align-items: center; gap: 0.5rem;
+            transform: translateX(150%); transition: transform 0.3s;
+            max-width: 350px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .notification.show { transform: translateX(0); }
+        .notification.success { background: var(--success); }
+        .notification.error { background: var(--danger); }
+        .notification.info { background: var(--info); }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .software-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+        }
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; gap: 1.5rem; }
+            nav ul { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+            .hero h1 { font-size: 2.5rem; }
+            .software-grid, .bot-grid { grid-template-columns: 1fr; }
+            .stats-container { grid-template-columns: repeat(2, 1fr); }
+            .section-title { font-size: 1.8rem; }
+            .scroll-top { bottom: 1rem; left: 1rem; width: 45px; height: 45px; }
+            .mobile-menu-btn { display: block; color: #1A1A2E; }
+            nav { display: none; width: 100%; }
+            nav.active { display: block; }
+            nav ul { flex-direction: column; gap: 1rem; }
+            #ai-chatbox { width: calc(100% - 40px); right: 20px; bottom: 80px; }
+        }
+        @media (max-width: 480px) {
+            .category-filters { justify-content: center; }
+            .feature-badges { flex-direction: column; align-items: center; }
+            .stats-container { grid-template-columns: 1fr; }
+            .modal-content { padding: 1.5rem; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="#" class="logo">
+                    <i class="fas fa-robot"></i>
+                    <span>KAMA ZENNEXT</span>
+                </a>
+                <div class="search">
+                    <input type="text" placeholder="Search software, AI tools, SaaS platforms...">
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#ai-assistant">AI Assistant</a></li>
+                        <li><a href="#software">Software</a></li>
+                        <li><a href="#open-source">Open Source</a></li>
+                        <li><a href="#monetization">Monetize</a></li>
+                        <li><a href="#vendors">For Vendors</a></li>
+                    </ul>
+                </nav>
+                <a href="#sell-software" class="cta-button" onclick="openSellModal()">Sell Your Software</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="feature-badges">
+                    <span class="badge badge-ai"><i class="fas fa-brain"></i> AI-Powered Marketplace</span>
+                    <span class="badge badge-finance"><i class="fas fa-chart-line"></i> Financial Software</span>
+                    <span class="badge badge-security"><i class="fas fa-shield-alt"></i> Cybersecurity Tools</span>
+                </div>
+                <h1><span class="hero-gradient">Discover. Compare.</span><br>Monetize Software</h1>
+                <p>World's next-gen AI software marketplace. Explore hundreds of financial, cybersecurity, and business tools with intelligent recommendations.</p>
+                <a href="#software" class="cta-button">Explore Software</a>
+                <a href="#ai-assistant" class="cta-button" style="background: transparent; border: 1px solid white; margin-left: 1rem;">Try AI Assistant</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AD SECTION (MONETIZATION) -->
+    <section class="ad-section" id="monetization">
+        <div class="container">
+            <h2 class="section-title" style="color: #1A1A2E;">💰 Monetization Ready</h2>
+            <p class="section-subtitle" style="color: #6B7280;">Integrated advertising system with multiple revenue streams</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px;">
+                    <h3 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-ad"></i> Ad Placements</h3>
+                    <p style="color: #6B7280;">Strategic ad placements integrated throughout the platform. Fully responsive and optimized for maximum revenue.</p>
+                    
+                    <!-- Ad Placeholder 1 -->
+                    <div class="ad-placeholder">
+                        <span class="ad-label">Sponsored Software</span>
+                        <div style="font-weight: bold; color: var(--light);">Premium Accounting Suite</div>
+                        <small style="color: var(--gray);">Special offer for KAMA users</small>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px;">
+                    <h3 style="color: var(--success); margin-bottom: 1rem;"><i class="fas fa-handshake"></i> Affiliate Marketing</h3>
+                    <p style="color: #6B7280;">Commission-based referrals to software vendors. Track conversions and optimize earnings.</p>
+                    
+                    <!-- Ad Placeholder 2 -->
+                    <div class="ad-placeholder">
+                        <span class="ad-label">Featured Partner</span>
+                        <div style="font-weight: bold; color: var(--light);">Security Pro 2024</div>
+                        <small style="color: var(--gray);">20% commission on referrals</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ad Blocker Detection -->
+            <div class="ad-blocker-warning" id="adBlockerWarning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Ad blocker detected. Please consider disabling it to support our platform.</span>
+            </div>
+            
+            <!-- Privacy Compliance -->
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border-left: 4px solid var(--info);">
+                <h4 style="color: var(--info); margin-bottom: 0.5rem;"><i class="fas fa-shield-alt"></i> Privacy Compliant</h4>
+                <p style="font-size: 0.9rem; color: #6B7280;">Our advertising system is compliant with GDPR, CCPA, and other privacy regulations. Users have full control over their data.</p>
+                <button onclick="openPrivacyModal()" style="background: transparent; border: 1px solid var(--info); color: var(--info); padding: 0.5rem 1rem; border-radius: 6px; margin-top: 1rem; cursor: pointer;">Privacy Settings</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI ASSISTANT SECTION - ACTUAL AI INTEGRATION -->
+    <section class="ai-assistant-section" id="ai-assistant">
+        <div class="container">
+            <h2 class="section-title">🤖 AI Assistant – Ask Anything</h2>
+            <p class="section-subtitle">Your AI guide to software suggestions, comparisons & marketplace help.</p>
+            
+            <div class="ai-input-box">
+                <textarea id="ai-question" placeholder="Ask: 'Recommend CRM for startups', 'Compare ZenNext vs HubSpot', 'Find free accounting software'..."></textarea>
+                <button id="ask-ai-btn" class="cta-button" style="width: 100%;">Ask AI</button>
+                <div id="ai-response"></div>
+                <small style="display:block;margin-top:8px;color:#6B7280;font-size:12px;">
+AI responses are generated automatically and may be inaccurate.
+</small>
+                
+                <!-- AI Comparison Table -->
+                <div id="ai-comparison-table" style="display:none; margin-top:20px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Criteria</th>
+                                <th id="comp-col-a">Product A</th>
+                                <th id="comp-col-b">Product B</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comp-body">
+                            <!-- Rows will be added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Quick Questions -->
+            <div style="margin-top: 2rem; text-align: center;">
+                <h4 style="color: #1A1A2E; margin-bottom: 1rem;">Try asking:</h4>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="quickQuestion('Find free CRM software')" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: rgba(108, 99, 255, 0.1); color: var(--primary); border: 1px solid rgba(108, 99, 255, 0.3);">Find free CRM software</button>
+                    <button onclick="quickQuestion('Best accounting tools for small business')" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: rgba(108, 99, 255, 0.1); color: var(--primary); border: 1px solid rgba(108, 99, 255, 0.3);">Best accounting tools</button>
+                    <button onclick="quickQuestion('Cybersecurity software for startups')" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: rgba(108, 99, 255, 0.1); color: var(--primary); border: 1px solid rgba(108, 99, 255, 0.3);">Cybersecurity for startups</button>
+                    <button onclick="quickQuestion('Compare financial software')" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: rgba(108, 99, 255, 0.1); color: var(--primary); border: 1px solid rgba(108, 99, 255, 0.3);">Compare financial software</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOFTWARE CATEGORIES -->
+    <section class="categories" id="software">
+        <div class="container">
+            <h2 class="section-title">📁 Software Marketplace</h2>
+            <p class="section-subtitle">Browse by category. Click any category to filter.</p>
+            
+            <div class="category-filters">
+                <div class="cat-filter active" data-filter="all">All Software</div>
+                <div class="cat-filter" data-filter="finance">Financial</div>
+                <div class="cat-filter" data-filter="cybersecurity">Cybersecurity</div>
+                <div class="cat-filter" data-filter="crm">CRM</div>
+                <div class="cat-filter" data-filter="ai">AI Tools</div>
+            </div>
+            
+            <div class="software-grid" id="softwareGrid">
+                <!-- Software cards will be loaded here by JavaScript -->
+            </div>
+            
+            <!-- In-content ad placement -->
+            <div class="ad-placeholder" style="margin: 2rem auto; max-width: 728px;">
+                <span class="ad-label">Premium Software Showcase</span>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white;">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 0.5rem;">Enterprise Security Suite</h4>
+                        <p style="color: var(--gray); font-size: 0.9rem;">Advanced protection for businesses. Special offer: 30% off for KAMA users.</p>
+                        <button onclick="trackAdClick('security_suite')" style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; margin-top: 0.5rem;">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OPEN SOURCE AI BOT SECTION -->
+    <section class="categories" id="open-source">
+        <div class="container">
+            <h2 class="section-title">🛠️ Open Source AI Bot</h2>
+            <p class="section-subtitle">This AI assistant is powered by open-source technology. Deploy your own version.</p>
+            
+            <div class="bot-options">
+                <h3 style="color: var(--ai-color); margin-bottom: 1rem;">Self-Hosted AI Bot Frameworks</h3>
+                
+                <div class="bot-grid">
+                    <div class="bot-card">
+                        <h4><i class="fab fa-node-js"></i> Botpress</h4>
+                        <p>Node.js based open-source bot builder with visual workflow editor and NLP</p>
+                        <div>
+                            <span class="bot-tag">Open Source</span>
+                            <span class="bot-tag">Visual Editor</span>
+                            <span class="bot-tag">Self-Hosted</span>
+                        </div>
+                        <a href="https://botpress.com/" target="_blank" class="visit-button" style="margin-top: 1rem;">Get Started</a>
+                    </div>
+                    
+                    <div class="bot-card">
+                        <h4><i class="fab fa-python"></i> Rasa</h4>
+                        <p>Python-based conversational AI with machine learning and custom actions</p>
+                        <div>
+                            <span class="bot-tag">Open Source</span>
+                            <span class="bot-tag">ML Powered</span>
+                            <span class="bot-tag">Customizable</span>
+                        </div>
+                        <a href="https://rasa.com/" target="_blank" class="visit-button" style="margin-top: 1rem;">Get Started</a>
+                    </div>
+                    
+                    <div class="bot-card">
+                        <h4><i class="fab fa-google"></i> Dialogflow CX</h4>
+                        <p>Google's enterprise dialog management with visual builder (free tier)</p>
+                        <div>
+                            <span class="bot-tag">Google Cloud</span>
+                            <span class="bot-tag">Visual Builder</span>
+                            <span class="bot-tag">Enterprise</span>
+                        </div>
+                        <a href="https://cloud.google.com/dialogflow" target="_blank" class="visit-button" style="margin-top: 1rem;">Get Started</a>
+                    </div>
+                    
+                    <div class="bot-card">
+                        <h4><i class="fab fa-microsoft"></i> Bot Framework</h4>
+                        <p>Microsoft's framework for building enterprise bots with Azure integration</p>
+                        <div>
+                            <span class="bot-tag">Microsoft</span>
+                            <span class="bot-tag">Multi-Channel</span>
+                            <span class="bot-tag">Azure</span>
+                        </div>
+                        <a href="https://dev.botframework.com/" target="_blank" class="visit-button" style="margin-top: 1rem;">Get Started</a>
+                    </div>
+                </div>
+                
+                <div class="deploy-box">
+                    <h4 style="color: var(--ai-color); margin-bottom: 1rem;"><i class="fas fa-rocket"></i> Quick Deploy: Botpress (Recommended)</h4>
+                    <p style="margin-bottom: 1rem;">Deploy your own AI bot with one command using Docker:</p>
+                    <pre style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: monospace; color: var(--light); margin: 1rem 0;">
+# Install Docker first
+docker run -d --name kama-ai-bot \
+  -p 3000:3000 \
+  -v botpress_data:/botpress/data \
+  botpress/server:latest</pre>
+                    <p style="font-size: 0.9rem; color: var(--gray);">Then connect to your bot at: <code style="background: rgba(108,99,255,0.1); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--primary);">http://your-server:3000</code></p>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <button onclick="copyDockerCommand()" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                            <i class="fas fa-copy"></i> Copy Command
+                        </button>
+                        <button onclick="testDeployment()" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: transparent; border: 1px solid var(--primary);">
+                            <i class="fas fa-play"></i> Test Deployment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VENDOR SECTION -->
+    <section class="categories" id="vendors">
+        <div class="container">
+            <h2 class="section-title">💰 Sell Your Software</h2>
+            <p class="section-subtitle">Reach millions of users. Get featured listings, subscription management, and lead generation.</p>
+            
+            <div class="ad-placeholder" style="margin: 2rem 0;">
+                <span class="ad-label">Vendor Spotlight</span>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #EC4899, #F472B6); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 0.5rem;">Top Performing Vendor</h4>
+                        <p style="color: var(--gray); font-size: 0.9rem;">"Increased sales by 300% using KAMA's vendor tools" - CRM Pro Solutions</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;">
+                <div style="text-align: center; max-width: 200px;">
+                    <div style="background: rgba(108, 99, 255, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--primary); font-size: 1.5rem;"><i class="fas fa-star"></i></div>
+                    <h4>Featured Listings</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Get premium placement on our marketplace</p>
+                </div>
+                <div style="text-align: center; max-width: 200px;">
+                    <div style="background: rgba(16, 185, 129, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--ai-color); font-size: 1.5rem;"><i class="fas fa-sync-alt"></i></div>
+                    <h4>Subscriptions</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Manage recurring billing and subscriptions</p>
+                </div>
+                <div style="text-align: center; max-width: 200px;">
+                    <div style="background: rgba(59, 130, 246, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--security-color); font-size: 1.5rem;"><i class="fas fa-bullseye"></i></div>
+                    <h4>Lead Generation</h4>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Get qualified leads and customer insights</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <button onclick="openSellModal()" class="cta-button" style="padding: 1rem 2rem; font-size: 1.1rem;">Start Selling Today</button>
+                <p style="color: var(--gray); margin-top: 1rem; font-size: 0.9rem;">Commission rates start at 15%. No setup fees.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" id="softwareCount">500+</div>
+                    <div class="stat-label">Software Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="aiConversations">15K+</div>
+                    <div class="stat-label">AI Conversations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="userCount">2M+</div>
+                    <div class="stat-label">Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$1.2M+</div>
+                    <div class="stat-label">Vendor Revenue</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <i class="fas fa-robot" style="color: var(--primary); font-size: 2rem;"></i>
+                <span style="font-size: 1.5rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;">KAMA ZENNEXT</span>
+            </div>
+            <p style="max-width: 600px; margin: 0 auto;">World's first open-source AI-powered software marketplace</p>
+            <div class="footer-links">
+                <a href="#home">Home</a><a href="#ai-assistant">AI Assistant</a><a href="#software">Software</a><a href="#open-source">Open Source</a><a href="#monetization">Monetize</a><a href="#vendors">For Vendors</a><a href="#privacy">Privacy</a><a href="#terms">Terms</a>
+            </div>
+            <p style="margin: 1rem 0; color: var(--ai-color);">
+                <i class="fas fa-code"></i> Powered by Open Source AI • Botpress • Self-Hostable
+            </p>
+            <div class="copyright">
+                &copy; 2024 KAMA ZENNEXT AI Software Marketplace. All rights reserved.<br>
+                <small style="color: #6B7280;">This demo includes simulated ads and monetization features.</small>
+            </div>
+            
+            <!-- Privacy & Cookie Notice -->
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                <p style="font-size: 0.8rem; color: var(--gray);">
+                    <i class="fas fa-cookie-bite"></i> This site uses cookies for essential functionality and analytics. By using our site, you consent to our use of cookies.
+                    <button onclick="openPrivacyModal()" style="background: transparent; border: none; color: var(--primary); cursor: pointer; margin-left: 0.5rem;">Learn More</button>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+    <div class="modal" id="sellModal">
+        <div class="modal-content">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Sell Your Software</h2>
+            <form id="vendorForm">
+                <div class="form-group">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Software Name</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-select" required>
+                        <option value="">Select Category</option>
+                        <option value="finance">Financial Software</option>
+                        <option value="cybersecurity">Cybersecurity</option>
+                        <option value="crm">CRM</option>
+                        <option value="ai">AI Tools</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Pricing Model</label>
+                    <select class="form-select" required>
+                        <option value="">Select Model</option>
+                        <option value="free">Free</option>
+                        <option value="freemium">Freemium</option>
+                        <option value="subscription">Subscription</option>
+                        <option value="one-time">One-time Purchase</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Website URL</label>
+                    <input type="url" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="cta-button" style="flex: 1;">Submit Application</button>
+                    <button type="button" onclick="closeModal('sellModal')" style="background: transparent; border: 1px solid var(--gray); color: var(--gray); padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="privacyModal">
+        <div class="modal-content">
+            <h2 style="color: var(--info); margin-bottom: 1.5rem;">Privacy Settings</h2>
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 1rem; color: var(--light); margin-bottom: 1rem;">
+                    <input type="checkbox" id="essentialCookies" checked disabled>
+                    <span>Essential Cookies (Required)</span>
+                </label>
+                <small style="color: var(--gray); display: block; margin-bottom: 1.5rem;">These cookies are necessary for the website to function.</small>
+            </div>
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 1rem; color: var(--light); margin-bottom: 1rem;">
+                    <input type="checkbox" id="analyticsCookies" checked>
+                    <span>Analytics Cookies</span>
+                </label>
+                <small style="color: var(--gray); display: block; margin-bottom: 1.5rem;">Help us understand how visitors interact with our website.</small>
+            </div>
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 1rem; color: var(--light); margin-bottom: 1rem;">
+                    <input type="checkbox" id="advertisingCookies" checked>
+                    <span>Advertising Cookies</span>
+                </label>
+                <small style="color: var(--gray); display: block; margin-bottom: 1.5rem;">Used to personalize ads and measure ad performance.</small>
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button onclick="savePrivacySettings()" class="cta-button" style="flex: 1;">Save Settings</button>
+                <button onclick="closeModal('privacyModal')" style="background: transparent; border: 1px solid var(--gray); color: var(--gray); padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="notification" id="successNotification">
+        <i class="fas fa-check-circle"></i>
+        <span>Action completed successfully!</span>
+    </div>
+    
+    <div class="notification error" id="errorNotification">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>An error occurred. Please try again.</span>
+    </div>
+
+    <!-- AI CHATBOX -->
+    <div id="ai-chatbox">
+        <div id="ai-header">
+            <span>AI Assistant</span>
+            <button id="ai-close-btn">✕</button>
+        </div>
+        <div id="ai-messages">
+            <div class="ai-msg-bot">Hi! I'm your AI assistant. How can I help you with software recommendations today?</div>
+        </div>
+        <div id="ai-input-area">
+            <input type="text" id="ai-input" placeholder="Ask anything about software...">
+            <button id="ai-send">Send</button>
+        </div>
+    </div>
+
+    <!-- FLOATING AI BUTTON -->
+    <button id="ai-chat-btn" aria-label="AI Support">
+        <i class="fas fa-robot"></i>
+    </button>
+     
+    <!-- SCROLL TO TOP -->
+    <div class="scroll-top" id="scrollTop" title="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- ALL JAVASCRIPT IN ONE PLACE -->
+    <script>
+        // ===============================
+        // SOFTWARE DATABASE
+        // ===============================
+        const softwareDatabase = [
+            // FINANCIAL SOFTWARE (15 entries)
+            { id: 1, name: "Wave Accounting", category: "finance", type: "free", description: "100% free accounting, invoicing, and receipt scanning for small businesses & freelancers.", features: ["Free Accounting & Invoicing", "Unlimited Income/Expense Tracking", "Receipt Scanning", "Multi-Currency"], icon: "fas fa-calculator", link: "https://www.waveapps.com/accounting" },
+            { id: 2, name: "QuickBooks Online", category: "finance", type: "trial", description: "Industry-leading accounting software with powerful features for businesses of all sizes.", features: ["Auto Categorization", "Tax Calculations", "Multi-User Access", "Advanced Reporting"], icon: "fas fa-book", link: "https://quickbooks.intuit.com" },
+            { id: 3, name: "FreshBooks", category: "finance", type: "trial", description: "Cloud-based accounting software designed for freelancers and service-based businesses.", features: ["Time Tracking", "Project Management", "Client Portal", "Recurring Invoices"], icon: "fas fa-file-invoice", link: "https://freshbooks.com" },
+            { id: 4, name: "Zoho Books", category: "finance", type: "free", description: "Free accounting for businesses with less than $50K in revenue per year.", features: ["Bank Reconciliation", "Inventory Tracking", "Automated Workflows", "GST Compliance"], icon: "fas fa-cloud", link: "https://www.zoho.com/books/free-accounting-software/" },
+            { id: 5, name: "Mint (by Intuit)", category: "finance", type: "free", description: "Free personal finance and budgeting tool to track spending, bills, and credit score.", features: ["Budget Creation & Tracking", "Bill Payment Reminders", "Credit Score Monitoring", "Investment Tracking"], icon: "fas fa-chart-pie", link: "https://mint.intuit.com" },
+            { id: 6, name: "Xero", category: "finance", type: "trial", description: "Beautiful accounting software for small businesses with 700+ app integrations.", features: ["Bank Connections", "Purchase Orders", "Project Tracking", "Multi-Currency"], icon: "fas fa-receipt", link: "https://www.xero.com" },
+            { id: 7, name: "GnuCash", category: "finance", type: "free", description: "Open-source personal and small-business financial accounting software.", features: ["Double-Entry Accounting", "Stock/Bond Accounts", "Scheduled Transactions", "Financial Reports"], icon: "fab fa-github", link: "https://gnucash.org" },
+            { id: 8, name: "KashFlow", category: "finance", type: "trial", description: "UK-based accounting software designed for small businesses and startups.", features: ["Payroll Integration", "VAT Management", "Invoice Templates", "Cash Flow Forecasting"], icon: "fas fa-pound-sign", link: "https://www.kashflow.com" },
+            { id: 9, name: "Sage Business Cloud", category: "finance", type: "trial", description: "Comprehensive accounting, payroll, and payment solutions for businesses.", features: ["Real-time Reporting", "Cash Flow Management", "Inventory Control", "Payroll Processing"], icon: "fas fa-chart-line", link: "https://www.sage.com" },
+            { id: 10, name: "ZipBooks", category: "finance", type: "free", description: "Free accounting software with intelligent insights and profit tracking.", features: ["Smart Insights", "Time Tracking", "Online Payments", "Profit & Loss Statements"], icon: "fas fa-zip", link: "https://zipbooks.com" },
+            { id: 11, name: "Manager.io", category: "finance", type: "free", description: "Free desktop accounting software for small businesses with cloud sync option.", features: ["Offline Access", "Inventory Management", "Invoicing", "Financial Reports"], icon: "fas fa-desktop", link: "https://manager.io" },
+            { id: 12, name: "Billy", category: "finance", type: "free", description: "Simple accounting and invoicing software with a forever-free basic plan.", features: ["Unlimited Invoices", "Expense Tracking", "Basic Reports", "Mobile App"], icon: "fas fa-file-alt", link: "https://www.billyapp.com" },
+            { id: 13, name: "Invoice Ninja", category: "finance", type: "free", description: "Open-source invoicing and billing platform with self-hosting option.", features: ["Time Tracking", "Task Management", "Client Portal", "Online Payments"], icon: "fas fa-user-ninja", link: "https://www.invoiceninja.com" },
+            { id: 14, name: "Turbotax", category: "finance", type: "paid", description: "Popular tax preparation software with guided filing and maximum refund guarantee.", features: ["Step-by-Step Guidance", "Audit Support", "Import W-2", "Maximum Refund Guarantee"], icon: "fas fa-file-contract", link: "https://turbotax.intuit.com" },
+            { id: 15, name: "FreeAgent", category: "finance", type: "trial", description: "Accounting software designed for freelancers, contractors, and small businesses.", features: ["Automatic Bank Import", "Self-Assessment Tax", "Project Tracking", "Time Tracking"], icon: "fas fa-user-tie", link: "https://www.freeagent.com" },
+            
+            // CYBERSECURITY SOFTWARE (15 entries)
+            { id: 16, name: "Bitdefender Antivirus Free", category: "cybersecurity", type: "free", description: "Award-winning free antivirus for Windows with real-time protection and anti-phishing.", features: ["Real-Time Malware Protection", "Anti-Phishing & Anti-Fraud", "Lightweight & Fast", "Automatic Updates"], icon: "fas fa-shield-virus", link: "https://www.bitdefender.com/solutions/free.html" },
+            { id: 17, name: "Malwarebytes Free", category: "cybersecurity", type: "free", description: "On-demand scanner that finds and removes malware, PUPs, and ransomware.", features: ["Detects & Removes Malware", "Ransomware Protection", "Rootkit Scanner", "Fast Scans"], icon: "fas fa-bug", link: "https://www.malwarebytes.com/free" },
+            { id: 18, name: "Avira Free Security Suite", category: "cybersecurity", type: "free", description: "Comprehensive free security including antivirus, VPN (500MB/mo), and password manager.", features: ["Real-Time Protection", "Free VPN (500 MB/Month)", "Password Manager", "Software Updater"], icon: "fas fa-user-shield", link: "https://www.avira.com/en/free-security-suite" },
+            { id: 19, name: "Kaspersky Security Cloud Free", category: "cybersecurity", type: "free", description: "Free antivirus with real-time protection, VPN, and account check for data leaks.", features: ["Real-Time Antivirus", "Free VPN (200 MB/Day)", "Account Data Leak Check", "Wi-Fi Security Alert"], icon: "fas fa-cloud-shield-alt", link: "https://www.kaspersky.com/free-antivirus" },
+            { id: 20, name: "AVG AntiVirus Free", category: "cybersecurity", type: "free", description: "Trusted free antivirus with essential protection against viruses and malware.", features: ["Malware Protection", "Web & Email Protection", "Performance Scans", "Easy to Use"], icon: "fas fa-shield-alt", link: "https://www.avg.com/en-us/free-antivirus-download" },
+            { id: 21, name: "Avast Free Antivirus", category: "cybersecurity", type: "free", description: "Free antivirus with Wi-Fi security scanner and behavior shield.", features: ["Wi-Fi Inspector", "Behavior Shield", "Game Mode", "Smart Scan"], icon: "fas fa-wifi", link: "https://www.avast.com/free-antivirus-download" },
+            { id: 22, name: "Sophos Home Free", category: "cybersecurity", type: "free", description: "Free cybersecurity for up to 3 devices with remote management.", features: ["Real-Time Antivirus", "Web Filtering", "Remote Management", "Ransomware Protection"], icon: "fas fa-home", link: "https://home.sophos.com" },
+            { id: 23, name: "ZoneAlarm Free Firewall", category: "cybersecurity", type: "free", description: "Free firewall protection with intrusion detection and program control.", features: ["Two-Way Firewall", "Intrusion Detection", "Program Control", "Identity Protection"], icon: "fas fa-fire", link: "https://www.zonealarm.com/software/free-firewall" },
+            { id: 24, name: "Comodo Free Firewall", category: "cybersecurity", type: "free", description: "Advanced firewall with auto-sandbox technology for unknown files.", features: ["Default-Deny Protection", "Auto-Sandbox Technology", "VirusScope", "Host Intrusion Prevention"], icon: "fas fa-dragon", link: "https://www.comodo.com/home/internet-security/firewall.php" },
+            { id: 25, name: "GlassWire Firewall", category: "cybersecurity", type: "free", description: "Network monitoring firewall with beautiful visualizations and alerts.", features: ["Network Monitoring", "Bandwidth Usage Graphs", "Security Alerts", "App Blocking"], icon: "fas fa-chart-network", link: "https://www.glasswire.com" },
+            { id: 26, name: "Norton Antivirus Plus", category: "cybersecurity", type: "paid", description: "Comprehensive security suite with smart firewall and password manager.", features: ["Smart Firewall", "Password Manager", "2GB Cloud Backup", "SafeCam"], icon: "fas fa-user-lock", link: "https://us.norton.com/antivirus" },
+            { id: 27, name: "McAfee Total Protection", category: "cybersecurity", type: "paid", description: "Multi-device security with identity theft protection and VPN.", features: ["Multi-Device Protection", "Identity Theft Protection", "Secure VPN", "Performance Optimization"], icon: "fas fa-globe", link: "https://www.mcafee.com/total-protection" },
+            { id: 28, name: "Trend Micro Antivirus+", category: "cybersecurity", type: "paid", description: "Antivirus with ransomware protection and pay-per-use ransomware money-back guarantee.", features: ["Ransomware Protection", "Social Media Protection", "Folder Shield", "Web Threat Protection"], icon: "fas fa-microchip", link: "https://www.trendmicro.com/en_us/forHome/products/antivirus-plus.html" },
+            { id: 29, name: "ESET NOD32 Antivirus", category: "cybersecurity", type: "paid", description: "Lightweight antivirus with advanced detection and gaming mode.", features: ["Advanced Detection", "Gaming Mode", "UEFI Scanner", "Exploit Blocker"], icon: "fas fa-gamepad", link: "https://www.eset.com/us/home/antivirus" },
+            { id: 30, name: "Webroot SecureAnywhere", category: "cybersecurity", type: "paid", description: "Cloud-based antivirus with fast scans and identity theft protection.", features: ["Cloud-Based Scanning", "Identity Theft Protection", "Fast Scans", "Multi-Device Sync"], icon: "fas fa-cloud-sun", link: "https://www.webroot.com/us/en" },
+            
+            // CRM SOFTWARE (10 entries)
+            { id: 31, name: "HubSpot CRM", category: "crm", type: "free", description: "Completely free CRM with sales pipeline, email tracking, and unlimited users.", features: ["Unlimited Users & Contacts", "Email Tracking & Templates", "Deal & Task Management", "Meeting Scheduling"], icon: "fas fa-address-book", link: "https://www.hubspot.com/products/crm" },
+            { id: 32, name: "Zoho CRM", category: "crm", type: "free", description: "Free CRM for up to 3 users with essential sales automation features.", features: ["Up to 3 Users Free", "Lead & Contact Management", "Sales Pipeline", "Email Integration"], icon: "fas fa-users", link: "https://www.zoho.com/crm/free/" },
+            { id: 33, name: "Freshsales (Freshworks)", category: "crm", type: "free", description: "AI-powered CRM with built-in phone, email, and contact scoring in free plan.", features: ["Up to 3 Users", "Contact & Deal Management", "Email Tracking", "AI-based Lead Scoring"], icon: "fas fa-sun", link: "https://www.freshworks.com/crm/freshsales/free-crm/" },
+            { id: 34, name: "Bitrix24", category: "crm", type: "free", description: "Free CRM for up to 12 users with tasks, documents, and communication tools.", features: ["Up to 12 Users", "Unlimited Contacts", "Task Management", "Document Storage"], icon: "fas fa-b", link: "https://www.bitrix24.com/" },
+            { id: 35, name: "Agile CRM", category: "crm", type: "free", description: "All-in-one CRM with marketing automation, telephony, and help desk.", features: ["Up to 10 Users", "Contact Management", "Email Tracking", "Landing Pages"], icon: "fas fa-bolt", link: "https://www.agilecrm.com/" },
+            { id: 36, name: "Really Simple Systems", category: "crm", type: "free", description: "Easy-to-use CRM designed for small businesses with essential features.", features: ["Up to 2 Users", "100MB Storage", "Contact Management", "Sales Pipeline"], icon: "fas fa-check-circle", link: "https://www.reallysimplesystems.com/free-crm/" },
+            { id: 37, name: "SuiteCRM", category: "crm", type: "free", description: "Open source CRM based on SugarCRM with complete customization options.", features: ["100% Open Source", "Self-Hosted", "Full Customization", "Sales Automation"], icon: "fab fa-osi", link: "https://suitecrm.com/" },
+            { id: 38, name: "Vtiger CRM Open Source", category: "crm", type: "free", description: "Open source CRM with sales, marketing, and support capabilities.", features: ["Self-Hosted Free Version", "Sales Automation", "Email Marketing", "Customer Support"], icon: "fas fa-tiger", link: "https://www.vtiger.com/vtiger-crm-open-source/" },
+            { id: 39, name: "Odoo CRM", category: "crm", type: "free", description: "Open source business suite with integrated CRM, sales, and inventory.", features: ["Open Source Community Edition", "Sales Pipeline", "Lead Scoring", "Email Integration"], icon: "fas fa-cube", link: "https://www.odoo.com/page/crm" },
+            { id: 40, name: "Salesforce Essentials", category: "crm", type: "trial", description: "Simplified version of Salesforce for small businesses with limited free trial.", features: ["Limited Free Trial", "Contact Management", "Opportunity Tracking", "Email Integration"], icon: "fas fa-cloud", link: "https://www.salesforce.com/essentials/" },
+            
+            // AI TOOLS (10 entries)
+            { id: 41, name: "ChatGPT", category: "ai", type: "free", description: "Advanced AI chatbot for conversation, content creation, and task assistance.", features: ["Natural Language Conversations", "Code Generation & Explanation", "Creative Writing", "Translation"], icon: "fas fa-comment-dots", link: "https://chat.openai.com" },
+            { id: 42, name: "Canva AI", category: "ai", type: "free", description: "AI-powered graphic design tool with templates and image generation.", features: ["AI Image Generation", "Template Suggestions", "Brand Kit", "Collaboration Tools"], icon: "fas fa-palette", link: "https://www.canva.com/ai-tools/" },
+            { id: 43, name: "Grammarly", category: "ai", type: "free", description: "AI-powered writing assistant for grammar checking and style improvements.", features: ["Grammar & Spell Check", "Tone Detection", "Plagiarism Checker", "Writing Suggestions"], icon: "fas fa-spell-check", link: "https://www.grammarly.com" },
+            { id: 44, name: "Jasper AI", category: "ai", type: "trial", description: "AI content creation tool for marketing copy, blogs, and social media posts.", features: ["Content Templates", "Brand Voice", "SEO Optimization", "Multi-Language"], icon: "fas fa-pen-nib", link: "https://www.jasper.ai" },
+            { id: 45, name: "Midjourney", category: "ai", type: "paid", description: "AI image generation tool creating artwork from text descriptions.", features: ["Text-to-Image Generation", "Multiple Art Styles", "High Resolution", "Community Gallery"], icon: "fas fa-image", link: "https://www.midjourney.com" },
+            { id: 46, name: "Notion AI", category: "ai", type: "trial", description: "AI-powered workspace for notes, docs, wikis, and project management.", features: ["AI Writing Assistance", "Task Management", "Database Creation", "Team Collaboration"], icon: "fas fa-sticky-note", link: "https://www.notion.com/product/ai" },
+            { id: 47, name: "GitHub Copilot", category: "ai", type: "free", description: "AI pair programmer that suggests code and entire functions in your editor.", features: ["Code Suggestions", "Multiple Languages", "VS Code Integration", "Function Generation"], icon: "fas fa-code", link: "https://github.com/features/copilot" },
+            { id: 48, name: "DALL-E 2", category: "ai", type: "paid", description: "OpenAI's AI system creating realistic images from natural language descriptions.", features: ["Photorealistic Images", "Artistic Styles", "Image Editing", "Multiple Variations"], icon: "fas fa-robot", link: "https://openai.com/dall-e-2" },
+            { id: 49, name: "Zapier", category: "ai", type: "free", description: "Automates workflows by connecting different web apps with AI enhancements.", features: ["100 Tasks/Month Free", "5 Zaps (Automations)", "15-min Updates", "App Integrations"], icon: "fas fa-bolt", link: "https://zapier.com" },
+            { id: 50, name: "Beautiful.AI", category: "ai", type: "free", description: "AI-powered presentation maker that designs slides automatically.", features: ["Smart Templates", "Auto Design", "Team Collaboration", "Brand Controls"], icon: "fas fa-presentation", link: "https://www.beautiful.ai" }
+        ];
+
+        // ===============================
+        // REAL AI INTEGRATION - FIXED VERSION
+        // ===============================
+        function formatAIResponse(text) {
+            // Create a temporary div to parse the text
+            const tempDiv = document.createElement('div');
+            tempDiv.className = 'ai-card';
+            
+            // Convert markdown-like formatting to HTML
+            let html = text
+                .replace(/### (.*?)(\n|$)/g, '<h3>$1</h3>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\* (.*?)(\n|$)/g, '<li>$1</li>')
+                .replace(/• (.*?)(\n|$)/g, '<li>$1</li>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+            
+            // Wrap in paragraphs if needed
+            if (!html.includes('<p>') && !html.includes('<h3>') && !html.includes('<li>')) {
+                html = '<p>' + html + '</p>';
+            }
+            
+            // Add list wrapper if there are list items
+            if (html.includes('<li>') && !html.includes('<ul>')) {
+                html = html.replace(/(<li>.*?<\/li>)+/g, '<ul>$&</ul>');
+            }
+            
+            tempDiv.innerHTML = html;
+            
+            // Add CTA buttons
+            const ctaDiv = document.createElement('div');
+            ctaDiv.className = 'ai-cta';
+            ctaDiv.innerHTML = `
+                <button onclick="quickQuestion('Compare alternatives')">🔍 Compare</button>
+                <button onclick="quickQuestion('Pricing details')">💰 Pricing</button>
+                <button onclick="quickQuestion('Best option for my business')">🎯 Best Fit</button>
+            `;
+            
+            tempDiv.appendChild(ctaDiv);
+            return tempDiv.outerHTML;
+        }
+
+        // ===============================
+        // AI INTEGRATION OBJECT
+        // ===============================
+        const aiIntegration = {
+            // AI Chat Functionality
+            chatBtn: document.getElementById('ai-chat-btn'),
+            chatbox: document.getElementById('ai-chatbox'),
+            aiSendBtn: document.getElementById('ai-send'),
+            aiInput: document.getElementById('ai-input'),
+            aiMessages: document.getElementById('ai-messages'),
+            
+            // AI Assistant Function
+            aiQuestion: document.getElementById('ai-question'),
+            aiResponse: document.getElementById('ai-response'),
+            askAIBtn: document.getElementById('ask-ai-btn'),
+            
+            // AI Configuration
+            aiConfig: {
+                useBackend: true,
+                backendEndpoint: '/api/ai-chat.php',
+                simulatedResponses: {
+                    'free crm software': "For free CRM software, I recommend:\n\n**HubSpot CRM** - Unlimited users, sales pipeline, email tracking\n**Zoho CRM** - Up to 3 users free, lead management\n**Bitrix24** - Up to 12 users, includes tasks & documents\n**Freshsales** - AI-powered, up to 3 users free\n\nHubSpot is best for sales teams, while Bitrix24 is great for collaboration.",
+                    'accounting software': "Top financial software:\n\n**Free:**\n• Wave Accounting - Complete accounting & invoicing\n• Mint - Personal finance tracking\n• Zoho Books - Free for businesses under $50K revenue\n\n**Paid:**\n• QuickBooks Online - Industry standard\n• Xero - Beautiful interface, great integrations\n• FreshBooks - Best for freelancers",
+                    'cybersecurity tools': "Best cybersecurity solutions:\n\n**Free:**\n• Bitdefender Free - Real-time malware protection\n• Malwarebytes - On-demand malware removal\n• Avira Security Suite - Includes VPN & password manager\n\n**Enterprise:**\n• CrowdStrike - Endpoint protection\n• Palo Alto - Network security\n• Splunk - SIEM solutions"
+                }
+            },
+            
+            initialize: function() {
+                // Initialize AI Chatbox
+                if (this.chatBtn) {
+                    this.chatBtn.addEventListener('click', () => {
+                        this.chatbox.style.display = this.chatbox.style.display === 'flex' ? 'none' : 'flex';
+                        if (this.chatbox.style.display === 'flex') {
+                            this.aiInput.focus();
+                        }
+                    });
+                }
+                
+                if (this.aiSendBtn) {
+                    this.aiSendBtn.addEventListener('click', () => this.sendAIMessage());
+                }
+                
+                if (this.aiInput) {
+                    this.aiInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') this.sendAIMessage();
+                    });
+                }
+                
+                if (this.askAIBtn) {
+                    this.askAIBtn.addEventListener('click', () => this.askAI());
+                }
+                
+                const closeBtn = document.getElementById('ai-close-btn');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        this.chatbox.style.display = 'none';
+                    });
+                }
+                
+                console.log("AI Integration initialized");
+            },
+            
+            addMessage: function(text, isUser = false) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = isUser ? 'ai-msg-user' : 'ai-msg-bot';
+                msgDiv.textContent = text;
+                
+                if (this.aiMessages) {
+                    this.aiMessages.appendChild(msgDiv);
+                    this.aiMessages.scrollTop = this.aiMessages.scrollHeight;
+                }
+            },
+            
+            sendAIMessage: async function() {
+                const message = this.aiInput.value.trim();
+                if (!message) return;
+
+                this.addMessage(message, true);
+                this.aiInput.value = '';
+
+                // Show "Thinking..." message
+                const thinkingMsg = document.createElement('div');
+                thinkingMsg.className = 'ai-msg-bot';
+                thinkingMsg.textContent = "Thinking...";
+                this.aiMessages.appendChild(thinkingMsg);
+
+                try {
+                    if (this.aiConfig.useBackend) {
+                        // Try backend API
+                        const response = await fetch(this.aiConfig.backendEndpoint, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ message: message })
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            // Remove "Thinking..." message
+                            thinkingMsg.remove();
+                            if (data.success && data.data && data.data.reply) {
+                                this.addMessage(data.data.reply, false);
+                            } else {
+                                this.addMessage("I'm having trouble processing that. Could you rephrase?", false);
+                            }
+                            return;
+                        }
+                    }
+                    
+                    // Fallback to simulated response
+                    thinkingMsg.remove();
+                    const simulatedResponse = this.getSimulatedResponse(message);
+                    this.addMessage(simulatedResponse, false);
+                    
+                } catch (error) {
+                    console.error("AI Error:", error);
+                    thinkingMsg.remove();
+                    const simulatedResponse = this.getSimulatedResponse(message);
+                    this.addMessage(simulatedResponse, false);
+                }
+            },
+            
+            askAI: async function() {
+                const question = this.aiQuestion ? this.aiQuestion.value.trim() : '';
+                const responseDiv = this.aiResponse;
+
+                if (!question) {
+                    alert("Please enter a question.");
+                    return;
+                }
+
+                responseDiv.innerHTML = "<div class='ai-card'><p>Thinking...</p></div>";
+
+                try {
+                    if (this.aiConfig.useBackend) {
+                        const response = await fetch(this.aiConfig.backendEndpoint, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ message: question })
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.reply) {
+    responseDiv.innerHTML = formatAIResponse(data.reply);
+    return;
+}
+                        }
+                    }
+                    
+                    // Fallback to simulated response
+                    const simulatedResponse = this.getSimulatedResponse(question);
+                    responseDiv.innerHTML = formatAIResponse(simulatedResponse);
+                    
+                } catch (error) {
+                    console.error("AI Error:", error);
+                    const simulatedResponse = this.getSimulatedResponse(question);
+                    responseDiv.innerHTML = formatAIResponse("⚠️ " + simulatedResponse);
+                }
+            },
+            
+            getSimulatedResponse: function(userMessage) {
+                const lowerMsg = userMessage.toLowerCase();
+                
+                // Check for specific keywords
+                for (const [key, response] of Object.entries(this.aiConfig.simulatedResponses)) {
+                    if (lowerMsg.includes(key)) {
+                        return response;
+                    }
+                }
+                
+                // Check for free software queries
+                if (lowerMsg.includes('free')) {
+                    if (lowerMsg.includes('crm')) {
+                        return this.aiConfig.simulatedResponses['free crm software'];
+                    } else if (lowerMsg.includes('account') || lowerMsg.includes('finance')) {
+                        return "For free financial software, I recommend:\n\n**Wave Accounting** - Complete accounting & invoicing for small businesses\n**Mint** - Personal finance tracking & budgeting\n**Zoho Books** - Free for businesses under $50K revenue\n**GnuCash** - Open source desktop accounting\n\nFor GST compliance in India, check Tally or Zoho Books.";
+                    } else if (lowerMsg.includes('security') || lowerMsg.includes('antivirus')) {
+                        return "Best free cybersecurity tools:\n\n**Bitdefender Free** - Real-time malware protection\n**Malwarebytes** - On-demand malware removal\n**Avira Security Suite** - Includes VPN & password manager\n**Sophos Home** - Protects up to 3 devices\n\nBitdefender offers the best real-time protection with minimal system impact.";
+                    }
+                }
+                
+                // General software recommendations
+                if (lowerMsg.includes('crm')) {
+                    return "CRM Software Recommendations:\n\n**Free:** HubSpot CRM, Zoho CRM, Bitrix24\n**Paid:** Salesforce, Microsoft Dynamics, Pipedrive\n**For startups:** HubSpot (free tier) or Freshsales\n**For enterprises:** Salesforce or Microsoft Dynamics";
+                }
+                
+                if (lowerMsg.includes('account') || lowerMsg.includes('finance')) {
+                    return this.aiConfig.simulatedResponses['accounting software'];
+                }
+                
+                if (lowerMsg.includes('security') || lowerMsg.includes('cyber')) {
+                    return this.aiConfig.simulatedResponses['cybersecurity tools'];
+                }
+                
+                // Default response
+                return "I can help you find software! Try asking:\n• 'Find free CRM software for startups'\n• 'Compare accounting software for small business'\n• 'Best cybersecurity tools for Windows'\n• 'AI tools for content creation'\n\nWhat specific requirements do you have?";
+            },
+            
+            quickQuestion: function(question) {
+                if (this.aiQuestion) {
+                    this.aiQuestion.value = question;
+                    this.askAI();
+                }
+            }
+        };
+
+        // ===============================
+        // MONETIZATION & AD SYSTEM
+        // ===============================
+        const adSystem = {
+            placements: [
+                { id: 'hero_banner', location: 'hero', type: 'banner', revenue: 25 },
+                { id: 'in_content', location: 'software_grid', type: 'native', revenue: 15 },
+                { id: 'sidebar', location: 'sidebar', type: 'display', revenue: 20 },
+                { id: 'vendor_spotlight', location: 'vendors', type: 'sponsored', revenue: 30 }
+            ],
+            
+            simulateAdLoad: function() {
+                let totalRevenue = 0;
+                this.placements.forEach(placement => {
+                    const impressions = Math.floor(Math.random() * 1000) + 500;
+                    const revenue = (impressions * placement.revenue) / 1000;
+                    totalRevenue += revenue;
+                });
+                return totalRevenue.toFixed(2);
+            },
+            
+            checkAdBlocker: function() {
+                const testAd = document.createElement('div');
+                testAd.className = 'adsbygoogle';
+                testAd.style.height = '1px';
+                document.body.appendChild(testAd);
+                
+                setTimeout(() => {
+                    const isBlocked = testAd.offsetHeight === 0;
+                    const warning = document.getElementById('adBlockerWarning');
+                    if (warning) {
+                        warning.style.display = isBlocked ? 'block' : 'none';
+                    }
+                    document.body.removeChild(testAd);
+                }, 100);
+            },
+            
+            trackAdClick: function(adId) {
+                console.log(`Ad clicked: ${adId}`);
+                this.showNotification('Ad interaction tracked successfully!', 'success');
+                
+                const revenueElement = document.querySelector('.stat-number:nth-child(4)');
+                if (revenueElement) {
+                    const current = parseFloat(revenueElement.textContent.replace(/[^0-9.]/g, '')) || 1.2;
+                    revenueElement.textContent = `$${(current + 0.01).toFixed(2)}M+`;
+                }
+            },
+            
+            showNotification: function(message, type = 'info') {
+                const notification = document.getElementById(`${type}Notification`);
+                if (notification) {
+                    notification.querySelector('span').textContent = message;
+                    notification.className = `notification ${type} show`;
+                    
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 3000);
+                }
+            }
+        };
+
+        // ===============================
+        // SOFTWARE RENDERING FUNCTIONS
+        // ===============================
+        function renderSoftware(filter = 'all') {
+            const grid = document.getElementById('softwareGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            let softwareToShow = [];
+            
+            if (filter === 'all') {
+                softwareToShow = softwareDatabase;
+            } else {
+                softwareToShow = softwareDatabase.filter(software => software.category === filter);
+            }
+            
+            if (softwareToShow.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--gray);">
+                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <h3>No software found</h3>
+                        <p>Try asking our AI assistant for recommendations!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            softwareToShow.forEach((software, index) => {
+                // Insert ad after every 5th item
+                if (index > 0 && index % 5 === 0) {
+                    const adCard = document.createElement('div');
+                    adCard.className = 'software-card';
+                    adCard.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                    adCard.style.background = 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(108, 99, 255, 0.1))';
+                    
+                    const adTitles = [
+                        'Enterprise Security Suite',
+                        'Premium Accounting Pro',
+                        'AI Development Platform',
+                        'Cloud Infrastructure Bundle'
+                    ];
+                    const adTitle = adTitles[Math.floor(Math.random() * adTitles.length)];
+                    
+                    adCard.innerHTML = `
+                        <div class="card-header">
+                            <div class="software-icon" style="background: linear-gradient(135deg, #3B82F6, #6C63FF);">
+                                <i class="fas fa-ad"></i>
+                            </div>
+                            <div class="card-title">
+                                <h3>${adTitle}</h3>
+                                <div class="software-category" style="background: rgba(59, 130, 246, 0.15); color: #3B82F6;">SPONSORED</div>
+                            </div>
+                        </div>
+                        <p class="software-description">Premium solution featured by our partners. Special offer available for KAMA users.</p>
+                        <div class="software-features">
+                            <div class="feature"><i class="fas fa-check"></i><span>Advanced features</span></div>
+                            <div class="feature"><i class="fas fa-check"></i><span>Priority support</span></div>
+                            <div class="feature"><i class="fas fa-check"></i><span>Enterprise-grade</span></div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="paid-badge">SPECIAL OFFER</div>
+                            <button onclick="trackAdClick('${adTitle.replace(/\s+/g, '_').toLowerCase()}')" class="visit-button">
+                                <i class="fas fa-external-link-alt"></i> Learn More
+                            </button>
+                        </div>
+                    `;
+                    grid.appendChild(adCard);
+                }
+                
+                const card = document.createElement('div');
+                card.className = 'software-card';
+                card.setAttribute('data-category', software.category);
+                
+                let iconClass = '';
+                if (software.category === 'finance') iconClass = 'finance-icon';
+                else if (software.category === 'cybersecurity') iconClass = 'security-icon';
+                else if (software.category === 'ai') iconClass = 'ai-icon';
+                else if (software.category === 'crm') iconClass = 'crm-icon';
+                
+                let categoryClass = '';
+                if (software.category === 'finance') categoryClass = 'finance-category';
+                else if (software.category === 'cybersecurity') categoryClass = 'security-category';
+                else if (software.category === 'ai') categoryClass = 'ai-category';
+                else if (software.category === 'crm') categoryClass = 'crm-category';
+                
+                let badgeClass = 'free-badge';
+                let badgeText = 'FREE';
+                if (software.type === 'trial') {
+                    badgeClass = 'trial-badge';
+                    badgeText = 'FREE TRIAL';
+                } else if (software.type === 'paid') {
+                    badgeClass = 'paid-badge';
+                    badgeText = 'PAID';
+                }
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="software-icon ${iconClass}">
+                            <i class="${software.icon}"></i>
+                        </div>
+                        <div class="card-title">
+                            <h3>${software.name}</h3>
+                            <div class="software-category ${categoryClass}">${software.category.toUpperCase()}</div>
+                        </div>
+                    </div>
+                    <p class="software-description">${software.description}</p>
+                    <div class="software-features">
+                        ${software.features.map(feature => `
+                            <div class="feature"><i class="fas fa-check"></i><span>${feature}</span></div>
+                        `).join('')}
+                    </div>
+                    <div class="card-footer">
+                        <div class="${badgeClass}">${badgeText}</div>
+                        <a href="${software.link}" target="_blank" class="visit-button">
+                            <i class="fas fa-external-link-alt"></i> Visit
+                        </a>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // ===============================
+        // MODAL FUNCTIONS
+        // ===============================
+        function openSellModal() {
+            const modal = document.getElementById('sellModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function openPrivacyModal() {
+            const modal = document.getElementById('privacyModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        function savePrivacySettings() {
+            const analytics = document.getElementById('analyticsCookies');
+            const advertising = document.getElementById('advertisingCookies');
+            
+            if (analytics && advertising) {
+                localStorage.setItem('privacy_settings', JSON.stringify({
+                    analytics: analytics.checked,
+                    advertising: advertising.checked,
+                    timestamp: new Date().toISOString()
+                }));
+                
+                adSystem.showNotification('Privacy settings saved successfully!', 'success');
+                closeModal('privacyModal');
+            }
+        }
+
+        // ===============================
+        // AD TRACKING FUNCTIONS
+        // ===============================
+        function trackAdClick(adId) {
+            adSystem.trackAdClick(adId);
+        }
+
+        // ===============================
+        // STATS ANIMATION
+        // ===============================
+        function animateStats() {
+            const counters = {
+                softwareCount: 500,
+                aiConversations: 15000,
+                userCount: 2000000
+            };
+            
+            const elements = {
+                softwareCount: document.getElementById('softwareCount'),
+                aiConversations: document.getElementById('aiConversations'),
+                userCount: document.getElementById('userCount')
+            };
+            
+            Object.keys(elements).forEach(key => {
+                if (elements[key]) {
+                    let current = 0;
+                    const target = counters[key];
+                    const increment = target / 100;
+                    const element = elements[key];
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        
+                        if (key === 'userCount') {
+                            element.textContent = `${Math.floor(current).toLocaleString()}+`;
+                        } else {
+                            element.textContent = `${Math.floor(current)}+`;
+                        }
+                    }, 20);
+                }
+            });
+        }
+
+        // ===============================
+        // HELPER FUNCTIONS
+        // ===============================
+        function copyDockerCommand() {
+            const command = `docker run -d --name kama-ai-bot -p 3000:3000 -v botpress_data:/botpress/data botpress/server:latest`;
+            navigator.clipboard.writeText(command).then(() => {
+                adSystem.showNotification("Docker command copied to clipboard!", "success");
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = command;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                adSystem.showNotification("Command copied to clipboard!", "success");
+            });
+        }
+        
+        function testDeployment() {
+            adSystem.showNotification("Testing Botpress deployment...", "info");
+            
+            setTimeout(() => {
+                const isSuccess = Math.random() > 0.3;
+                if (isSuccess) {
+                    adSystem.showNotification("✅ Deployment test successful! Botpress should be running on port 3000.", "success");
+                } else {
+                    adSystem.showNotification("⚠️ Deployment test failed. Make sure Docker is installed and running.", "error");
+                }
+            }, 2000);
+        }
+        
+        function quickQuestion(question) {
+            if (aiIntegration.quickQuestion) {
+                aiIntegration.quickQuestion(question);
+            }
+        }
+
+        // ===============================
+        // INITIALIZATION
+        // ===============================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize software grid with all software
+            renderSoftware();
+            
+            // Initialize AI Integration
+            aiIntegration.initialize();
+            
+            // Category filter buttons
+            document.querySelectorAll('.cat-filter').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    document.querySelectorAll('.cat-filter').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter software
+                    const filter = this.getAttribute('data-filter');
+                    renderSoftware(filter);
+                    
+                    // Smooth scroll to software section
+                    const softwareSection = document.getElementById('software');
+                    if (softwareSection) {
+                        softwareSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+            
+            // Scroll to top button
+            const scrollTopBtn = document.getElementById('scrollTop');
+            window.addEventListener('scroll', function() {
+                if (scrollTopBtn) {
+                    if (window.pageYOffset > 300) {
+                        scrollTopBtn.classList.add('show');
+                    } else {
+                        scrollTopBtn.classList.remove('show');
+                    }
+                }
+            });
+            
+            if (scrollTopBtn) {
+                scrollTopBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mainNav = document.getElementById('mainNav');
+            
+            if (mobileMenuBtn && mainNav) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mainNav.classList.toggle('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (mainNav.classList.contains('active')) {
+                        icon.className = 'fas fa-times';
+                    } else {
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+            }
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (mainNav && mainNav.classList.contains('active') && 
+                    !mainNav.contains(event.target) && 
+                    mobileMenuBtn && !mobileMenuBtn.contains(event.target)) {
+                    mainNav.classList.remove('active');
+                    if (mobileMenuBtn.querySelector('i')) {
+                        mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+                    }
+                }
+            });
+            
+            // Form submission
+            const vendorForm = document.getElementById('vendorForm');
+            if (vendorForm) {
+                vendorForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Simulate form submission
+                    const submitBtn = vendorForm.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                    submitBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        adSystem.showNotification('Application submitted successfully! We\'ll contact you within 48 hours.', 'success');
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        closeModal('sellModal');
+                        vendorForm.reset();
+                    }, 2000);
+                });
+            }
+            
+            // Check for ad blocker
+            adSystem.checkAdBlocker();
+            
+            // Animate stats
+            setTimeout(animateStats, 1000);
+            
+            // Load privacy settings
+            const savedSettings = localStorage.getItem('privacy_settings');
+            if (savedSettings) {
+                try {
+                    const settings = JSON.parse(savedSettings);
+                    const analyticsCheckbox = document.getElementById('analyticsCookies');
+                    const advertisingCheckbox = document.getElementById('advertisingCookies');
+                    
+                    if (analyticsCheckbox) analyticsCheckbox.checked = settings.analytics;
+                    if (advertisingCheckbox) advertisingCheckbox.checked = settings.advertising;
+                } catch(e) {
+                    console.log('Error loading privacy settings:', e);
+                }
+            }
+            
+            // Simulate live revenue updates
+            setInterval(() => {
+                const revenueElements = document.querySelectorAll('.stat-number');
+                if (revenueElements.length >= 4) {
+                    const revenueElement = revenueElements[3];
+                    const current = parseFloat(revenueElement.textContent.replace(/[^0-9.]/g, '')) || 1.2;
+                    const increment = Math.random() * 0.01;
+                    revenueElement.textContent = `$${(current + increment).toFixed(2)}M+`;
+                }
+            }, 30000);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Ctrl/Cmd + K to focus AI chat
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    if (aiIntegration.aiInput) {
+                        aiIntegration.aiInput.focus();
+                        aiIntegration.chatbox.style.display = 'flex';
+                    }
+                }
+                
+                // Escape to close modals
+                if (e.key === 'Escape') {
+                    const activeModal = document.querySelector('.modal.active');
+                    if (activeModal) {
+                        closeModal(activeModal.id);
+                    }
+                    
+                    // Also close AI chatbox
+                    if (aiIntegration.chatbox && aiIntegration.chatbox.style.display === 'flex') {
+                        aiIntegration.chatbox.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Auto-test AI connection on page load
+            console.log("KAMA ZENNEXT Marketplace loaded successfully!");
+            console.log("AI Integration: Ready");
+            console.log("Software Database: " + softwareDatabase.length + " items loaded");
+        });
+        
+        // Make functions globally available
+        window.trackAdClick = trackAdClick;
+        window.openSellModal = openSellModal;
+        window.openPrivacyModal = openPrivacyModal;
+        window.closeModal = closeModal;
+        window.savePrivacySettings = savePrivacySettings;
+        window.copyDockerCommand = copyDockerCommand;
+        window.testDeployment = testDeployment;
+        window.quickQuestion = quickQuestion;
+        window.aiIntegration = aiIntegration;
+    </script>
+</body>
+</html>

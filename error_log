@@ -1,0 +1,56 @@
+[15-Dec-2025 20:06:49 UTC] PHP Warning:  Undefined variable $nO in /home2/kamazennext/public_html/api/db.php on line 4
+[15-Dec-2025 20:06:49 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'kamazenn_kamazenn_user'@'localhost' (using password: YES) in /home2/kamazennext/public_html/api/db.php:7
+Stack trace:
+#0 /home2/kamazennext/public_html/api/db.php(7): mysqli->__construct('localhost', 'kamazenn_kamaze...', Object(SensitiveParameterValue), 'kamazenn_kamaze...')
+#1 /home2/kamazennext/public_html/test-db.php(2): include('/home2/kamazenn...')
+#2 {main}
+  thrown in /home2/kamazennext/public_html/api/db.php on line 7
+[15-Dec-2025 20:06:55 UTC] PHP Warning:  Undefined variable $nO in /home2/kamazennext/public_html/api/db.php on line 4
+[15-Dec-2025 20:06:55 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'kamazenn_kamazenn_user'@'localhost' (using password: YES) in /home2/kamazennext/public_html/api/db.php:7
+Stack trace:
+#0 /home2/kamazennext/public_html/api/db.php(7): mysqli->__construct('localhost', 'kamazenn_kamaze...', Object(SensitiveParameterValue), 'kamazenn_kamaze...')
+#1 /home2/kamazennext/public_html/test-db.php(2): include('/home2/kamazenn...')
+#2 {main}
+  thrown in /home2/kamazennext/public_html/api/db.php on line 7
+[15-Dec-2025 20:06:55 UTC] PHP Warning:  Undefined variable $nO in /home2/kamazennext/public_html/api/db.php on line 4
+[15-Dec-2025 20:06:55 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'kamazenn_kamazenn_user'@'localhost' (using password: YES) in /home2/kamazennext/public_html/api/db.php:7
+Stack trace:
+#0 /home2/kamazennext/public_html/api/db.php(7): mysqli->__construct('localhost', 'kamazenn_kamaze...', Object(SensitiveParameterValue), 'kamazenn_kamaze...')
+#1 /home2/kamazennext/public_html/test-db.php(2): include('/home2/kamazenn...')
+#2 {main}
+  thrown in /home2/kamazennext/public_html/api/db.php on line 7
+[15-Dec-2025 20:06:56 UTC] PHP Warning:  Undefined variable $nO in /home2/kamazennext/public_html/api/db.php on line 4
+[15-Dec-2025 20:06:56 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'kamazenn_kamazenn_user'@'localhost' (using password: YES) in /home2/kamazennext/public_html/api/db.php:7
+Stack trace:
+#0 /home2/kamazennext/public_html/api/db.php(7): mysqli->__construct('localhost', 'kamazenn_kamaze...', Object(SensitiveParameterValue), 'kamazenn_kamaze...')
+#1 /home2/kamazennext/public_html/test-db.php(2): include('/home2/kamazenn...')
+#2 {main}
+  thrown in /home2/kamazennext/public_html/api/db.php on line 7
+[15-Dec-2025 20:07:04 UTC] PHP Warning:  Undefined variable $nO in /home2/kamazennext/public_html/api/db.php on line 4
+[15-Dec-2025 20:07:04 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'kamazenn_kamazenn_user'@'localhost' (using password: YES) in /home2/kamazennext/public_html/api/db.php:7
+Stack trace:
+#0 /home2/kamazennext/public_html/api/db.php(7): mysqli->__construct('localhost', 'kamazenn_kamaze...', Object(SensitiveParameterValue), 'kamazenn_kamaze...')
+#1 /home2/kamazennext/public_html/test-db.php(2): include('/home2/kamazenn...')
+#2 {main}
+  thrown in /home2/kamazennext/public_html/api/db.php on line 7
+[15-Dec-2025 20:07:05 UTC] PHP Warning:  Undefined variable $nO in /home2/kamazennext/public_html/api/db.php on line 4
+[15-Dec-2025 20:07:05 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'kamazenn_kamazenn_user'@'localhost' (using password: YES) in /home2/kamazennext/public_html/api/db.php:7
+Stack trace:
+#0 /home2/kamazennext/public_html/api/db.php(7): mysqli->__construct('localhost', 'kamazenn_kamaze...', Object(SensitiveParameterValue), 'kamazenn_kamaze...')
+#1 /home2/kamazennext/public_html/test-db.php(2): include('/home2/kamazenn...')
+#2 {main}
+  thrown in /home2/kamazennext/public_html/api/db.php on line 7
+[15-Dec-2025 20:07:06 UTC] PHP Warning:  Undefined variable $nO in /home2/kamazennext/public_html/api/db.php on line 4
+[15-Dec-2025 20:07:06 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'kamazenn_kamazenn_user'@'localhost' (using password: YES) in /home2/kamazennext/public_html/api/db.php:7
+Stack trace:
+#0 /home2/kamazennext/public_html/api/db.php(7): mysqli->__construct('localhost', 'kamazenn_kamaze...', Object(SensitiveParameterValue), 'kamazenn_kamaze...')
+#1 /home2/kamazennext/public_html/test-db.php(2): include('/home2/kamazenn...')
+#2 {main}
+  thrown in /home2/kamazennext/public_html/api/db.php on line 7
+[15-Dec-2025 20:08:48 UTC] PHP Warning:  Undefined variable $nO in /home2/kamazennext/public_html/api/db.php on line 4
+[15-Dec-2025 20:08:48 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'kamazenn_kamazenn_user'@'localhost' (using password: YES) in /home2/kamazennext/public_html/api/db.php:7
+Stack trace:
+#0 /home2/kamazennext/public_html/api/db.php(7): mysqli->__construct('localhost', 'kamazenn_kamaze...', Object(SensitiveParameterValue), 'kamazenn_kamaze...')
+#1 /home2/kamazennext/public_html/test-db.php(6): include('/home2/kamazenn...')
+#2 {main}
+  thrown in /home2/kamazennext/public_html/api/db.php on line 7

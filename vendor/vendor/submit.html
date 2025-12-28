@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Submit Your Software – KAMA ZENNEXT</title>
+</head>
+<body>
+
+<h2>Submit Your Software</h2>
+
+<form action="/api/save_vendor.php" method="post">
+  <input name="company" placeholder="Company Name" required><br><br>
+  <input name="email" placeholder="Business Email" required><br><br>
+
+  <select name="plan">
+    <option value="2999">Basic Listing – ₹2,999</option>
+    <option value="9999">Featured Listing – ₹9,999</option>
+    <option value="24999">Sponsored Listing – ₹24,999</option>
+  </select><br><br>
+
+  <button type="submit">Proceed to Payment</button>
+</form>
+
+</body>
+</html>

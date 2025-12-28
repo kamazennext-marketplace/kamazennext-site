@@ -1,0 +1,10 @@
+[15-Dec-2025 20:56:52 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/kamazennext/public_html/api/db.php:1) in /home2/kamazennext/public_html/admin/approve.php on line 13
+[16-Dec-2025 17:46:27 UTC] PHP Warning:  Undefined array key "title" in /home2/kamazennext/public_html/admin/dashboard.php on line 156
+[16-Dec-2025 17:47:38 UTC] PHP Warning:  Undefined array key "title" in /home2/kamazennext/public_html/admin/dashboard.php on line 156
+[16-Dec-2025 17:47:38 UTC] PHP Warning:  Undefined array key "title" in /home2/kamazennext/public_html/admin/dashboard.php on line 156
+[16-Dec-2025 17:47:47 UTC] PHP Warning:  Undefined array key "title" in /home2/kamazennext/public_html/admin/dashboard.php on line 156
+[16-Dec-2025 17:47:47 UTC] PHP Warning:  Undefined array key "title" in /home2/kamazennext/public_html/admin/dashboard.php on line 156
+[16-Dec-2025 17:47:48 UTC] PHP Warning:  Undefined array key "title" in /home2/kamazennext/public_html/admin/dashboard.php on line 156
+[16-Dec-2025 17:47:48 UTC] PHP Warning:  Undefined array key "title" in /home2/kamazennext/public_html/admin/dashboard.php on line 156
+[16-Dec-2025 17:50:59 UTC] PHP Warning:  Undefined array key "title" in /home2/kamazennext/public_html/admin/dashboard.php on line 156
+[16-Dec-2025 17:51:01 UTC] PHP Warning:  Undefined array key "title" in /home2/kamazennext/public_html/admin/dashboard.php on line 156

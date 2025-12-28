@@ -1,0 +1,38 @@
+[25-Dec-2025 16:16:56 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:17:12 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:17:28 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:17:38 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:20:55 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:21:04 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:21:12 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:22:18 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:26:22 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:27:45 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:27:46 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:30:29 UTC] PHP Parse error:  syntax error, unexpected token ";", expecting "]" in /home2/kamazennext/public_html/backend/api.php on line 117
+[25-Dec-2025 16:43:00 UTC] PHP Warning:  file_get_contents(/home2/kamazennext/public_html/backend/.env): Failed to open stream: No such file or directory in /home2/kamazennext/public_html/backend/api.php on line 4
+[25-Dec-2025 16:43:00 UTC] PHP Fatal error:  Uncaught ValueError: putenv(): Argument #1 ($assignment) must have a valid syntax in /home2/kamazennext/public_html/backend/api.php:4
+Stack trace:
+#0 /home2/kamazennext/public_html/backend/api.php(4): putenv('')
+#1 {main}
+  thrown in /home2/kamazennext/public_html/backend/api.php on line 4
+[25-Dec-2025 17:46:09 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 82
+[25-Dec-2025 17:46:11 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 82
+[25-Dec-2025 17:49:23 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 91
+[25-Dec-2025 17:49:23 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 91
+[25-Dec-2025 18:08:37 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 18:08:38 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 18:14:15 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 18:14:15 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 18:14:49 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 18:14:49 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 18:38:11 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 18:38:14 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 18:38:16 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 18:38:26 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 18:45:38 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 19:29:34 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[25-Dec-2025 19:29:40 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[26-Dec-2025 16:08:48 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[26-Dec-2025 16:49:32 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
+[26-Dec-2025 16:49:37 UTC] PHP Parse error:  Unmatched '}' in /home2/kamazennext/public_html/backend/api.php on line 102
