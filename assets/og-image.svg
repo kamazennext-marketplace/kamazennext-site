@@ -1,0 +1,19 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="50%" stop-color="#A855F7" />
+      <stop offset="100%" stop-color="#EC4899" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" rx="32" fill="#0F0F1A" />
+  <rect x="30" y="30" width="1140" height="570" rx="24" fill="url(#gradient)" opacity="0.12" />
+  <text x="80" y="210" fill="#F8FAFC" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="64" font-weight="800">Kama ZenNext</text>
+  <text x="80" y="280" fill="#E2E8F0" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="38" font-weight="600">AI Software Marketplace &amp; Automation Solutions</text>
+  <text x="80" y="360" fill="#CBD5E1" font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif" font-size="28" font-weight="500">Enterprise-ready tools, custom development, and expert AI support.</text>
+  <circle cx="1050" cy="140" r="110" fill="url(#gradient)" opacity="0.35" />
+  <circle cx="980" cy="420" r="90" fill="#22C55E" opacity="0.22" />
+  <circle cx="1120" cy="340" r="60" fill="#3B82F6" opacity="0.24" />
+  <rect x="80" y="420" width="320" height="12" rx="6" fill="url(#gradient)" />
+  <rect x="80" y="450" width="240" height="12" rx="6" fill="#22C55E" opacity="0.7" />
+</svg>
