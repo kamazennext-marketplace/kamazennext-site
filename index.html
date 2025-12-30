@@ -19,11 +19,14 @@
     <meta name="twitter:description" content="Discover Kama ZenNext's AI software marketplace with enterprise-ready automation tools, custom development, and expert AI support for your business.">
     <meta name="twitter:image" content="https://yourdomain.com/assets/og-image.svg">
     <meta name="twitter:url" content="https://yourdomain.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6249603944790814" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" onload="this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet"></noscript>
     <style>
         /* ================================
         AI COMPARISON TABLE – HARD FIX
@@ -1467,11 +1470,25 @@ docker run -d --name kama-ai-bot \
         // ===============================
         // MODAL FUNCTIONS
         // ===============================
+        let recaptchaRequested = false;
+
+        function loadRecaptcha() {
+            if (recaptchaRequested) return;
+            recaptchaRequested = true;
+
+            const script = document.createElement('script');
+            script.src = 'https://www.google.com/recaptcha/api.js';
+            script.async = true;
+            script.defer = true;
+            document.body.appendChild(script);
+        }
+
         function openSellModal() {
             const modal = document.getElementById('sellModal');
             if (modal) {
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                loadRecaptcha();
             }
         }
         
@@ -1598,10 +1615,20 @@ docker run -d --name kama-ai-bot \
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize software grid with all software
             renderSoftware();
-            
+
             // Initialize AI Integration
             aiIntegration.initialize();
-            
+
+            // Lazy load reCAPTCHA after first paint
+            const scheduleRecaptcha = () => {
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(loadRecaptcha, { timeout: 3000 });
+                } else {
+                    setTimeout(loadRecaptcha, 2000);
+                }
+            };
+            scheduleRecaptcha();
+
             // Category filter buttons
             document.querySelectorAll('.cat-filter').forEach(button => {
                 button.addEventListener('click', function() {
