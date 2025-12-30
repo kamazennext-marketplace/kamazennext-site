@@ -26,6 +26,14 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" onload="this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet"></noscript>
     <style>
+        /* ===== ABOVE-THE-FOLD PERFORMANCE GUARDRAILS ===== */
+        body.preload *,
+        body.preload *::before,
+        body.preload *::after {
+            animation: none !important;
+            transition: none !important;
+        }
+
         /* ================================
         AI COMPARISON TABLE – HARD FIX
         ================================ */
@@ -69,7 +77,7 @@
             --card-bg: #24243D; --ai-color: #10B981; --finance-color: #8B5CF6; --security-color: #3B82F6;
             --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; }
         body { background-color: var(--darker); color: var(--light); line-height: 1.6; overflow-x: hidden; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
         
@@ -503,7 +511,12 @@
         }
     </style>
 </head>
-<body>
+<body class="preload">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            requestAnimationFrame(() => document.body.classList.remove('preload'));
+        });
+    </script>
     <!-- HEADER -->
     <header>
         <div class="container">
@@ -1047,8 +1060,6 @@ docker run -d --name kama-ai-bot \
                 });
             }
         };
-
-        thirdPartyLoader.setupListeners();
 
         // ===============================
         // SOFTWARE DATABASE
@@ -1683,6 +1694,8 @@ docker run -d --name kama-ai-bot \
         // INITIALIZATION
         // ===============================
         document.addEventListener('DOMContentLoaded', function() {
+            thirdPartyLoader.setupListeners();
+
             // Initialize software grid with all software
             renderSoftware();
 
