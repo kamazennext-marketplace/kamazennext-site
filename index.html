@@ -21,8 +21,6 @@
     <meta name="twitter:url" content="https://yourdomain.com/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6249603944790814" crossorigin="anonymous"></script>
     <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" onload="this.rel='stylesheet'">
@@ -972,6 +970,87 @@ docker run -d --name kama-ai-bot \
     <!-- ALL JAVASCRIPT IN ONE PLACE -->
     <script>
         // ===============================
+        // THIRD-PARTY SCRIPT LAZY LOADING
+        // ===============================
+        const thirdPartyLoader = {
+            adsLoaded: false,
+            recaptchaRequested: false,
+            hasStarted: false,
+            loadScript(src, attributes = {}) {
+                return new Promise((resolve, reject) => {
+                    const existing = document.querySelector(`script[src="${src}"]`);
+                    if (existing) {
+                        resolve(existing);
+                        return;
+                    }
+
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.async = true;
+                    script.defer = true;
+
+                    Object.entries(attributes).forEach(([key, value]) => {
+                        if (value !== undefined && value !== null) {
+                            script.setAttribute(key, value);
+                        }
+                    });
+
+                    script.onload = () => resolve(script);
+                    script.onerror = reject;
+
+                    document.body.appendChild(script);
+                });
+            },
+            loadAdsense() {
+                if (this.adsLoaded) return;
+                this.adsLoaded = true;
+                this.loadScript('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6249603944790814', {
+                    crossorigin: 'anonymous'
+                }).catch(() => {
+                    // Silent failure to avoid blocking the page if ads are blocked.
+                });
+            },
+            loadRecaptcha() {
+                if (this.recaptchaRequested) return;
+                this.recaptchaRequested = true;
+
+                const load = () => this.loadScript('https://www.google.com/recaptcha/api.js');
+
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(load);
+                } else {
+                    setTimeout(load, 300);
+                }
+            },
+            startOnInteraction() {
+                if (this.hasStarted) return;
+                this.hasStarted = true;
+
+                const trigger = () => {
+                    if ('requestIdleCallback' in window) {
+                        requestIdleCallback(() => this.loadAdsense());
+                    } else {
+                        setTimeout(() => this.loadAdsense(), 1500);
+                    }
+                };
+
+                trigger();
+            },
+            setupListeners() {
+                const userEvents = ['scroll', 'pointerdown', 'touchstart', 'keydown', 'click'];
+                userEvents.forEach(event => {
+                    window.addEventListener(event, () => this.startOnInteraction(), { once: true, passive: true });
+                });
+
+                window.addEventListener('load', () => {
+                    setTimeout(() => this.startOnInteraction(), 2500);
+                });
+            }
+        };
+
+        thirdPartyLoader.setupListeners();
+
+        // ===============================
         // SOFTWARE DATABASE
         // ===============================
         const softwareDatabase = [
@@ -1470,17 +1549,8 @@ docker run -d --name kama-ai-bot \
         // ===============================
         // MODAL FUNCTIONS
         // ===============================
-        let recaptchaRequested = false;
-
         function loadRecaptcha() {
-            if (recaptchaRequested) return;
-            recaptchaRequested = true;
-
-            const script = document.createElement('script');
-            script.src = 'https://www.google.com/recaptcha/api.js';
-            script.async = true;
-            script.defer = true;
-            document.body.appendChild(script);
+            thirdPartyLoader.loadRecaptcha();
         }
 
         function openSellModal() {
