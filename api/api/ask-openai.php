@@ -1,100 +1,115 @@
 <?php
-ini_set('display_errors', 0);
-error_reporting(0);
-
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed']);
-    exit;
-}
-
-$input = json_decode(file_get_contents('php://input'), true);
-
-if (!is_array($input) || !isset($input['message'])) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Invalid request']);
-    exit;
-}
-
-$message = trim($input['message']);
-$history = isset($input['history']) && is_array($input['history']) ? $input['history'] : [];
-
-// Load OpenAI API key from external config file.
-$configPath = '/home2/kamazennext/openai_config.php';
-if (file_exists($configPath)) {
-    include $configPath;
-}
-
-if (!defined('OPENAI_API_KEY') || !OPENAI_API_KEY) {
-    http_response_code(500);
-    echo json_encode(['error' => 'AI service unavailable']);
-    exit;
-}
-
-// Build the conversation for the Responses API.
-$messages = [];
-foreach ($history as $item) {
-    if (!isset($item['role'], $item['content'])) {
-        continue;
+/**
+ * OpenAI helper for the AI chat endpoint.
+ *
+ * The API key should be stored at /home2/kamazennext/.secrets/openai_key.txt on the server
+ * (outside public_html) or provided via the OPENAI_API_KEY environment variable.
+ */
+function kz_ask_openai(string $message, array $history = []): string
+{
+    $trimmedMessage = trim($message);
+    if ($trimmedMessage === '') {
+        http_response_code(503);
+        throw new Exception('Missing message');
     }
 
-    $role = $item['role'] === 'assistant' ? 'assistant' : 'user';
-    $messages[] = [
-        'role' => $role,
-        'content' => (string) $item['content'],
+    $apiKey = null;
+    $keyFile = '/home2/kamazennext/.secrets/openai_key.txt';
+
+    if (is_readable($keyFile)) {
+        $fileContents = trim((string)file_get_contents($keyFile));
+        if ($fileContents !== '') {
+            $apiKey = $fileContents;
+        }
+    }
+
+    if (!$apiKey) {
+        $envKey = getenv('OPENAI_API_KEY');
+        if ($envKey) {
+            $apiKey = trim($envKey);
+        }
+    }
+
+    if (!$apiKey) {
+        http_response_code(503);
+        throw new Exception('OpenAI API key not configured');
+    }
+
+    $model = getenv('OPENAI_MODEL') ?: 'gpt-4.1-mini';
+
+    $inputMessages = [];
+    foreach ($history as $item) {
+        if (!is_array($item)) {
+            continue;
+        }
+
+        $role = $item['role'] ?? null;
+        $content = $item['content'] ?? null;
+
+        if (is_string($role) && is_string($content) && trim($content) !== '') {
+            $inputMessages[] = [
+                'role' => $role,
+                'content' => $content,
+            ];
+        }
+    }
+
+    $inputMessages[] = [
+        'role' => 'user',
+        'content' => $trimmedMessage,
     ];
+
+    $payload = [
+        'model' => $model,
+        'input' => $inputMessages,
+        'max_output_tokens' => 500,
+        'temperature' => 0.7,
+    ];
+
+    $ch = curl_init('https://api.openai.com/v1/responses');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $apiKey,
+        ],
+        CURLOPT_POSTFIELDS => json_encode($payload),
+        CURLOPT_TIMEOUT => 30,
+    ]);
+
+    $response = curl_exec($ch);
+    $curlError = curl_error($ch);
+    $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($response === false) {
+        http_response_code(503);
+        throw new Exception('Failed to contact OpenAI: ' . $curlError);
+    }
+
+    $data = json_decode($response, true);
+
+    if ($statusCode >= 400 || !is_array($data)) {
+        http_response_code(503);
+        $errorMessage = is_array($data) && isset($data['error']['message'])
+            ? $data['error']['message']
+            : 'Unknown error from OpenAI';
+        throw new Exception($errorMessage);
+    }
+
+    $reply = null;
+
+    if (isset($data['output_text'])) {
+        $reply = $data['output_text'];
+    } elseif (isset($data['output'][0]['content'][0]['text'])) {
+        $reply = $data['output'][0]['content'][0]['text'];
+    }
+
+    if (!is_string($reply) || trim($reply) === '') {
+        http_response_code(503);
+        throw new Exception('No reply returned from OpenAI');
+    }
+
+    return $reply;
 }
-
-$messages[] = [
-    'role' => 'user',
-    'content' => $message,
-];
-
-$payload = [
-    'model' => 'gpt-4o-mini',
-    'max_output_tokens' => 400,
-    'input' => $messages,
-    'response_format' => ['type' => 'text'],
-];
-
-$ch = curl_init('https://api.openai.com/v1/responses');
-curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_HTTPHEADER => [
-        'Content-Type: application/json',
-        'Authorization: Bearer ' . OPENAI_API_KEY,
-    ],
-    CURLOPT_POSTFIELDS => json_encode($payload),
-]);
-
-$response = curl_exec($ch);
-$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$error = curl_error($ch);
-curl_close($ch);
-
-if ($response === false || $statusCode >= 400) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Failed to contact AI service']);
-    exit;
-}
-
-$data = json_decode($response, true);
-$reply = $data['output'][0]['content'][0]['text'] ?? null;
-
-if (!$reply) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Invalid AI response']);
-    exit;
-}
-
-echo json_encode(['reply' => $reply]);
