@@ -1,6 +1,7 @@
-SetEnv OPENAI_API_KEY 
+SetEnv OPENAI_API_KEY
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php81” package as the default “PHP” programming language.
+Redirect 302 /favicon.ico /assets/favicon.svg
 <IfModule mime_module>
   AddHandler application/x-httpd-ea-php81___lsphp .php .php8 .phtml
 </IfModule>
