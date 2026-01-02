@@ -19,15 +19,10 @@
   }
   </style>
   <link rel="stylesheet" href="assets/css/style.css?v=99">
-  <style id="no-header-flash">
-    /* Prevent header FOUC on refresh */
-    header { visibility: hidden; }
-    body.css-ready header { visibility: visible; }
-  </style>
 </head>
 <body>
 <script>
-  // Show header only after the first paint + styles have applied
+  // Ensure header displays only after styles are applied to prevent flashes
   window.addEventListener('load', function () {
     document.body.classList.add('css-ready');
   });
