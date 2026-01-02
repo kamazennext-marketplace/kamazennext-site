@@ -62,3 +62,25 @@ header form input[type="search"]{
     min-width: 170px !important;
   }
 }
+/* FINAL override: keep header search wide even if other CSS loads later */
+header input#siteSearch,
+header #siteSearch,
+.site-header input#siteSearch,
+.site-header #siteSearch{
+  width: 280px !important;
+  min-width: 280px !important;
+  max-width: 280px !important;
+  flex: 0 0 280px !important;
+}
+
+@media (max-width: 992px){
+  header input#siteSearch,
+  header #siteSearch,
+  .site-header input#siteSearch,
+  .site-header #siteSearch{
+    width: 170px !important;
+    min-width: 170px !important;
+    max-width: 170px !important;
+    flex: 0 0 170px !important;
+  }
+}
