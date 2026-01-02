@@ -148,3 +148,34 @@ header .header-search-box input{
     flex: 0 0 170px !important;
   }
 }
+
+/* === Final, permanent header search sizing (prevents flex shrink) === */
+header .search,
+header .header-search-wrap,
+header .header-search-box{
+  flex: 0 0 auto !important;
+  min-width: 0 !important;
+}
+
+header .header-search-wrap.header-search-box{
+  width: 280px !important;
+  flex: 0 0 280px !important;
+  max-width: 280px !important;
+}
+
+header #siteSearch{
+  width: 100% !important;
+  height: 44px !important;
+  padding: 0 14px !important;
+  box-sizing: border-box !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+@media (max-width: 992px){
+  header .header-search-wrap.header-search-box{
+    width: 170px !important;
+    flex: 0 0 170px !important;
+    max-width: 170px !important;
+  }
+}
