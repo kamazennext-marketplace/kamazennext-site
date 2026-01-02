@@ -32,6 +32,11 @@
     }
   </style>
   <link rel="stylesheet" href="assets/css/style.css?v=99">
+  <style id="no-header-flash">
+    /* Prevent header FOUC on refresh */
+    header { visibility: hidden; }
+    body.css-ready header { visibility: visible; }
+  </style>
 </head>
 <body>
 <script>
@@ -58,6 +63,12 @@
   setTimeout(lockHeaderSearchWidth, 250);
   setTimeout(lockHeaderSearchWidth, 800);
 })();
+</script>
+<script>
+  // Show header only after the first paint + styles have applied
+  window.addEventListener('load', function () {
+    document.body.classList.add('css-ready');
+  });
 </script>
 </body>
 </html>
