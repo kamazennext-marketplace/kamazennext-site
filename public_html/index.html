@@ -58,31 +58,6 @@
 </head>
 <body>
 <script>
-(function() {
-  function lockHeaderSearchWidth() {
-    var el = document.querySelector('.header-search-box');
-    if (!el) return;
-
-    var isMobile = window.matchMedia('(max-width: 992px)').matches;
-    var w = isMobile ? 170 : 280;
-
-    el.style.width = w + 'px';
-    el.style.minWidth = w + 'px';
-    el.style.maxWidth = w + 'px';
-    el.style.flex = '0 0 ' + w + 'px';
-  }
-
-  // Run after everything else
-  window.addEventListener('load', lockHeaderSearchWidth);
-  window.addEventListener('resize', lockHeaderSearchWidth);
-
-  // Also run a few times right after load to beat late scripts
-  setTimeout(lockHeaderSearchWidth, 50);
-  setTimeout(lockHeaderSearchWidth, 250);
-  setTimeout(lockHeaderSearchWidth, 800);
-})();
-</script>
-<script>
   // Show header only after the first paint + styles have applied
   window.addEventListener('load', function () {
     document.body.classList.add('css-ready');
