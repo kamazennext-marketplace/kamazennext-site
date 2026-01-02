@@ -1,0 +1,22 @@
+/* Header search input fix */
+header input[type="search"],
+header input[type="text"],
+.site-header input[type="search"],
+.site-header input[type="text"]{
+  height: 44px;
+  padding: 0 14px;
+  min-width: 220px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  line-height: 44px;
+}
+
+@media (max-width: 992px){
+  header input[type="search"],
+  header input[type="text"],
+  .site-header input[type="search"],
+  .site-header input[type="text"]{
+    min-width: 160px;
+  }
+}
