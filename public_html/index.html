@@ -21,6 +21,35 @@
     @media (max-width: 992px){
       header .header-search-wrap.header-search-box { width: 170px; min-width: 170px; max-width: 170px; flex: 0 0 170px; }
     }
+
+    /* --- Extend header search width (final override) --- */
+    header .search{
+      width: 360px !important;
+      flex: 0 0 360px !important;
+    }
+
+    header .header-search-wrap.header-search-box{
+      width: 360px !important;
+      min-width: 360px !important;
+      max-width: 360px !important;
+      flex: 0 0 360px !important;
+    }
+
+    header #siteSearch{
+      width: 100% !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    @media (max-width: 992px){
+      header .search,
+      header .header-search-wrap.header-search-box{
+        width: 220px !important;
+        flex: 0 0 220px !important;
+        min-width: 220px !important;
+        max-width: 220px !important;
+      }
+    }
   </style>
   <style id="force-header-search">
     /* last-in-head override to beat later CSS/JS flashes */
