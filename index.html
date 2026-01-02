@@ -509,6 +509,61 @@
             .modal-content { padding: 1.5rem; }
             .hero h1 { font-size: 2rem; }
         }
+
+        /* ===== Header alignment fix ===== */
+        header, .header, .site-header { width: 100%; }
+
+        header .container,
+        .header .container,
+        .site-header .container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        header .logo,
+        header .navbar-brand,
+        .header .logo,
+        .site-header .logo {
+          display: flex;
+          align-items: center;
+          line-height: 1;
+        }
+
+        header nav ul,
+        .header nav ul,
+        .site-header nav ul,
+        .navbar-nav {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+
+        header nav a,
+        .header nav a,
+        .site-header nav a,
+        .navbar-nav .nav-link {
+          display: inline-flex;
+          align-items: center;
+          line-height: 1;
+          padding: 10px 0;
+        }
+
+        header, .header, .site-header, .navbar { min-height: 64px; }
+
+        header * { box-sizing: border-box; }
+
+        /* Bootstrap navbar alignment fix (safe even if Bootstrap not used) */
+        .navbar .container,
+        .navbar .container-fluid { align-items: center !important; }
+        .navbar-brand {
+          display: inline-flex;
+          align-items: center;
+          line-height: 1;
+        }
     </style>
 </head>
 <body class="preload">
