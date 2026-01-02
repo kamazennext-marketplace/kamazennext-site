@@ -78,3 +78,28 @@ header #siteSearch,
     flex: 0 0 170px !important;
   }
 }
+
+/* Header search container (not input) */
+.header-search-box{
+  width: 280px !important;
+  min-width: 280px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+}
+
+.header-search-box input,
+.header-search-box textarea{
+  width: 100% !important;
+  border: 0 !important;
+  outline: none !important;
+}
+
+@media (max-width: 992px){
+  .header-search-box{
+    width: 170px !important;
+    min-width: 170px !important;
+  }
+}
