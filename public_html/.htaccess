@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^contact-test\.html$ - [L]
+RewriteRule ^api/ - [L]
