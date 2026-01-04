@@ -26,3 +26,5 @@ jobs:
             **/.cpanel.yml
             public_html/**
             public_html_clean/**
+            openai_config.example.php
+
