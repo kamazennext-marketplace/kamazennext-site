@@ -1,0 +1,222 @@
+/* Header search input fix */
+header input[type="search"],
+header input[type="text"],
+.site-header input[type="search"],
+.site-header input[type="text"]{
+  height: 44px;
+  padding: 0 14px;
+  min-width: 220px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  line-height: 44px;
+}
+
+@media (max-width: 992px){
+  header input[type="search"],
+  header input[type="text"],
+  .site-header input[type="search"],
+  .site-header input[type="text"]{
+    min-width: 160px;
+  }
+}
+
+/* Hard override for header search */
+#siteSearch{
+  width: 260px !important;
+  min-width: 260px !important;
+  height: 44px !important;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+  line-height: 44px !important;
+}
+
+@media (max-width: 992px){
+  #siteSearch{
+    width: 170px !important;
+    min-width: 170px !important;
+  }
+}
+/* FINAL override: keep header search wide even if other CSS loads later */
+header input#siteSearch,
+header #siteSearch,
+.site-header input#siteSearch,
+.site-header #siteSearch{
+  width: 280px !important;
+  min-width: 280px !important;
+  max-width: 280px !important;
+  flex: 0 0 280px !important;
+}
+
+@media (max-width: 992px){
+  header input#siteSearch,
+  header #siteSearch,
+  .site-header input#siteSearch,
+  .site-header #siteSearch{
+    width: 170px !important;
+    min-width: 170px !important;
+    max-width: 170px !important;
+    flex: 0 0 170px !important;
+  }
+}
+
+/* Hard fix: search wrapper controls final width */
+.header-search-wrap{
+  width: 280px !important;
+  flex: 0 0 280px !important;
+}
+
+.header-search-wrap input{
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+}
+
+@media (max-width: 992px){
+  .header-search-wrap{
+    width: 170px !important;
+    flex: 0 0 170px !important;
+  }
+}
+
+/* Header search container (not input) */
+.header-search-box{
+  width: 280px !important;
+  min-width: 280px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+}
+
+.header-search-box input,
+.header-search-box textarea{
+  width: 100% !important;
+  border: 0 !important;
+  outline: none !important;
+}
+
+@media (max-width: 992px){
+  .header-search-box{
+    width: 170px !important;
+    min-width: 170px !important;
+  }
+}
+
+/* Cross-platform header search fix */
+.header-search-box,
+header .header-search-box{
+  width: 240px !important;
+  min-width: 240px !important;
+  max-width: 240px !important;
+  flex: 0 0 240px !important;
+}
+
+.header-search-box input,
+header .header-search-box input{
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  height: 44px !important;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+  line-height: 44px !important;
+  box-sizing: border-box !important;
+  font-size: 14px !important;
+}
+
+/* Remove OS-specific "search" styling differences */
+.header-search-box input[type="search"]{
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+/* placeholder should not look cut */
+.header-search-box input::placeholder{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 992px){
+  .header-search-box,
+  header .header-search-box{
+    width: 170px !important;
+    min-width: 170px !important;
+    max-width: 170px !important;
+    flex: 0 0 170px !important;
+  }
+}
+
+/* === Final, permanent header search sizing (prevents flex shrink) === */
+header .search,
+header .header-search-wrap,
+header .header-search-box{
+  flex: 0 0 auto !important;
+  min-width: 0 !important;
+}
+
+header .header-search-wrap.header-search-box{
+  width: 360px !important;
+  min-width: 360px !important;
+  max-width: 360px !important;
+  flex: 0 0 360px !important;
+}
+
+header #siteSearch{
+  width: 100% !important;
+  height: 44px !important;
+  padding: 0 14px !important;
+  box-sizing: border-box !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+@media (max-width: 992px){
+  header .header-search-wrap.header-search-box{
+    width: 220px !important;
+    min-width: 220px !important;
+    max-width: 220px !important;
+    flex: 0 0 220px !important;
+  }
+}
+
+/* Breadcrumbs */
+.breadcrumbs{
+  font-size: 0.9rem;
+  color: var(--muted, #94a3b8);
+  margin: 0 0 16px;
+}
+
+.breadcrumbs ol{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.breadcrumbs li{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+}
+
+.breadcrumbs li:not(:last-child)::after{
+  content: '›';
+  color: var(--muted, #94a3b8);
+}
+
+.breadcrumbs a{
+  color: inherit;
+  text-decoration: none;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.breadcrumbs a:hover{
+  text-decoration: underline;
+}
