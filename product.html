@@ -6,6 +6,7 @@
   <title>Product Detail - Kama ZenNext</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
@@ -54,6 +55,14 @@
   </header>
 
   <main>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><a href="/software.html">Products</a></li>
+        <li><a id="productCategoryLink" href="/software.html">Category</a></li>
+        <li id="productCrumb" aria-current="page">Product</li>
+      </ol>
+    </nav>
     <div id="productCard" class="hero" aria-live="polite">Loading...</div>
   </main>
 
@@ -63,6 +72,8 @@
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
     const card = document.getElementById('productCard');
+    const crumbCategoryLink = document.getElementById('productCategoryLink');
+    const crumbProduct = document.getElementById('productCrumb');
     const origin = window.location.origin;
 
     injectBaseSchema({
@@ -150,11 +161,17 @@
     const renderProduct = (product) => {
       if (!product) {
         card.innerHTML = `<p>Product not found. <a href="/software.html">Back to Products</a></p>`;
+        crumbCategoryLink.textContent = 'Products';
+        crumbCategoryLink.href = '/software.html';
+        crumbProduct.textContent = 'Product';
         return;
       }
       hydrateSEO(product);
       const compareIds = getCompareIds();
       const categoryLink = `/category/${slugify(product.category)}`;
+      crumbCategoryLink.textContent = product.category;
+      crumbCategoryLink.href = categoryLink;
+      crumbProduct.textContent = product.name;
       card.innerHTML = `
         <div class="title-row">
           <div>

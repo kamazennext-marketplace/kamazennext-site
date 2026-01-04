@@ -6,6 +6,7 @@
   <title>Category - Kama ZenNext</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
@@ -56,6 +57,13 @@
   </header>
 
   <main>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><a href="/software.html">Products</a></li>
+        <li id="categoryCrumb" aria-current="page">Category</li>
+      </ol>
+    </nav>
     <div class="hero">
       <div style="display:flex; align-items:center; gap:10px;">
         <i class="fa-solid fa-layer-group" style="color: var(--primary);"></i>
@@ -77,6 +85,7 @@
     const emptyState = document.getElementById('emptyState');
     const titleEl = document.getElementById('categoryTitle');
     const descriptionEl = document.getElementById('categoryDescription');
+    const categoryCrumb = document.getElementById('categoryCrumb');
     const origin = window.location.origin;
 
     injectBaseSchema({
@@ -184,6 +193,7 @@
       titleEl.textContent = 'Category not found';
       descriptionEl.textContent = 'Please choose a category from the products page.';
       emptyState.style.display = 'block';
+      categoryCrumb.textContent = 'Category';
     } else {
       fetch('/data/products.json')
         .then(res => res.json())
@@ -194,6 +204,7 @@
           window.__categoryProducts = matched;
           titleEl.textContent = `${catName} AI Tools`;
           descriptionEl.textContent = `Browse the best ${catName} AI tools and software to streamline your workflows.`;
+          categoryCrumb.textContent = catName;
           renderProducts();
           const origin = window.location.origin;
           hydrateSEO(catName, origin);
