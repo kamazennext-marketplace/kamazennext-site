@@ -1,22 +1,208 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Marketplace Smoke Tests</title>
+  <style>
+    :root { --bg: #0f172a; --panel: #111827; --border: #1f2937; --text: #e5e7eb; --muted: #9ca3af; --pass: #16a34a; --fail: #dc2626; --pending: #eab308; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); }
+    header { padding: 24px; border-bottom: 1px solid var(--border); background: linear-gradient(90deg, #111827, #0b1224); }
+    h1 { margin: 0 0 8px; }
+    p { margin: 4px 0 0; color: var(--muted); }
+    main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 60px; }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 18px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22); }
+    .test-row { display: grid; grid-template-columns: 1fr 200px; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); margin-top: 10px; }
+    .test-row h3 { margin: 0 0 6px; }
+    .test-row small { color: var(--muted); }
+    .status { display: inline-flex; align-items: center; justify-content: center; min-width: 80px; padding: 8px 12px; border-radius: 999px; font-weight: 800; letter-spacing: 0.03em; }
+    .pass { background: rgba(22, 163, 74, 0.12); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.4); }
+    .fail { background: rgba(220, 38, 38, 0.12); color: #fca5a5; border: 1px solid rgba(252, 165, 165, 0.4); }
+    .pending { background: rgba(234, 179, 8, 0.12); color: #fef08a; border: 1px solid rgba(254, 240, 138, 0.4); }
+    .detail { color: var(--muted); margin-top: 4px; font-size: 0.95rem; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+    button { background: #2563eb; color: #f8fafc; border: none; border-radius: 10px; padding: 10px 14px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35); }
+    button:disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; }
+    code { background: #111827; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
 <body>
-<h1>Testing Kamazennext</h1>
-<button onclick="testAPI()">Test Backend</button>
-<div id="result"></div>
+  <header>
+    <h1>AI Marketplace Smoke Tests</h1>
+    <p>Runs on page load. Use this page to verify marketplace availability.</p>
+  </header>
+  <main>
+    <div class="panel">
+      <div class="actions">
+        <button id="btnProducts">Open Products</button>
+        <button id="btnFirstProduct" disabled>Open First Product</button>
+        <button id="btnCompare">Open Compare</button>
+      </div>
+      <div class="test-row">
+        <div>
+          <h3>Products endpoint</h3>
+          <small>Fetch <code>/data/products.json</code> and show first product</small>
+          <div class="detail" id="products-detail">Waiting...</div>
+        </div>
+        <div class="status pending" id="products-status">PENDING</div>
+      </div>
+      <div class="test-row">
+        <div>
+          <h3>Software page exists</h3>
+          <small>HEAD/GET <code>/software.html</code></small>
+          <div class="detail" id="software-detail">Waiting...</div>
+        </div>
+        <div class="status pending" id="software-status">PENDING</div>
+      </div>
+      <div class="test-row">
+        <div>
+          <h3>Product page exists</h3>
+          <small>HEAD/GET <code>/product.html</code></small>
+          <div class="detail" id="product-detail">Waiting...</div>
+        </div>
+        <div class="status pending" id="product-status">PENDING</div>
+      </div>
+      <div class="test-row">
+        <div>
+          <h3>Compare page exists</h3>
+          <small>HEAD/GET <code>/compare.html</code></small>
+          <div class="detail" id="compare-detail">Waiting...</div>
+        </div>
+        <div class="status pending" id="compare-status">PENDING</div>
+      </div>
+      <div class="test-row">
+        <div>
+          <h3>Compare localStorage</h3>
+          <small>Set <code>kz_compare_ids</code> with first product id</small>
+          <div class="detail" id="storage-detail">Waiting...</div>
+        </div>
+        <div class="status pending" id="storage-status">PENDING</div>
+      </div>
+    </div>
+  </main>
 
-<script>
-async function testAPI() {
-    try {
-        const response = await fetch('/backend/api.php?action=health');
-        const data = await response.json();
-        document.getElementById('result').innerHTML = 
-            JSON.stringify(data, null, 2);
-    } catch (error) {
-        document.getElementById('result').innerHTML = 
-            'Error: ' + error.message;
-    }
-}
-</script>
+  <script>
+    let firstProduct = null;
+
+    const statusEl = (name) => document.getElementById(`${name}-status`);
+    const detailEl = (name) => document.getElementById(`${name}-detail`);
+
+    const setStatus = (name, state, detail = '') => {
+      const el = statusEl(name);
+      if (!el) return;
+      el.textContent = state.toUpperCase();
+      el.className = `status ${state}`;
+      const d = detailEl(name);
+      if (d) d.textContent = detail;
+    };
+
+    const setPending = (name, message = 'Running...') => {
+      const el = statusEl(name);
+      if (el) { el.textContent = 'PENDING'; el.className = 'status pending'; }
+      const d = detailEl(name);
+      if (d) d.textContent = message;
+    };
+
+    const fetchWithHeadFallback = async (path) => {
+      try {
+        const headResponse = await fetch(path, { method: 'HEAD' });
+        if (headResponse.ok) return headResponse;
+        if (headResponse.status !== 405) return headResponse;
+      } catch (err) {
+        console.warn('HEAD failed for', path, err);
+      }
+      return fetch(path, { method: 'GET', cache: 'no-store' });
+    };
+
+    const testProductsEndpoint = async () => {
+      setPending('products');
+      const response = await fetch('/data/products.json', { method: 'GET', cache: 'no-store' });
+      if (!response.ok) throw new Error(`Status ${response.status}`);
+      const data = await response.json();
+      if (!Array.isArray(data) || data.length < 1) throw new Error('Expected an array with at least one product');
+      const first = data[0];
+      firstProduct = first;
+      document.getElementById('btnFirstProduct').disabled = false;
+      setStatus('products', 'pass', `Found ${data.length} products. First: ${first.name} (${first.id})`);
+      return first;
+    };
+
+    const testPageExists = async (name, path) => {
+      setPending(name);
+      const response = await fetchWithHeadFallback(path);
+      if (!response.ok) throw new Error(`Status ${response.status}`);
+      setStatus(name, 'pass', `${path} responded with status ${response.status}`);
+      return response.status;
+    };
+
+    const testCompareStorage = async () => {
+      setPending('storage');
+      if (!firstProduct) throw new Error('No product available from products test');
+      const expectedIds = [firstProduct.id];
+      localStorage.setItem('kz_compare_ids', JSON.stringify(expectedIds));
+      let stored = null;
+      try { stored = JSON.parse(localStorage.getItem('kz_compare_ids') || '[]'); }
+      catch (err) { throw new Error('Unable to parse stored ids'); }
+      const matches = Array.isArray(stored) && stored.length === expectedIds.length && stored[0] === expectedIds[0];
+      if (!matches) throw new Error(`Stored value did not match. Got: ${JSON.stringify(stored)}`);
+      setStatus('storage', 'pass', `Stored and retrieved ${JSON.stringify(stored)}`);
+      return stored;
+    };
+
+    const runTests = async () => {
+      try {
+        await testProductsEndpoint();
+      } catch (err) {
+        console.error(err);
+        setStatus('products', 'fail', err.message);
+        setStatus('storage', 'fail', 'Skipped because products failed');
+        return;
+      }
+
+      const pageChecks = [
+        ['software', '/software.html'],
+        ['product', '/product.html'],
+        ['compare', '/compare.html']
+      ];
+
+      const pageResults = await Promise.allSettled(
+        pageChecks.map(([name, path]) => testPageExists(name, path))
+      );
+
+      pageResults.forEach((result, index) => {
+        if (result.status === 'rejected') {
+          const [name] = pageChecks[index];
+          console.error('Page check failure', result.reason);
+          setStatus(name, 'fail', result.reason instanceof Error ? result.reason.message : String(result.reason));
+        }
+      });
+
+      try {
+        await testCompareStorage();
+      } catch (err) {
+        console.error(err);
+        setStatus('storage', 'fail', err.message);
+      }
+    };
+
+    document.getElementById('btnProducts').addEventListener('click', () => {
+      window.location.href = '/software.html';
+    });
+
+    document.getElementById('btnFirstProduct').addEventListener('click', () => {
+      if (!firstProduct) {
+        alert('First product not loaded yet.');
+        return;
+      }
+      window.location.href = `/product.html?id=${encodeURIComponent(firstProduct.id)}`;
+    });
+
+    document.getElementById('btnCompare').addEventListener('click', () => {
+      window.location.href = '/compare.html';
+    });
+
+    window.addEventListener('DOMContentLoaded', runTests);
+  </script>
 </body>
 </html>
