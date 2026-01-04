@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kama ZenNext Products</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --dark: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--dark); }
+    a { color: inherit; text-decoration: none; }
+    .site-header { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    .nav-container { max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
+    .brand { font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+    nav { display: flex; gap: 16px; flex: 1; flex-wrap: wrap; }
+    nav a { font-weight: 600; padding: 8px 10px; border-radius: 8px; transition: background .2s; }
+    nav a:hover { background: #eef2ff; }
+    .cta { background: linear-gradient(135deg, var(--primary), #a855f7); color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; white-space: nowrap; }
+    main { max-width: 1200px; margin: 30px auto 60px; padding: 0 20px; }
+    .page-title { display: flex; align-items: center; gap: 12px; margin: 10px 0 20px; }
+    .page-title h1 { margin: 0; font-size: 2rem; }
+    .filters { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
+    .filters label { display: block; font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
+    .filters input, .filters select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border); font-size: 0.95rem; }
+    .products-grid { margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
+    .badge.category { background: #eef2ff; color: #312e81; }
+    .badge.api { background: #ecfeff; color: #155e75; }
+    .badge.pricing { background: #fef3c7; color: #92400e; }
+    .platforms, .meta { color: var(--muted); font-size: 0.9rem; }
+    .card h3 { margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+    .tagline { color: var(--muted); margin: 0; }
+    .actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .compare-btn { border: 1px solid var(--primary); color: var(--primary); background: #eef2ff; padding: 8px 12px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+    .compare-btn.remove { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+    .count { color: var(--muted); margin-top: 12px; font-size: 0.95rem; }
+    .empty { background: #fff; border: 1px dashed var(--border); border-radius: 14px; padding: 24px; text-align: center; color: var(--muted); margin-top: 20px; }
+    @media (max-width: 640px) { nav { width: 100%; order: 3; } .nav-container { flex-wrap: wrap; } .cta { width: 100%; text-align: center; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/">Kama ZenNext</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/software.html">Products</a>
+        <a href="/compare.html">Compare</a>
+        <a href="/ai-assistant.html">AI Assistant</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="cta" href="/sell.html">Submit a tool (Coming soon)</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-title">
+      <i class="fa-solid fa-box-open" style="color: var(--primary);"></i>
+      <h1>Products</h1>
+    </div>
+    <p style="color: var(--muted); margin-top: 0;">Browse AI products curated by Kama ZenNext. Filter, sort, and add tools to your comparison tray.</p>
+
+    <div class="filters">
+      <div>
+        <label for="search">Search</label>
+        <input id="search" type="search" placeholder="Search by name or tagline">
+      </div>
+      <div>
+        <label for="category">Category</label>
+        <select id="category">
+          <option value="all">All</option>
+        </select>
+      </div>
+      <div>
+        <label for="pricing">Pricing</label>
+        <select id="pricing">
+          <option value="all">All</option>
+          <option value="freemium">Freemium</option>
+          <option value="subscription">Subscription</option>
+          <option value="usage-based">Usage-based</option>
+        </select>
+      </div>
+      <div>
+        <label for="api">API</label>
+        <select id="api">
+          <option value="all">All</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+      <div>
+        <label for="sort">Sort</label>
+        <select id="sort">
+          <option value="recent">Recently updated</option>
+          <option value="name">Name</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="count" id="count"></div>
+    <div class="products-grid" id="productsGrid"></div>
+    <div class="empty" id="emptyState" style="display:none;">No products found. Try adjusting your filters.</div>
+  </main>
+
+  <script>
+    const productsGrid = document.getElementById('productsGrid');
+    const emptyState = document.getElementById('emptyState');
+    const countEl = document.getElementById('count');
+    const searchInput = document.getElementById('search');
+    const categorySelect = document.getElementById('category');
+    const pricingSelect = document.getElementById('pricing');
+    const apiSelect = document.getElementById('api');
+    const sortSelect = document.getElementById('sort');
+
+    const params = new URLSearchParams(window.location.search);
+    const state = {
+      q: params.get('q') || '',
+      cat: params.get('cat') || 'all',
+      pricing: params.get('pricing') || 'all',
+      api: params.get('api') || 'all',
+      sort: params.get('sort') || 'recent'
+    };
+
+    searchInput.value = state.q;
+    categorySelect.value = state.cat;
+    pricingSelect.value = state.pricing;
+    apiSelect.value = state.api;
+    sortSelect.value = state.sort;
+
+    let products = [];
+
+    const getCompareIds = () => {
+      try { return JSON.parse(localStorage.getItem('kz_compare_ids')) || []; }
+      catch { return []; }
+    };
+    const saveCompareIds = (ids) => localStorage.setItem('kz_compare_ids', JSON.stringify(ids.slice(0, 4)));
+    const toggleCompare = (id) => {
+      const ids = getCompareIds();
+      const idx = ids.indexOf(id);
+      if (idx >= 0) {
+        ids.splice(idx, 1);
+      } else {
+        if (ids.length >= 4) { alert('You can only compare up to 4 products.'); return; }
+        ids.push(id);
+      }
+      saveCompareIds(ids);
+      renderProducts();
+    };
+
+    const updateQuery = () => {
+      const newParams = new URLSearchParams();
+      if (state.q) newParams.set('q', state.q);
+      if (state.cat !== 'all') newParams.set('cat', state.cat);
+      if (state.pricing !== 'all') newParams.set('pricing', state.pricing);
+      if (state.api !== 'all') newParams.set('api', state.api);
+      if (state.sort !== 'recent') newParams.set('sort', state.sort);
+      const qs = newParams.toString();
+      const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+      history.replaceState({}, '', newUrl);
+    };
+
+    const formatPricing = (p) => {
+      if (!p) return 'N/A';
+      const base = p.model ? p.model.replace('-', ' ') : 'pricing';
+      const price = p.starting_price !== undefined ? `$${p.starting_price}${p.model === 'usage-based' ? '/unit' : '/mo'}` : '';
+      const trial = p.free_trial ? ' • Free trial' : '';
+      return `${base.charAt(0).toUpperCase() + base.slice(1)} ${price}${trial}`;
+    };
+
+    const applyFilters = () => {
+      const q = state.q.toLowerCase();
+      return products
+        .filter(p => !q || p.name.toLowerCase().includes(q) || (p.tagline || '').toLowerCase().includes(q))
+        .filter(p => state.cat === 'all' || p.category === state.cat)
+        .filter(p => state.pricing === 'all' || (p.pricing && p.pricing.model === state.pricing))
+        .filter(p => state.api === 'all' || (state.api === 'yes' ? p.api : !p.api))
+        .sort((a, b) => {
+          if (state.sort === 'name') return a.name.localeCompare(b.name);
+          return new Date(b.last_updated) - new Date(a.last_updated);
+        });
+    };
+
+    const renderProducts = () => {
+      const filtered = applyFilters();
+      productsGrid.innerHTML = '';
+      if (!filtered.length) {
+        emptyState.style.display = 'block';
+        countEl.textContent = 'No products match your filters.';
+        return;
+      }
+      emptyState.style.display = 'none';
+      countEl.textContent = `${filtered.length} product${filtered.length === 1 ? '' : 's'} found`;
+      const compareIds = getCompareIds();
+      filtered.forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="actions">
+            <span class="badge category"><i class="fa-solid fa-tag"></i> ${p.category}</span>
+            <span class="badge pricing">${p.pricing ? p.pricing.model : 'Pricing'}</span>
+          </div>
+          <h3><a href="/product.html?id=${encodeURIComponent(p.id)}">${p.name}</a></h3>
+          <p class="tagline">${p.tagline || ''}</p>
+          <div class="platforms"><i class="fa-solid fa-laptop"></i> ${p.platforms ? p.platforms.join(', ') : 'N/A'}</div>
+          <div class="platforms"><i class="fa-regular fa-calendar"></i> Updated ${p.last_updated}</div>
+          <div class="actions">
+            <span class="badge api"><i class="fa-solid fa-code"></i> ${p.api ? 'API available' : 'No API'}</span>
+            <button class="compare-btn ${compareIds.includes(p.id) ? 'remove' : ''}" data-id="${p.id}">
+              ${compareIds.includes(p.id) ? 'Remove Compare' : 'Add Compare'}
+            </button>
+          </div>
+        `;
+        card.querySelector('.compare-btn').addEventListener('click', () => toggleCompare(p.id));
+        productsGrid.appendChild(card);
+      });
+    };
+
+    const bindFilters = () => {
+      searchInput.addEventListener('input', (e) => { state.q = e.target.value.trim(); updateQuery(); renderProducts(); });
+      categorySelect.addEventListener('change', (e) => { state.cat = e.target.value; updateQuery(); renderProducts(); });
+      pricingSelect.addEventListener('change', (e) => { state.pricing = e.target.value; updateQuery(); renderProducts(); });
+      apiSelect.addEventListener('change', (e) => { state.api = e.target.value; updateQuery(); renderProducts(); });
+      sortSelect.addEventListener('change', (e) => { state.sort = e.target.value; updateQuery(); renderProducts(); });
+    };
+
+    const populateCategories = () => {
+      const cats = Array.from(new Set(products.map(p => p.category))).sort();
+      cats.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat; opt.textContent = cat; opt.selected = cat === state.cat;
+        categorySelect.appendChild(opt);
+      });
+    };
+
+    fetch('/data/products.json')
+      .then(res => res.json())
+      .then(data => {
+        products = data || [];
+        populateCategories();
+        renderProducts();
+        bindFilters();
+      })
+      .catch(err => {
+        console.error(err);
+        emptyState.style.display = 'block';
+        emptyState.textContent = 'Unable to load products right now.';
+      });
+  </script>
+</body>
+</html>
