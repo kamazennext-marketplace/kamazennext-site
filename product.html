@@ -57,10 +57,19 @@
     <div id="productCard" class="hero" aria-live="polite">Loading...</div>
   </main>
 
-  <script>
+  <script type="module">
+    import { injectBaseSchema, injectBreadcrumbs, setMeta } from '/assets/js/seo-schema.js';
+
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
     const card = document.getElementById('productCard');
+    const origin = window.location.origin;
+
+    injectBaseSchema({
+      siteName: 'Kama ZenNext',
+      siteUrl: origin,
+      logoUrl: `${origin}/assets/favicon.svg`
+    });
 
     const getCompareIds = () => {
       try { return JSON.parse(localStorage.getItem('kz_compare_ids')) || []; }
@@ -75,28 +84,6 @@
     };
 
     const slugify = (str) => (str || '').toString().toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-
-    const setMeta = (name, content, isProperty = false) => {
-      if (!content) return;
-      const selector = isProperty ? `meta[property="${name}"]` : `meta[name="${name}"]`;
-      let tag = document.querySelector(selector);
-      if (!tag) {
-        tag = document.createElement('meta');
-        tag.setAttribute(isProperty ? 'property' : 'name', name);
-        document.head.appendChild(tag);
-      }
-      tag.setAttribute('content', content);
-    };
-
-    const setCanonical = (url) => {
-      let link = document.querySelector('link[rel="canonical"]');
-      if (!link) {
-        link = document.createElement('link');
-        link.setAttribute('rel', 'canonical');
-        document.head.appendChild(link);
-      }
-      link.setAttribute('href', url);
-    };
 
     const buildStructuredData = (product, canonicalUrl) => {
       if (!product) return null;
@@ -129,17 +116,27 @@
 
     const hydrateSEO = (product) => {
       if (!product) return;
-      const origin = window.location.origin;
       const canonicalUrl = `${origin}/p/${encodeURIComponent(product.id)}`;
       const title = `${product.name} | ${product.category} AI Tool | Kama ZenNext`;
       const description = (product.tagline || '').substring(0, 150);
-      document.title = title;
-      setMeta('description', description);
-      setMeta('og:title', title, true);
-      setMeta('og:description', description, true);
-      setMeta('og:url', canonicalUrl, true);
-      setMeta('og:type', 'product', true);
-      setCanonical(canonicalUrl);
+      const categoryUrl = `${origin}/category/${slugify(product.category)}`;
+
+      setMeta({
+        title,
+        description,
+        canonicalUrl,
+        ogTitle: title,
+        ogDescription: description,
+        ogUrl: canonicalUrl,
+        ogType: 'product'
+      });
+
+      injectBreadcrumbs([
+        { name: 'Home', url: `${origin}/` },
+        { name: 'Products', url: `${origin}/software.html` },
+        { name: product.category, url: categoryUrl },
+        { name: product.name, url: canonicalUrl }
+      ]);
 
       const ldData = buildStructuredData(product, canonicalUrl);
       if (ldData) {
