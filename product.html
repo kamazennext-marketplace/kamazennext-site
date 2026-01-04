@@ -74,23 +74,101 @@
       ids.push(id); saveCompareIds(ids); return ids;
     };
 
+    const slugify = (str) => (str || '').toString().toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
+    const setMeta = (name, content, isProperty = false) => {
+      if (!content) return;
+      const selector = isProperty ? `meta[property="${name}"]` : `meta[name="${name}"]`;
+      let tag = document.querySelector(selector);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute(isProperty ? 'property' : 'name', name);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute('content', content);
+    };
+
+    const setCanonical = (url) => {
+      let link = document.querySelector('link[rel="canonical"]');
+      if (!link) {
+        link = document.createElement('link');
+        link.setAttribute('rel', 'canonical');
+        document.head.appendChild(link);
+      }
+      link.setAttribute('href', url);
+    };
+
+    const buildStructuredData = (product, canonicalUrl) => {
+      if (!product) return null;
+      const data = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: product.name,
+        applicationCategory: `${product.category} software`,
+        operatingSystem: (product.platforms || []).join(', ') || 'Web',
+        url: product.website || canonicalUrl,
+        dateModified: product.last_updated || new Date().toISOString().slice(0, 10)
+      };
+      if (product.pricing) {
+        data.offers = {
+          '@type': 'Offer',
+          price: product.pricing.starting_price !== undefined ? product.pricing.starting_price : '',
+          priceCurrency: 'USD',
+          category: product.pricing.model
+        };
+      }
+      if (product.rating && Number(product.rating) > 0) {
+        data.aggregateRating = {
+          '@type': 'AggregateRating',
+          ratingValue: product.rating,
+          reviewCount: product.review_count || 0
+        };
+      }
+      return data;
+    };
+
+    const hydrateSEO = (product) => {
+      if (!product) return;
+      const origin = window.location.origin;
+      const canonicalUrl = `${origin}/p/${encodeURIComponent(product.id)}`;
+      const title = `${product.name} | ${product.category} AI Tool | Kama ZenNext`;
+      const description = (product.tagline || '').substring(0, 150);
+      document.title = title;
+      setMeta('description', description);
+      setMeta('og:title', title, true);
+      setMeta('og:description', description, true);
+      setMeta('og:url', canonicalUrl, true);
+      setMeta('og:type', 'product', true);
+      setCanonical(canonicalUrl);
+
+      const ldData = buildStructuredData(product, canonicalUrl);
+      if (ldData) {
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(ldData);
+        document.head.appendChild(script);
+      }
+    };
+
     const renderProduct = (product) => {
       if (!product) {
         card.innerHTML = `<p>Product not found. <a href="/software.html">Back to Products</a></p>`;
         return;
       }
+      hydrateSEO(product);
       const compareIds = getCompareIds();
+      const categoryLink = `/category/${slugify(product.category)}`;
       card.innerHTML = `
         <div class="title-row">
           <div>
-            <div class="badge cat"><i class="fa-solid fa-tag"></i> ${product.category}</div>
+            <a class="badge cat" href="${categoryLink}"><i class="fa-solid fa-tag"></i> ${product.category}</a>
             <h1>${product.name}</h1>
             <p class="tagline">${product.tagline || ''}</p>
           </div>
           <button class="compare-btn" id="compareBtn">${compareIds.includes(product.id) ? 'In Compare' : 'Add Compare'}</button>
         </div>
         <div class="meta">
-          <div><strong>Pricing:</strong> ${product.pricing ? product.pricing.model : 'N/A'} (${product.pricing ? '$' + product.pricing.starting_price : ''})</div>
+          <div><strong>Pricing:</strong> ${product.pricing ? product.pricing.model : 'N/A'} (${product.pricing && product.pricing.starting_price !== undefined ? '$' + product.pricing.starting_price : ''})</div>
           <div><strong>API:</strong> ${product.api ? 'Yes' : 'No'}</div>
           <div><strong>Platforms:</strong> ${product.platforms ? product.platforms.join(', ') : 'N/A'}</div>
           <div><strong>Last updated:</strong> ${product.last_updated}</div>

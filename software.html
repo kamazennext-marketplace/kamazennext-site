@@ -123,6 +123,8 @@
     const apiSelect = document.getElementById('api');
     const sortSelect = document.getElementById('sort');
 
+    const slugify = (str) => (str || '').toString().toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
     const params = new URLSearchParams(window.location.search);
     const state = {
       q: params.get('q') || '',
@@ -205,12 +207,13 @@
       filtered.forEach(p => {
         const card = document.createElement('article');
         card.className = 'card';
+        const catLink = `/category/${slugify(p.category)}`;
         card.innerHTML = `
           <div class="actions">
-            <span class="badge category"><i class="fa-solid fa-tag"></i> ${p.category}</span>
+            <a class="badge category" href="${catLink}"><i class="fa-solid fa-tag"></i> ${p.category}</a>
             <span class="badge pricing">${p.pricing ? p.pricing.model : 'Pricing'}</span>
           </div>
-          <h3><a href="/product.html?id=${encodeURIComponent(p.id)}">${p.name}</a></h3>
+          <h3><a href="/p/${encodeURIComponent(p.id)}">${p.name}</a></h3>
           <p class="tagline">${p.tagline || ''}</p>
           <div class="platforms"><i class="fa-solid fa-laptop"></i> ${p.platforms ? p.platforms.join(', ') : 'N/A'}</div>
           <div class="platforms"><i class="fa-regular fa-calendar"></i> Updated ${p.last_updated}</div>

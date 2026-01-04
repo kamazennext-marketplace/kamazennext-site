@@ -1,3 +1,13 @@
 RewriteEngine On
 RewriteRule ^contact-test\.html$ - [L]
 RewriteRule ^api/ - [L]
+
+# SEO-friendly category URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^category/([^/]+)/?$ /category.html?cat=$1 [L,QSA]
+
+# SEO-friendly product URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^p/([^/]+)/?$ /product.html?id=$1 [L,QSA]
