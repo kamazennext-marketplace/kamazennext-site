@@ -68,13 +68,22 @@
     <div class="empty" id="emptyState" style="display:none;">No tools found in this category.</div>
   </main>
 
-  <script>
+  <script type="module">
+    import { injectBaseSchema, injectBreadcrumbs, setMeta } from '/assets/js/seo-schema.js';
+
     const params = new URLSearchParams(window.location.search);
     const catSlug = params.get('cat');
     const productsGrid = document.getElementById('productsGrid');
     const emptyState = document.getElementById('emptyState');
     const titleEl = document.getElementById('categoryTitle');
     const descriptionEl = document.getElementById('categoryDescription');
+    const origin = window.location.origin;
+
+    injectBaseSchema({
+      siteName: 'Kama ZenNext',
+      siteUrl: origin,
+      logoUrl: `${origin}/assets/favicon.svg`
+    });
 
     const slugify = (str) => (str || '').toString().toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
@@ -94,28 +103,6 @@
       }
       saveCompareIds(ids);
       renderProducts();
-    };
-
-    const setMeta = (name, content, isProperty = false) => {
-      if (!content) return;
-      const selector = isProperty ? `meta[property="${name}"]` : `meta[name="${name}"]`;
-      let tag = document.querySelector(selector);
-      if (!tag) {
-        tag = document.createElement('meta');
-        tag.setAttribute(isProperty ? 'property' : 'name', name);
-        document.head.appendChild(tag);
-      }
-      tag.setAttribute('content', content);
-    };
-
-    const setCanonical = (url) => {
-      let link = document.querySelector('link[rel="canonical"]');
-      if (!link) {
-        link = document.createElement('link');
-        link.setAttribute('rel', 'canonical');
-        document.head.appendChild(link);
-      }
-      link.setAttribute('href', url);
     };
 
     const injectItemList = (items, origin) => {
@@ -175,14 +162,22 @@
       if (!catName) return;
       const title = `${catName} AI Tools & Software | Kama ZenNext`;
       const description = `Compare ${catName} AI tools and software. Browse the best ${catName} AI tools, see pricing, and evaluate features.`;
-      document.title = title;
-      setMeta('description', description);
-      setMeta('og:title', title, true);
-      setMeta('og:description', description, true);
-      setMeta('og:type', 'website', true);
       const canonical = `${origin}/category/${catSlug}`;
-      setMeta('og:url', canonical, true);
-      setCanonical(canonical);
+      setMeta({
+        title,
+        description,
+        canonicalUrl: canonical,
+        ogTitle: title,
+        ogDescription: description,
+        ogUrl: canonical,
+        ogType: 'website'
+      });
+
+      injectBreadcrumbs([
+        { name: 'Home', url: `${origin}/` },
+        { name: 'Products', url: `${origin}/software.html` },
+        { name: catName, url: canonical }
+      ]);
     };
 
     if (!catSlug) {

@@ -47,5 +47,14 @@
       <p><strong>Support:</strong> support@kamazennext.com</p>
     </div>
   </main>
+  <script type="module">
+    import { injectBaseSchema } from '/assets/js/seo-schema.js';
+    const siteUrl = window.location.origin;
+    injectBaseSchema({
+      siteName: 'Kama ZenNext',
+      siteUrl,
+      logoUrl: `${siteUrl}/assets/favicon.svg`
+    });
+  </script>
 </body>
 </html>
