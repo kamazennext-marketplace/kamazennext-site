@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Category - Kama ZenNext</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root { --primary: #6366f1; --dark: #0f172a; --muted: #64748b; --border: #e2e8f0; --bg: #f8fafc; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--dark); }
+    a { color: inherit; text-decoration: none; }
+    .site-header { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    .nav-container { max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
+    .brand { font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+    nav { display: flex; gap: 16px; flex: 1; flex-wrap: wrap; }
+    nav a { font-weight: 600; padding: 8px 10px; border-radius: 8px; transition: background .2s; }
+    nav a:hover { background: #eef2ff; }
+    .cta { background: linear-gradient(135deg, var(--primary), #a855f7); color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; white-space: nowrap; }
+    main { max-width: 1200px; margin: 30px auto 60px; padding: 0 20px; }
+    .hero { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
+    .page-title { display: flex; align-items: center; gap: 12px; margin: 0; font-size: 2rem; }
+    .description { color: var(--muted); margin-top: 8px; }
+    .products-grid { margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
+    .badge.category { background: #eef2ff; color: #312e81; }
+    .badge.api { background: #ecfeff; color: #155e75; }
+    .badge.pricing { background: #fef3c7; color: #92400e; }
+    .platforms, .meta { color: var(--muted); font-size: 0.9rem; }
+    .card h3 { margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+    .tagline { color: var(--muted); margin: 0; }
+    .actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .compare-btn { border: 1px solid var(--primary); color: var(--primary); background: #eef2ff; padding: 8px 12px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+    .compare-btn.remove { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+    .empty { background: #fff; border: 1px dashed var(--border); border-radius: 14px; padding: 24px; text-align: center; color: var(--muted); margin-top: 20px; }
+    @media (max-width: 640px) { nav { width: 100%; order: 3; } .nav-container { flex-wrap: wrap; } .cta { width: 100%; text-align: center; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/">Kama ZenNext</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/software.html">Products</a>
+        <a href="/compare.html">Compare</a>
+        <a href="/ai-assistant.html">AI Assistant</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="cta" href="/sell.html">Submit a tool (Coming soon)</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <i class="fa-solid fa-layer-group" style="color: var(--primary);"></i>
+        <h1 class="page-title" id="categoryTitle">Category</h1>
+      </div>
+      <p class="description" id="categoryDescription"></p>
+    </div>
+
+    <div class="products-grid" id="productsGrid"></div>
+    <div class="empty" id="emptyState" style="display:none;">No tools found in this category.</div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const catSlug = params.get('cat');
+    const productsGrid = document.getElementById('productsGrid');
+    const emptyState = document.getElementById('emptyState');
+    const titleEl = document.getElementById('categoryTitle');
+    const descriptionEl = document.getElementById('categoryDescription');
+
+    const slugify = (str) => (str || '').toString().toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
+    const getCompareIds = () => {
+      try { return JSON.parse(localStorage.getItem('kz_compare_ids')) || []; }
+      catch { return []; }
+    };
+    const saveCompareIds = (ids) => localStorage.setItem('kz_compare_ids', JSON.stringify(ids.slice(0, 4)));
+    const toggleCompare = (id) => {
+      const ids = getCompareIds();
+      const idx = ids.indexOf(id);
+      if (idx >= 0) {
+        ids.splice(idx, 1);
+      } else {
+        if (ids.length >= 4) { alert('You can only compare up to 4 products.'); return; }
+        ids.push(id);
+      }
+      saveCompareIds(ids);
+      renderProducts();
+    };
+
+    const setMeta = (name, content, isProperty = false) => {
+      if (!content) return;
+      const selector = isProperty ? `meta[property="${name}"]` : `meta[name="${name}"]`;
+      let tag = document.querySelector(selector);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute(isProperty ? 'property' : 'name', name);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute('content', content);
+    };
+
+    const setCanonical = (url) => {
+      let link = document.querySelector('link[rel="canonical"]');
+      if (!link) {
+        link = document.createElement('link');
+        link.setAttribute('rel', 'canonical');
+        document.head.appendChild(link);
+      }
+      link.setAttribute('href', url);
+    };
+
+    const injectItemList = (items, origin) => {
+      if (!items.length) return;
+      const ld = {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        itemListElement: items.map((p, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: p.name,
+          description: p.tagline || '',
+          url: `${origin}/p/${encodeURIComponent(p.id)}`
+        }))
+      };
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(ld);
+      document.head.appendChild(script);
+    };
+
+    const renderProducts = () => {
+      if (!window.__categoryProducts) return;
+      const compareIds = getCompareIds();
+      productsGrid.innerHTML = '';
+      if (!window.__categoryProducts.length) {
+        emptyState.style.display = 'block';
+        return;
+      }
+      emptyState.style.display = 'none';
+      window.__categoryProducts.forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        const catLink = `/category/${slugify(p.category)}`;
+        card.innerHTML = `
+          <div class="actions">
+            <a class="badge category" href="${catLink}"><i class="fa-solid fa-tag"></i> ${p.category}</a>
+            <span class="badge pricing">${p.pricing ? p.pricing.model : 'Pricing'}</span>
+          </div>
+          <h3><a href="/p/${encodeURIComponent(p.id)}">${p.name}</a></h3>
+          <p class="tagline">${p.tagline || ''}</p>
+          <div class="platforms"><i class="fa-solid fa-laptop"></i> ${p.platforms ? p.platforms.join(', ') : 'N/A'}</div>
+          <div class="platforms"><i class="fa-regular fa-calendar"></i> Updated ${p.last_updated}</div>
+          <div class="actions">
+            <span class="badge api"><i class="fa-solid fa-code"></i> ${p.api ? 'API available' : 'No API'}</span>
+            <button class="compare-btn ${compareIds.includes(p.id) ? 'remove' : ''}" data-id="${p.id}">
+              ${compareIds.includes(p.id) ? 'Remove Compare' : 'Add Compare'}
+            </button>
+          </div>
+        `;
+        card.querySelector('.compare-btn').addEventListener('click', () => toggleCompare(p.id));
+        productsGrid.appendChild(card);
+      });
+    };
+
+    const hydrateSEO = (catName, origin) => {
+      if (!catName) return;
+      const title = `${catName} AI Tools & Software | Kama ZenNext`;
+      const description = `Compare ${catName} AI tools and software. Browse the best ${catName} AI tools, see pricing, and evaluate features.`;
+      document.title = title;
+      setMeta('description', description);
+      setMeta('og:title', title, true);
+      setMeta('og:description', description, true);
+      setMeta('og:type', 'website', true);
+      const canonical = `${origin}/category/${catSlug}`;
+      setMeta('og:url', canonical, true);
+      setCanonical(canonical);
+    };
+
+    if (!catSlug) {
+      titleEl.textContent = 'Category not found';
+      descriptionEl.textContent = 'Please choose a category from the products page.';
+      emptyState.style.display = 'block';
+    } else {
+      fetch('/data/products.json')
+        .then(res => res.json())
+        .then(list => {
+          const products = list || [];
+          const matched = products.filter(p => slugify(p.category) === catSlug);
+          const catName = matched[0]?.category || catSlug.replace(/-/g, ' ');
+          window.__categoryProducts = matched;
+          titleEl.textContent = `${catName} AI Tools`;
+          descriptionEl.textContent = `Browse the best ${catName} AI tools and software to streamline your workflows.`;
+          renderProducts();
+          const origin = window.location.origin;
+          hydrateSEO(catName, origin);
+          injectItemList(matched, origin);
+        })
+        .catch(err => {
+          console.error(err);
+          titleEl.textContent = 'Category unavailable';
+          descriptionEl.textContent = 'We could not load this category right now.';
+          emptyState.style.display = 'block';
+        });
+    }
+  </script>
+</body>
+</html>

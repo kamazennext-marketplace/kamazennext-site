@@ -1,8 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /api/
-Disallow: /backend/
-Disallow: /forms/
-Disallow: /vendor/
-Sitemap: https://kamazennext.com/sitemap.xml 
+
+Sitemap: https://kamazennext.com/sitemap.php

@@ -195,7 +195,7 @@
         alert('First product not loaded yet.');
         return;
       }
-      window.location.href = `/product.html?id=${encodeURIComponent(firstProduct.id)}`;
+      window.location.href = `/p/${encodeURIComponent(firstProduct.id)}`;
     });
 
     document.getElementById('btnCompare').addEventListener('click', () => {
