@@ -24,3 +24,5 @@ jobs:
             **/.github/**
             **/node_modules/**
             **/.cpanel.yml
+            public_html/**
+            public_html_clean/**
