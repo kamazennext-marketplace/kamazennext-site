@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Products - Kama ZenNext</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root { --primary: #6366f1; --dark: #0f172a; --muted: #64748b; --border: #e2e8f0; --bg: #f8fafc; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--dark); }
+    a { color: inherit; text-decoration: none; }
+    .site-header { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    .nav-container { max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
+    .brand { font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+    nav { display: flex; gap: 14px; flex: 1; flex-wrap: wrap; }
+    nav a { padding: 8px 10px; border-radius: 8px; font-weight: 600; }
+    nav a:hover { background: #eef2ff; }
+    .cta { background: linear-gradient(135deg, var(--primary), #a855f7); color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; }
+    main { max-width: 1200px; margin: 30px auto 80px; padding: 0 20px; }
+    .page-title { display: flex; align-items: center; gap: 10px; }
+    .controls { display: flex; gap: 10px; margin: 16px 0; flex-wrap: wrap; }
+    .button { border: 1px solid var(--border); padding: 10px 14px; border-radius: 10px; font-weight: 700; cursor: pointer; background: #fff; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(15,23,42,0.06); }
+    th, td { border: 1px solid var(--border); padding: 12px; text-align: left; vertical-align: top; }
+    th { background: #eef2ff; }
+    .product-cell { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .pill { background: #e2e8f0; color: #0f172a; padding: 6px 10px; border-radius: 999px; display: inline-flex; margin: 2px 4px 2px 0; }
+    .muted { color: var(--muted); }
+    .empty { background: #fff; border: 1px dashed var(--border); border-radius: 14px; padding: 24px; text-align: center; color: var(--muted); margin-top: 20px; }
+    @media (max-width: 768px) { table { display: block; overflow-x: auto; white-space: nowrap; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/">Kama ZenNext</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/software.html">Products</a>
+        <a href="/compare.html">Compare</a>
+        <a href="/ai-assistant.html">AI Assistant</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <a class="cta" href="/sell.html">Submit a tool (Coming soon)</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-title">
+      <i class="fa-solid fa-code-compare" style="color: var(--primary);"></i>
+      <h1>Compare Products</h1>
+    </div>
+    <p class="muted">Add products from the Products page to compare up to 4 options side-by-side.</p>
+    <div class="controls">
+      <button class="button" id="clearBtn">Clear all</button>
+      <a class="button" href="/software.html">Browse products</a>
+    </div>
+    <div id="compareArea"></div>
+  </main>
+
+  <script>
+    const compareArea = document.getElementById('compareArea');
+    const clearBtn = document.getElementById('clearBtn');
+
+    const getCompareIds = () => {
+      try { return JSON.parse(localStorage.getItem('kz_compare_ids')) || []; }
+      catch { return []; }
+    };
+    const saveCompareIds = (ids) => localStorage.setItem('kz_compare_ids', JSON.stringify(ids.slice(0, 4)));
+
+    const renderTable = (products) => {
+      if (!products.length) {
+        compareArea.innerHTML = '<div class="empty">No products selected. Add up to 4 from the Products page.</div>';
+        return;
+      }
+      const labels = [
+        { key: 'pricing', label: 'Pricing', render: (p) => p.pricing ? `${p.pricing.model} • $${p.pricing.starting_price}${p.pricing.free_trial ? ' • Free trial' : ''}` : 'N/A' },
+        { key: 'api', label: 'API', render: (p) => p.api ? 'Yes' : 'No' },
+        { key: 'platforms', label: 'Platforms', render: (p) => (p.platforms || []).join(', ') },
+        { key: 'best_for', label: 'Best for', render: (p) => (p.best_for || []).map(i => `<span class="pill">${i}</span>`).join('') },
+        { key: 'key_features', label: 'Key features', render: (p) => (p.key_features || []).map(i => `<div>• ${i}</div>`).join('') },
+        { key: 'last_updated', label: 'Last updated', render: (p) => p.last_updated || '' },
+      ];
+
+      const header = `<tr><th></th>${products.map(p => `<th>${p.name}</th>`).join('')}</tr>`;
+      const rows = labels.map(row => `<tr><th>${row.label}</th>${products.map(p => `<td>${row.render(p) || ''}</td>`).join('')}</tr>`).join('');
+      const removeRow = `<tr><th>Actions</th>${products.map(p => `<td class="product-cell"><span class="muted">${p.category}</span><button class="button" data-id="${p.id}">Remove</button></td>`).join('')}</tr>`;
+
+      compareArea.innerHTML = `<table>${header}${removeRow}${rows}</table>`;
+      compareArea.querySelectorAll('button[data-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const ids = getCompareIds().filter(id => id !== btn.dataset.id);
+          saveCompareIds(ids);
+          load();
+        });
+      });
+    };
+
+    const load = () => {
+      const ids = getCompareIds();
+      if (!ids.length) { renderTable([]); return; }
+      fetch('/data/products.json')
+        .then(res => res.json())
+        .then(list => renderTable((list || []).filter(p => ids.includes(p.id)).slice(0, 4)))
+        .catch(() => compareArea.innerHTML = '<div class="empty">Unable to load products right now.</div>');
+    };
+
+    clearBtn.addEventListener('click', () => { saveCompareIds([]); load(); });
+    load();
+  </script>
+</body>
+</html>
