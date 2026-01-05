@@ -4,6 +4,7 @@
       <i class="fas fa-robot"></i>
       <span>Kama ZenNext</span>
     </a>
+    <button class="menu-btn" aria-label="Open menu" type="button" id="menuBtn">☰</button>
     <form class="header-search" action="/software.html" method="GET">
       <input name="q" placeholder="Search software, AI tools, SaaS platforms..." />
     </form>
@@ -13,8 +14,25 @@
       <a href="/compare.html">Compare</a>
       <a href="/ai-assistant.html">AI Assistant</a>
       <a href="/open-source.html">Open Source</a>
-      <a href="/contact.html">Contact</a>
+      <a href="/contact-us.html">Contact</a>
     </nav>
     <a class="header-cta" href="/submit-tool.html">Submit a tool</a>
+  </div>
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <div class="mobile-drawer-panel">
+      <div class="mobile-drawer-top">
+        <strong>Kama ZenNext</strong>
+        <button class="menu-close" type="button" id="menuClose">✕</button>
+      </div>
+      <nav class="mobile-nav">
+        <a href="/">Home</a>
+        <a href="/software.html">Products</a>
+        <a href="/compare.html">Compare</a>
+        <a href="/ai-assistant.html">AI Assistant</a>
+        <a href="/open-source.html">Open Source</a>
+        <a href="/contact-us.html">Contact</a>
+        <a class="mobile-cta" href="/submit-tool.html">Submit a tool</a>
+      </nav>
+    </div>
   </div>
 </header>
