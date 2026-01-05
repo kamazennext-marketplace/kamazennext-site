@@ -19,6 +19,7 @@
     <meta name="twitter:description" content="Discover Kama ZenNext's AI software marketplace with enterprise-ready automation tools, custom development, and expert AI support for your business.">
     <meta name="twitter:image" content="https://yourdomain.com/assets/og-image.svg">
     <meta name="twitter:url" content="https://yourdomain.com/">
+    <link rel="stylesheet" href="/assets/css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.rel='stylesheet'">
@@ -153,7 +154,25 @@
         .badge-ai { background: rgba(16, 185, 129, 0.15); color: var(--ai-color); border: 1px solid rgba(16, 185, 129, 0.3); }
         .badge-finance { background: rgba(139, 92, 246, 0.15); color: var(--finance-color); border: 1px solid rgba(139, 92, 246, 0.3); }
         .badge-security { background: rgba(59, 130, 246, 0.15); color: var(--security-color); border: 1px solid rgba(59, 130, 246, 0.3); }
-        
+
+        /* ===== HOMEPAGE CATALOG BLOCKS ===== */
+        .catalog-block { color: #0f172a; }
+        .catalog-block .section-title { color: #0f172a; }
+        .catalog-block .section-subtitle { color: #475569; }
+        .catalog-block .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
+        .catalog-block .card h3 { margin: 0; font-size: 1.1rem; color: #0f172a; }
+        .catalog-block .card p { margin: 0; color: #475569; }
+        .catalog-block .meta { color: #64748b; font-size: 0.9rem; }
+        .catalog-block .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
+        .catalog-block .badge.category { background: #eef2ff; color: #312e81; }
+        .catalog-block .badge.api { background: #ecfeff; color: #155e75; }
+        .catalog-block .badge.pricing { background: #fef3c7; color: #92400e; }
+        .catalog-block .actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .catalog-block .cta-button { background: linear-gradient(135deg, var(--primary), #a855f7); color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; border: none; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .catalog-block .secondary-link { color: #4f46e5; font-weight: 700; text-decoration: none; }
+        .catalog-block .section-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+        .catalog-block .category-header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 24px 0 10px; }
+    
         /* ===== AI ASSISTANT SECTION ===== */
         .ai-assistant-section {
             background: #f8f9ff; padding: 80px 0;
@@ -621,6 +640,42 @@
         </div>
     </section>
 
+    <section class="categories" style="background: #f8fafc; padding-top: 3rem; padding-bottom: 2rem;">
+        <div class="container catalog-block">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Top Categories</h2>
+                    <p class="section-subtitle">Browse the most popular segments across our marketplace.</p>
+                </div>
+                <a class="secondary-link" href="/software.html">View all products</a>
+            </div>
+            <div class="homeGrid" id="categoryGrid"></div>
+        </div>
+    </section>
+
+    <section class="categories" style="background: #f8fafc; padding-top: 0;">
+        <div class="container catalog-block">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Trending Tools</h2>
+                    <p class="section-subtitle">Freshly updated products across the marketplace.</p>
+                </div>
+                <a class="secondary-link" href="/software.html">Browse more</a>
+            </div>
+            <div class="homeGrid" id="trendingGrid"></div>
+        </div>
+    </section>
+
+    <section class="categories" style="background: #f8fafc; padding-top: 0; padding-bottom: 3rem;">
+        <div class="container catalog-block">
+            <div class="section-header">
+                <h2 class="section-title">Best in Automation / Chatbots / Image Generation</h2>
+                <p class="section-subtitle" style="margin-bottom: 0;">Hand-picked winners from our catalog.</p>
+            </div>
+            <div id="bestByCategory"></div>
+        </div>
+    </section>
+
     <!-- AD SECTION (MONETIZATION) -->
     <section class="ad-section" id="monetization">
         <div class="container">
@@ -1037,6 +1092,141 @@ docker run -d --name kama-ai-bot \
     <div class="scroll-top" id="scrollTop" title="Scroll to top">
         <i class="fas fa-arrow-up"></i>
     </div>
+
+    <script type="module">
+        import {
+            loadProducts,
+            getCategories,
+            getTrending,
+            pickBestInCategory,
+            urlForCategory,
+            urlForProduct
+        } from '/assets/js/catalog.js';
+
+        const categoryGrid = document.getElementById('categoryGrid');
+        const trendingGrid = document.getElementById('trendingGrid');
+        const bestByCategory = document.getElementById('bestByCategory');
+
+        const formatDate = (dateStr) => {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        };
+
+        const buildPricingLabel = (pricing) => {
+            if (!pricing || !pricing.model) return null;
+            const label = pricing.model.replace(/-/g, ' ');
+            return label.charAt(0).toUpperCase() + label.slice(1);
+        };
+
+        const renderCategories = (products) => {
+            const categories = getCategories(products).slice(0, 8);
+            categoryGrid.innerHTML = '';
+            categories.forEach(({ name, count }) => {
+                const tile = document.createElement('a');
+                tile.className = 'catTile';
+                tile.href = urlForCategory(name);
+                tile.innerHTML = `
+                    <div>
+                        <strong>${name}</strong>
+                        <div style="color:#64748b; font-size:0.9rem;">${count} tools</div>
+                    </div>
+                    <span style="color:#cbd5e1; font-size:1.1rem;">➜</span>
+                `;
+                categoryGrid.appendChild(tile);
+            });
+        };
+
+        const renderTrending = (products) => {
+            const trending = getTrending(products);
+            trendingGrid.innerHTML = '';
+            trending.forEach((product) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const pricingLabel = buildPricingLabel(product.pricing);
+                card.innerHTML = `
+                    <div style="display:flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+                        <div>
+                            <h3>${product.name}</h3>
+                            <p class="meta">${product.tagline || ''}</p>
+                        </div>
+                        <div style="display:flex; gap:6px; flex-wrap: wrap; justify-content: flex-end;">
+                            <span class="badge category">${product.category || 'Software'}</span>
+                            ${pricingLabel ? `<span class="badge pricing">${pricingLabel}</span>` : ''}
+                            ${product.api ? '<span class="badge api">API</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="meta">Updated ${formatDate(product.last_updated)}</div>
+                    <div class="actions">
+                        <a class="cta-button" href="${urlForProduct(product.id)}">View</a>
+                        <a class="secondary-link" href="/software.html">Browse more</a>
+                    </div>
+                `;
+                trendingGrid.appendChild(card);
+            });
+        };
+
+        const renderBestByCategory = (products) => {
+            const focusCategories = ['Automation', 'Chatbots', 'Image Generation'];
+            bestByCategory.innerHTML = '';
+            const section = bestByCategory.closest('section');
+            let hasContent = false;
+
+            focusCategories.forEach((cat) => {
+                const picks = pickBestInCategory(products, cat, 3);
+                if (!picks.length) return;
+                hasContent = true;
+
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = `
+                    <div class="category-header">
+                        <h3 style="margin:0; color:#0f172a;">${cat}</h3>
+                        <a class="secondary-link" href="${urlForCategory(cat)}">See all</a>
+                    </div>
+                `;
+
+                const grid = document.createElement('div');
+                grid.className = 'homeGrid';
+
+                picks.forEach((product) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    const pricingLabel = buildPricingLabel(product.pricing);
+                    card.innerHTML = `
+                        <h3>${product.name}</h3>
+                        <p>${product.tagline || ''}</p>
+                        <div style="display:flex; gap:6px; flex-wrap: wrap;">
+                            <span class="badge category">${product.category || 'Software'}</span>
+                            ${pricingLabel ? `<span class="badge pricing">${pricingLabel}</span>` : ''}
+                            ${product.api ? '<span class="badge api">API</span>' : ''}
+                        </div>
+                        <div class="meta">Updated ${formatDate(product.last_updated)}</div>
+                        <div class="actions" style="margin-top:auto;">
+                            <a class="cta-button" href="${urlForProduct(product.id)}">View</a>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                wrapper.appendChild(grid);
+                bestByCategory.appendChild(wrapper);
+            });
+
+            if (section) {
+                section.style.display = hasContent ? '' : 'none';
+            }
+        };
+
+        loadProducts()
+            .then((products) => {
+                renderCategories(products);
+                renderTrending(products);
+                renderBestByCategory(products);
+            })
+            .catch((error) => {
+                console.error('Failed to load catalog content', error);
+            });
+    </script>
 
     <!-- ALL JAVASCRIPT IN ONE PLACE -->
     <script>
