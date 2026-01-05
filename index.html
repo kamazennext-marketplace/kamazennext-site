@@ -595,33 +595,30 @@
         });
     </script>
     <!-- HEADER -->
-    <header>
-        <div class="container">
-            <div class="header-container">
-                <a href="#" class="logo">
-                    <i class="fas fa-robot"></i>
-                    <span>KAMA ZENNEXT</span>
-                </a>
-                <div class="search">
-                    <div class="header-search-wrap header-search-box">
-                        <input id="siteSearch" type="text" placeholder="Search software, AI tools, SaaS platforms...">
-                    </div>
-                </div>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <nav id="mainNav">
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="/software.html">Products</a></li>
-                        <li><a href="/compare.html">Compare</a></li>
-                        <li><a href="/ai-assistant.html">AI Assistant</a></li>
-                        <li><a href="/open-source.html">Open Source</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </nav>
-                <a href="/submit-tool.html" class="cta-button">Submit a tool (Coming soon)</a>
-            </div>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <i class="fas fa-robot"></i>
+                <span>KAMA ZENNEXT</span>
+            </a>
+            <form class="header-search" action="/software.html" method="GET">
+                <input type="search" name="q" placeholder="Search software, AI tools, SaaS platforms..." aria-label="Search software">
+            </form>
+            <nav class="header-nav" id="mainNav">
+                <a href="#home">Home</a>
+                <a href="/software.html">Products</a>
+                <a href="/compare.html">Compare</a>
+                <a href="/ai-assistant.html">AI Assistant</a>
+                <a href="/open-source.html">Open Source</a>
+                <a href="/contact.html">Contact</a>
+            </nav>
+            <a class="header-cta" href="/submit-tool.html">
+                <span>Submit a tool</span>
+                <span class="cta-badge">Coming soon</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </header>
 

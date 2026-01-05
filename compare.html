@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Compare Products - Kama ZenNext</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -13,13 +14,6 @@
     * { box-sizing: border-box; }
     body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--dark); }
     a { color: inherit; text-decoration: none; }
-    .site-header { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-    .nav-container { max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
-    .brand { font-weight: 800; font-size: 1.2rem; color: var(--primary); }
-    nav { display: flex; gap: 14px; flex: 1; flex-wrap: wrap; }
-    nav a { padding: 8px 10px; border-radius: 8px; font-weight: 600; }
-    nav a:hover { background: #eef2ff; }
-    .cta { background: linear-gradient(135deg, var(--primary), #a855f7); color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; }
     main { max-width: 1200px; margin: 30px auto 80px; padding: 0 20px; }
     .page-title { display: flex; align-items: center; gap: 10px; }
     .controls { display: flex; gap: 10px; margin: 16px 0; flex-wrap: wrap; }
@@ -37,16 +31,26 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="nav-container">
-      <a class="brand" href="/">Kama ZenNext</a>
-      <nav>
+    <div class="container header-inner">
+      <a class="logo" href="/">
+        <i class="fas fa-robot"></i>
+        <span>Kama ZenNext</span>
+      </a>
+      <form class="header-search" action="/software.html" method="GET">
+        <input type="search" name="q" placeholder="Search software, AI tools, SaaS platforms..." aria-label="Search software">
+      </form>
+      <nav class="header-nav">
         <a href="/">Home</a>
         <a href="/software.html">Products</a>
         <a href="/compare.html">Compare</a>
         <a href="/ai-assistant.html">AI Assistant</a>
+        <a href="/open-source.html">Open Source</a>
         <a href="/contact.html">Contact</a>
       </nav>
-      <a class="cta" href="/submit-tool.html">Submit a tool (Coming soon)</a>
+      <a class="header-cta" href="/submit-tool.html">
+        <span>Submit a tool</span>
+        <span class="cta-badge">Coming soon</span>
+      </a>
     </div>
   </header>
 
