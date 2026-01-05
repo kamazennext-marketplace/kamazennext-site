@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /category/
+  RewriteRule ^([^/]+)/?$ /category.html?cat=$1 [L,QSA,NC]
+</IfModule>
+Options -Indexes
