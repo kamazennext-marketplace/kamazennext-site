@@ -1,38 +1,48 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h2>Test KAMA ZENNEXT AI</h2>
-<input type="text" id="question" placeholder="Ask about software..." style="width:300px;padding:10px;">
-<button onclick="ask()">Ask AI</button>
-<div id="response" style="margin-top:20px;padding:15px;background:#f5f5f5;border-radius:5px;"></div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test KAMA ZENNEXT AI</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/header.js" defer></script>
+</head>
+<body style="font-family:Inter, system-ui, sans-serif; background:var(--bg); color:var(--text); padding:2rem;">
+  <div id="site-header"></div>
+  <main class="container" style="max-width:800px;">
+    <h2>Test KAMA ZENNEXT AI</h2>
+    <div class="form-grid">
+      <label class="full">Ask a question
+        <input type="text" id="question" placeholder="Ask about software...">
+      </label>
+    </div>
+    <div class="form-actions" style="margin-top:12px;">
+      <button class="btn btn-primary" onclick="ask()">Ask AI</button>
+    </div>
+    <div id="response" class="card" style="margin-top:20px;"></div>
+  </main>
 
-<script>
-async function ask() {
-    const question = document.getElementById('question').value;
-    const responseDiv = document.getElementById('response');
-    
-    if (!question) return;
-    
-    responseDiv.innerHTML = 'Asking AI...';
-    
-    try {
-        const response = await fetch('/backend/api.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({action: 'chat', message: question})
-        });
-        
-        const data = await response.json();
-        
-        if (data.success && data.data && data.data.reply) {
-            responseDiv.innerHTML = data.data.reply.replace(/\n/g, '<br>');
-        } else {
-            responseDiv.innerHTML = 'Error: ' + (data.error || 'Unknown error');
-        }
-    } catch (error) {
-        responseDiv.innerHTML = 'Connection error: ' + error.message;
-    }
-}
-</script>
+  <script>
+  async function ask() {
+      const question = document.getElementById('question').value;
+      const responseDiv = document.getElementById('response');
+
+      if (!question) return;
+
+      responseDiv.innerHTML = 'Asking AI...';
+
+      try {
+          const response = await fetch('/backend/api.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ question })
+          });
+          const data = await response.json();
+          responseDiv.innerHTML = data.answer || 'No response from AI.';
+      } catch (error) {
+          responseDiv.innerHTML = 'Error calling AI API.';
+      }
+  }
+  </script>
 </body>
 </html>

@@ -11,39 +11,31 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="/assets/js/header.js" defer></script>
   <style>
-    :root {
-      --primary: #6366f1;
-      --dark: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --bg: #f8fafc;
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--dark); }
-    a { color: inherit; text-decoration: none; }
-    main { max-width: 1200px; margin: 30px auto 60px; padding: 0 20px; }
-    .page-title { display: flex; align-items: center; gap: 12px; margin: 10px 0 20px; }
-    .page-title h1 { margin: 0; font-size: 2rem; }
-    .filters { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
-    .filters label { display: block; font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
-    .filters input, .filters select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border); font-size: 0.95rem; }
+    main { max-width: var(--maxw); margin: 40px auto 60px; padding: 0 18px; }
+    .page-title { display: flex; align-items: center; gap: 12px; margin: 10px 0 12px; }
+    .page-title h1 { margin: 0; font-size: 2rem; color: var(--text); }
+    .page-title i { color: var(--primary); }
+    .intro { color: var(--muted); margin-top: 0; }
+    .filters { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); box-shadow: var(--shadow2); }
+    .filters label { display: block; font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; font-weight: 700; }
+    .filters input, .filters select { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid var(--border); font-size: 0.95rem; background: var(--surface2); color: var(--text); box-shadow: var(--shadow2); }
     .products-grid { margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-    .card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
+    .card { padding: 18px; }
     .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
-    .badge.category { background: #eef2ff; color: #312e81; }
-    .badge.api { background: #ecfeff; color: #155e75; }
-    .badge.pricing { background: #fef3c7; color: #92400e; }
-    .badge.featured-label { background: #e0f2fe; color: #0ea5e9; }
-    .badge.sponsored-label { background: #fef3c7; color: #b45309; }
-    .platforms, .meta { color: var(--muted); font-size: 0.9rem; }
-    .card h3 { margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
-    .tagline { color: var(--muted); margin: 0; }
+    .badge.category { background: var(--primarySoft); color: var(--primary); }
+    .badge.api { background: rgba(16,185,129,0.12); color: #065f46; }
+    .badge.pricing { background: rgba(15,23,42,0.04); color: var(--muted); }
+    .badge.featured-label { background: rgba(16,185,129,0.12); color: #065f46; }
+    .badge.sponsored-label { background: rgba(252,211,77,0.35); color: #92400e; }
+    .platforms, .meta, .tagline { color: var(--muted); font-size: 0.95rem; }
+    .card h3 { margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; color: var(--text); }
+    .tagline { margin: 0; }
     .actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .compare-btn { border: 1px solid var(--primary); color: var(--primary); background: #eef2ff; padding: 8px 12px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-    .compare-btn.remove { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+    .compare-btn { border: 1px solid var(--primary); color: var(--primary); background: var(--surface2); padding: 8px 12px; border-radius: 12px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow2); }
+    .compare-btn.remove { background: rgba(239,68,68,0.12); border-color: #ef4444; color: #b91c1c; }
     .count { color: var(--muted); margin-top: 12px; font-size: 0.95rem; }
-    .empty { background: #fff; border: 1px dashed var(--border); border-radius: 14px; padding: 24px; text-align: center; color: var(--muted); margin-top: 20px; }
-    @media (max-width: 640px) { nav { width: 100%; order: 3; } }
+    .empty { background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); padding: 24px; text-align: center; color: var(--muted); margin-top: 20px; box-shadow: var(--shadow2); }
+    @media (max-width: 640px) { .page-title { flex-direction: column; align-items: flex-start; } }
   </style>
   <script src="/assets/js/security.js"></script>
 </head>
@@ -55,7 +47,7 @@
       <i class="fa-solid fa-box-open" style="color: var(--primary);"></i>
       <h1>Products</h1>
     </div>
-    <p style="color: var(--muted); margin-top: 0;">Browse AI products curated by Kama ZenNext. Filter, sort, and add tools to your comparison tray.</p>
+    <p class="intro">Browse AI products curated by Kama ZenNext. Filter, sort, and add tools to your comparison tray.</p>
 
     <div class="filters">
       <div>

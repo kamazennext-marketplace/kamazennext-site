@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 Not Found</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; text-align: center; background-color: #f5f5f5; color: #333; }
-    main { max-width: 500px; margin: 0 auto; background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); }
-    a { color: #00509e; text-decoration: none; }
+    body { font-family: Inter, system-ui, sans-serif; margin: 0; padding: 2rem; text-align: center; background: var(--bg); color: var(--text); }
+    main { max-width: 500px; margin: 2rem auto; background: var(--surface); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); }
+    a { color: var(--primary); text-decoration: none; font-weight: 700; }
     a:hover { text-decoration: underline; }
   </style>
+  <script src="/assets/js/header.js" defer></script>
 </head>
 <body>
+  <div id="site-header"></div>
   <main>
     <h1>404 Not Found</h1>
     <p>Page not found.</p>
