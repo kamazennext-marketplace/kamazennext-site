@@ -1,6 +1,6 @@
 In cPanel File Manager: enable Show Hidden Files
 Check /public_html/.user.ini and /public_html/php.ini for auto_prepend_file / auto_append_file
-Search public_html for: jsinit.directfwd, skz_pid, jspark_init, directfwd
+Search public_html for suspicious loader domains or injected IDs from prior incidents
 Check ErrorDocument and AddHandler rules in any .htaccess
 Check for unknown .php files recently modified
 Rotate cPanel/FTP/GitHub secrets after cleanup
