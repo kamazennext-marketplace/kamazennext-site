@@ -1,4 +1,5 @@
-# Custom error page
+# Custom error pages
+ErrorDocument 403 /403.html
 ErrorDocument 404 /404.html
 
 <IfModule mod_rewrite.c>
