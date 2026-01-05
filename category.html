@@ -16,13 +16,6 @@
     * { box-sizing: border-box; }
     body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--dark); }
     a { color: inherit; text-decoration: none; }
-    .site-header { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-    .nav-container { max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
-    .brand { font-weight: 800; font-size: 1.2rem; color: var(--primary); }
-    nav { display: flex; gap: 16px; flex: 1; flex-wrap: wrap; }
-    nav a { font-weight: 600; padding: 8px 10px; border-radius: 8px; transition: background .2s; }
-    nav a:hover { background: #eef2ff; }
-    .cta { background: linear-gradient(135deg, var(--primary), #a855f7); color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; white-space: nowrap; }
     main { max-width: 1200px; margin: 30px auto 60px; padding: 0 20px; }
     .hero { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
     .page-title { display: flex; align-items: center; gap: 12px; margin: 0; font-size: 2rem; }
@@ -46,22 +39,32 @@
     .featured-strip h3 { margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
     .featured-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
     .featured-grid .card { border-color: #cbd5e1; }
-    @media (max-width: 640px) { nav { width: 100%; order: 3; } .nav-container { flex-wrap: wrap; } .cta { width: 100%; text-align: center; } }
+    @media (max-width: 640px) { nav { width: 100%; order: 3; } }
   </style>
   <script src="/assets/js/security.js"></script>
 </head>
 <body>
   <header class="site-header">
-    <div class="nav-container">
-      <a class="brand" href="/">Kama ZenNext</a>
-      <nav>
+    <div class="container header-inner">
+      <a class="logo" href="/">
+        <i class="fas fa-robot"></i>
+        <span>Kama ZenNext</span>
+      </a>
+      <form class="header-search" action="/software.html" method="GET">
+        <input type="search" name="q" placeholder="Search software, AI tools, SaaS platforms..." aria-label="Search software">
+      </form>
+      <nav class="header-nav">
         <a href="/">Home</a>
         <a href="/software.html">Products</a>
         <a href="/compare.html">Compare</a>
         <a href="/ai-assistant.html">AI Assistant</a>
+        <a href="/open-source.html">Open Source</a>
         <a href="/contact.html">Contact</a>
       </nav>
-      <a class="cta" href="/submit-tool.html">Submit a tool (Coming soon)</a>
+      <a class="header-cta" href="/submit-tool.html">
+        <span>Submit a tool</span>
+        <span class="cta-badge">Coming soon</span>
+      </a>
     </div>
   </header>
 
