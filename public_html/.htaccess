@@ -5,14 +5,14 @@ ErrorDocument 404 /404.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Allow specific paths
-  RewriteRule ^contact-test\.html$ - [L]
-  RewriteRule ^api/ - [L]
-
   # Don’t rewrite real files/dirs
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
+
+  # Allow specific paths
+  RewriteRule ^contact-test\.html$ - [L]
+  RewriteRule ^api/ - [L]
 
   # Clean category URL -> category.html
   RewriteRule ^category/([^/]+)/?$ category.html?cat=$1 [L,QSA,NC]
