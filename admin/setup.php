@@ -39,7 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Passwords do not match.';
     } else {
         $hash = password_hash($password, PASSWORD_BCRYPT);
-        $configSnippet = "<?php\ndefine('ADMIN_PASSWORD_HASH','{$hash}');\n";
+        $configSnippet = "<?php\n" .
+            "define('ADMIN_PASSWORD_HASH', '{$hash}');\n";
     }
 }
 
@@ -76,7 +77,7 @@ function h(?string $value): string
 <body>
 <div class="panel">
     <h1>Admin Setup</h1>
-    <p>This helper generates a bcrypt hash for your admin password and shows where to place <code>admin_config.php</code>. This page only works while no valid configuration exists.</p>
+    <p>This helper generates a bcrypt hash for your admin password and shows where to place <code>admin_config.php</code>. This page only works while no valid configuration exists and does not store your password.</p>
 
     <div class="alert alert-warning">
         <strong>Config file location</strong>
@@ -110,6 +111,9 @@ function h(?string $value): string
 
         <h3>admin_config.php contents</h3>
         <textarea readonly id="configSnippet"><?= h($configSnippet) ?></textarea>
+        <div class="copy-row">
+            <button class="button" type="button" id="copyConfig">Copy Snippet</button>
+        </div>
     <?php endif; ?>
 
     <div class="alert alert-warning" style="margin-top:16px;">
@@ -122,6 +126,8 @@ function h(?string $value): string
 <script>
 const copyButton = document.getElementById('copyHash');
 const hashOutput = document.getElementById('hashOutput');
+const copyConfigButton = document.getElementById('copyConfig');
+const configSnippet = document.getElementById('configSnippet');
 
 if (copyButton && hashOutput) {
     copyButton.addEventListener('click', () => {
@@ -130,6 +136,16 @@ if (copyButton && hashOutput) {
             .catch(() => copyButton.textContent = 'Copy failed');
 
         setTimeout(() => copyButton.textContent = 'Copy Hash', 1500);
+    });
+}
+
+if (copyConfigButton && configSnippet) {
+    copyConfigButton.addEventListener('click', () => {
+        navigator.clipboard.writeText(configSnippet.value)
+            .then(() => copyConfigButton.textContent = 'Snippet copied!')
+            .catch(() => copyConfigButton.textContent = 'Copy failed');
+
+        setTimeout(() => copyConfigButton.textContent = 'Copy Snippet', 1500);
     });
 }
 </script>
