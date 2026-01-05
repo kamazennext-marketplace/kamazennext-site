@@ -251,9 +251,9 @@ $isAdding = $isAuthenticated && isset($_GET['add']);
 
     <?php if (!$configLoaded): ?>
         <div class="alert alert-warning">
-            <strong>Configuration missing.</strong> Create <code>admin_config.php</code> outside the web root (recommended path: <code><?= h(dirname(__DIR__, 2)) ?>/admin_config.php</code>) based on <code>admin/admin_config.example.php</code>.
+            <strong>Admin configuration missing.</strong> Create <code>admin_config.php</code> before logging in. The admin first checks <code><?= h(dirname(__DIR__, 2)) ?>/admin_config.php</code> and then <code><?= h(__DIR__) ?>/admin_config.php</code> as a fallback.
             <div style="margin-top:8px;">
-                <a class="button" href="/admin/setup.php">Run Admin Setup</a>
+                <a class="button" href="/admin/setup.php">Open Admin Setup</a>
             </div>
         </div>
     <?php endif; ?>
