@@ -19,3 +19,10 @@ ErrorDocument 404 /404.html
   # Clean product URL -> product.html
   RewriteRule ^p/([^/]+)/?$ product.html?id=$1 [L,QSA,NC]
 </IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
