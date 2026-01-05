@@ -38,5 +38,13 @@ export function pickBestInCategory(products = [], categoryName, n = 3) {
     .slice(0, n);
 }
 
-export const urlForCategory = (name) => `/software.html?cat=${encodeURIComponent(name || '')}`;
-export const urlForProduct = (id) => `/product.html?id=${encodeURIComponent(id || '')}`;
+const slugify = (value = '') =>
+  value
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '');
+
+export const urlForCategory = (name) => `/category/${slugify(name)}`;
+export const urlForProduct = (id) => `/p/${encodeURIComponent(id || '')}`;

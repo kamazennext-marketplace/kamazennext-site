@@ -213,7 +213,7 @@
           </div>
           <div class="card-grid">
             ${alternatives.map(item => `
-              <a class="product-card" href="/product.html?id=${encodeURIComponent(item.id)}">
+              <a class="product-card" href="/p/${encodeURIComponent(item.id)}">
                 <img src="${item.logo}" alt="${item.name} logo" loading="lazy" />
                 <div>
                   <h4>${item.name}</h4>
@@ -244,7 +244,7 @@
           </div>
           <div class="card-grid">
             ${productsToShow.slice(0, 6).map(item => `
-              <a class="product-card" href="/product.html?id=${encodeURIComponent(item.id)}">
+              <a class="product-card" href="/p/${encodeURIComponent(item.id)}">
                 <img src="${item.logo}" alt="${item.name} logo" loading="lazy" />
                 <div>
                   <h4>${item.name}</h4>
@@ -353,7 +353,7 @@
 
       const copyLinkBtn = document.getElementById('copyLinkBtn');
       copyLinkBtn.addEventListener('click', async () => {
-        const shareUrl = `${origin}/product.html?id=${encodeURIComponent(product.id)}`;
+        const shareUrl = `${origin}/p/${encodeURIComponent(product.id)}`;
         try {
           await navigator.clipboard.writeText(shareUrl);
           copyLinkBtn.textContent = 'Copied!';
