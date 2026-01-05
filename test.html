@@ -4,31 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Marketplace Smoke Tests</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="/assets/js/header.js" defer></script>
   <style>
-    :root { --bg: #0f172a; --panel: #111827; --border: #1f2937; --text: #e5e7eb; --muted: #9ca3af; --pass: #16a34a; --fail: #dc2626; --pending: #eab308; }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); }
-    header { padding: 24px; border-bottom: 1px solid var(--border); background: linear-gradient(90deg, #111827, #0b1224); }
+    header { padding: 24px; border-bottom: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow2); }
     h1 { margin: 0 0 8px; }
     p { margin: 4px 0 0; color: var(--muted); }
     main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 60px; }
-    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 18px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22); }
-    .test-row { display: grid; grid-template-columns: 1fr 200px; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); margin-top: 10px; }
-    .test-row h3 { margin: 0 0 6px; }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 18px; box-shadow: var(--shadow); }
+    .test-row { display: grid; grid-template-columns: 1fr 200px; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); margin-top: 10px; background: var(--surface2); box-shadow: var(--shadow2); }
+    .test-row h3 { margin: 0 0 6px; color: var(--text); }
     .test-row small { color: var(--muted); }
     .status { display: inline-flex; align-items: center; justify-content: center; min-width: 80px; padding: 8px 12px; border-radius: 999px; font-weight: 800; letter-spacing: 0.03em; }
-    .pass { background: rgba(22, 163, 74, 0.12); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.4); }
-    .fail { background: rgba(220, 38, 38, 0.12); color: #fca5a5; border: 1px solid rgba(252, 165, 165, 0.4); }
-    .pending { background: rgba(234, 179, 8, 0.12); color: #fef08a; border: 1px solid rgba(254, 240, 138, 0.4); }
+    .pass { background: rgba(16,185,129,0.12); color: #065f46; border: 1px solid rgba(16,185,129,0.35); }
+    .fail { background: rgba(239,68,68,0.12); color: #b91c1c; border: 1px solid rgba(239,68,68,0.35); }
+    .pending { background: rgba(234,179,8,0.14); color: #92400e; border: 1px solid rgba(234,179,8,0.35); }
     .detail { color: var(--muted); margin-top: 4px; font-size: 0.95rem; }
     .actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
-    button { background: #2563eb; color: #f8fafc; border: none; border-radius: 10px; padding: 10px 14px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35); }
+    button { background: linear-gradient(90deg, var(--primary), var(--primary2)); color: #f8fafc; border: none; border-radius: 12px; padding: 10px 14px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow2); }
     button:disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; }
-    code { background: #111827; padding: 2px 6px; border-radius: 6px; }
+    code { background: var(--surface2); padding: 2px 6px; border-radius: 6px; }
   </style>
   <script src="/assets/js/security.js"></script>
 </head>
 <body>
+  <div id="site-header"></div>
   <header>
     <h1>AI Marketplace Smoke Tests</h1>
     <p>Runs on page load. Use this page to verify marketplace availability.</p>

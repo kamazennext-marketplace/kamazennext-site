@@ -211,12 +211,12 @@
             <div class="ad-placeholder" style="margin: 2rem auto; max-width: 728px;">
                 <span class="ad-label">Premium Software Showcase</span>
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white;">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), var(--primary2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white;">
                         <i class="fas fa-crown"></i>
                     </div>
                     <div>
-                        <h4 style="color: var(--light); margin-bottom: 0.5rem;">Enterprise Security Suite</h4>
-                        <p style="color: var(--gray); font-size: 0.9rem;">Advanced protection for businesses. Special offer: 30% off for KAMA users.</p>
+                        <h4 style="color: var(--text); margin-bottom: 0.5rem;">Enterprise Security Suite</h4>
+                        <p style="color: var(--muted); font-size: 0.9rem;">Advanced protection for businesses. Special offer: 30% off for KAMA users.</p>
                         <button onclick="trackAdClick('security_suite')" style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; margin-top: 0.5rem;">Learn More</button>
                     </div>
                 </div>
@@ -282,13 +282,13 @@
                 <div class="deploy-box">
                     <h4 style="color: var(--ai-color); margin-bottom: 1rem;"><i class="fas fa-rocket"></i> Quick Deploy: Botpress (Recommended)</h4>
                     <p style="margin-bottom: 1rem;">Deploy your own AI bot with one command using Docker:</p>
-                    <pre style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: monospace; color: var(--light); margin: 1rem 0;">
+                    <pre style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: monospace; color: var(--text); margin: 1rem 0;">
 # Install Docker first
 docker run -d --name kama-ai-bot \
   -p 3000:3000 \
   -v botpress_data:/botpress/data \
   botpress/server:latest</pre>
-                    <p style="font-size: 0.9rem; color: var(--gray);">Then connect to your bot at: <code style="background: rgba(108,99,255,0.1); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--primary);">http://your-server:3000</code></p>
+                    <p style="font-size: 0.9rem; color: var(--muted);">Then connect to your bot at: <code style="background: rgba(108,99,255,0.1); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--primary);">http://your-server:3000</code></p>
                     
                     <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
                         <button onclick="copyDockerCommand()" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
@@ -316,8 +316,8 @@ docker run -d --name kama-ai-bot \
                         <i class="fas fa-star"></i>
                     </div>
                     <div>
-                        <h4 style="color: var(--light); margin-bottom: 0.5rem;">Top Performing Vendor</h4>
-                        <p style="color: var(--gray); font-size: 0.9rem;">"Increased sales by 300% using KAMA's vendor tools" - CRM Pro Solutions</p>
+                        <h4 style="color: var(--text); margin-bottom: 0.5rem;">Top Performing Vendor</h4>
+                        <p style="color: var(--muted); font-size: 0.9rem;">"Increased sales by 300% using KAMA's vendor tools" - CRM Pro Solutions</p>
                     </div>
                 </div>
             </div>
@@ -326,23 +326,23 @@ docker run -d --name kama-ai-bot \
                 <div style="text-align: center; max-width: 200px;">
                     <div style="background: rgba(108, 99, 255, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--primary); font-size: 1.5rem;"><i class="fas fa-star"></i></div>
                     <h4>Featured Listings</h4>
-                    <p style="color: var(--gray); font-size: 0.9rem;">Get premium placement on our marketplace</p>
+                    <p style="color: var(--muted); font-size: 0.9rem;">Get premium placement on our marketplace</p>
                 </div>
                 <div style="text-align: center; max-width: 200px;">
                     <div style="background: rgba(16, 185, 129, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--ai-color); font-size: 1.5rem;"><i class="fas fa-sync-alt"></i></div>
                     <h4>Subscriptions</h4>
-                    <p style="color: var(--gray); font-size: 0.9rem;">Manage recurring billing and subscriptions</p>
+                    <p style="color: var(--muted); font-size: 0.9rem;">Manage recurring billing and subscriptions</p>
                 </div>
                 <div style="text-align: center; max-width: 200px;">
                     <div style="background: rgba(59, 130, 246, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--security-color); font-size: 1.5rem;"><i class="fas fa-bullseye"></i></div>
                     <h4>Lead Generation</h4>
-                    <p style="color: var(--gray); font-size: 0.9rem;">Get qualified leads and customer insights</p>
+                    <p style="color: var(--muted); font-size: 0.9rem;">Get qualified leads and customer insights</p>
                 </div>
             </div>
             
             <div style="text-align: center; margin-top: 3rem;">
                 <button onclick="openSellModal()" class="cta-button" style="padding: 1rem 2rem; font-size: 1.1rem;">Start Selling Today</button>
-                <p style="color: var(--gray); margin-top: 1rem; font-size: 0.9rem;">Commission rates start at 15%. No setup fees.</p>
+                <p style="color: var(--muted); margin-top: 1rem; font-size: 0.9rem;">Commission rates start at 15%. No setup fees.</p>
             </div>
         </div>
     </section>
@@ -392,7 +392,7 @@ docker run -d --name kama-ai-bot \
             
             <!-- Privacy & Cookie Notice -->
             <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                <p style="font-size: 0.8rem; color: var(--gray);">
+                <p style="font-size: 0.8rem; color: var(--muted);">
                     <i class="fas fa-cookie-bite"></i> This site uses cookies for essential functionality and analytics. By using our site, you consent to our use of cookies.
                     <button onclick="openPrivacyModal()" style="background: transparent; border: none; color: var(--primary); cursor: pointer; margin-left: 0.5rem;">Learn More</button>
                 </p>
@@ -442,7 +442,7 @@ docker run -d --name kama-ai-bot \
                 </div>
                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
                     <button type="submit" class="cta-button" style="flex: 1;">Submit Application</button>
-                    <button type="button" onclick="closeModal('sellModal')" style="background: transparent; border: 1px solid var(--gray); color: var(--gray); padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer;">Cancel</button>
+                    <button type="button" onclick="closeModal('sellModal')" style="background: transparent; border: 1px solid var(--muted); color: var(--muted); padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer;">Cancel</button>
                 </div>
             </form>
         </div>
@@ -452,29 +452,29 @@ docker run -d --name kama-ai-bot \
         <div class="modal-content">
             <h2 style="color: var(--info); margin-bottom: 1.5rem;">Privacy Settings</h2>
             <div class="form-group">
-                <label style="display: flex; align-items: center; gap: 1rem; color: var(--light); margin-bottom: 1rem;">
+                <label style="display: flex; align-items: center; gap: 1rem; color: var(--text); margin-bottom: 1rem;">
                     <input type="checkbox" id="essentialCookies" checked disabled>
                     <span>Essential Cookies (Required)</span>
                 </label>
-                <small style="color: var(--gray); display: block; margin-bottom: 1.5rem;">These cookies are necessary for the website to function.</small>
+                <small style="color: var(--muted); display: block; margin-bottom: 1.5rem;">These cookies are necessary for the website to function.</small>
             </div>
             <div class="form-group">
-                <label style="display: flex; align-items: center; gap: 1rem; color: var(--light); margin-bottom: 1rem;">
+                <label style="display: flex; align-items: center; gap: 1rem; color: var(--text); margin-bottom: 1rem;">
                     <input type="checkbox" id="analyticsCookies" checked>
                     <span>Analytics Cookies</span>
                 </label>
-                <small style="color: var(--gray); display: block; margin-bottom: 1.5rem;">Help us understand how visitors interact with our website.</small>
+                <small style="color: var(--muted); display: block; margin-bottom: 1.5rem;">Help us understand how visitors interact with our website.</small>
             </div>
             <div class="form-group">
-                <label style="display: flex; align-items: center; gap: 1rem; color: var(--light); margin-bottom: 1rem;">
+                <label style="display: flex; align-items: center; gap: 1rem; color: var(--text); margin-bottom: 1rem;">
                     <input type="checkbox" id="advertisingCookies" checked>
                     <span>Advertising Cookies</span>
                 </label>
-                <small style="color: var(--gray); display: block; margin-bottom: 1.5rem;">Used to personalize ads and measure ad performance.</small>
+                <small style="color: var(--muted); display: block; margin-bottom: 1.5rem;">Used to personalize ads and measure ad performance.</small>
             </div>
             <div style="display: flex; gap: 1rem; margin-top: 2rem;">
                 <button onclick="savePrivacySettings()" class="cta-button" style="flex: 1;">Save Settings</button>
-                <button onclick="closeModal('privacyModal')" style="background: transparent; border: 1px solid var(--gray); color: var(--gray); padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer;">Close</button>
+                <button onclick="closeModal('privacyModal')" style="background: transparent; border: 1px solid var(--muted); color: var(--muted); padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer;">Close</button>
             </div>
         </div>
     </div>
@@ -1166,7 +1166,7 @@ docker run -d --name kama-ai-bot \
             
             if (softwareToShow.length === 0) {
                 grid.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--gray);">
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--muted);">
                         <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
                         <h3>No software found</h3>
                         <p>Try asking our AI assistant for recommendations!</p>
