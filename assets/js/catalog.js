@@ -22,6 +22,30 @@ export function getTrending(products = []) {
     .slice(0, 8);
 }
 
+const featuredSortValue = (value) => {
+  if (value === null || value === undefined || value === '') return Number.POSITIVE_INFINITY;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : Number.POSITIVE_INFINITY;
+};
+
+const bySponsoredThenUpdated = (a, b) => {
+  const rankA = featuredSortValue(a.sponsored_rank);
+  const rankB = featuredSortValue(b.sponsored_rank);
+  if (rankA !== rankB) return rankA - rankB;
+  return new Date(b.last_updated || 0) - new Date(a.last_updated || 0);
+};
+
+export function getFeatured(products = [], limit = 6) {
+  return [...products]
+    .filter((p) => p?.featured || p?.sponsored_rank !== undefined)
+    .sort(bySponsoredThenUpdated)
+    .slice(0, limit);
+}
+
+export function getFeaturedByCategory(products = [], category, limit = 6) {
+  return getFeatured(products.filter((p) => p.category === category), limit);
+}
+
 export function groupByCategory(products = []) {
   return products.reduce((acc, product) => {
     if (!product?.category) return acc;

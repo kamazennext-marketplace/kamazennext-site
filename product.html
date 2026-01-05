@@ -59,6 +59,12 @@
     .sticky-compare:hover { opacity: 0.95; }
     .small-meta { display: flex; gap: 6px; align-items: center; margin-top: 6px; color: var(--muted); font-size: 0.9rem; }
     .alt-section-header { display: flex; align-items: center; gap: 10px; justify-content: space-between; flex-wrap: wrap; }
+    .reviews-grid { display: grid; gap: 12px; }
+    .review-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 12px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
+    .review-title { margin: 0 0 6px; font-size: 1rem; }
+    .review-meta { color: var(--muted); font-size: 0.9rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; background: #eef2ff; color: #312e81; margin-right: 8px; margin-top: 6px; }
+    .chip.con { background: #fef2f2; color: #991b1b; }
     @media (max-width: 640px) {
       nav { width: 100%; order: 3; }
       .nav-container { flex-wrap: wrap; }
@@ -79,7 +85,7 @@
         <a href="/ai-assistant.html">AI Assistant</a>
         <a href="/contact.html">Contact</a>
       </nav>
-      <a class="cta" href="/sell.html">Submit a tool (Coming soon)</a>
+      <a class="cta" href="/submit-tool.html">Submit a tool (Coming soon)</a>
     </div>
   </header>
 
@@ -129,6 +135,18 @@
 
     const slugify = (str) => (str || '').toString().toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
+    const deriveReviewStats = (product = {}) => {
+      const reviews = Array.isArray(product.reviews) ? product.reviews : [];
+      const derivedCount = reviews.length;
+      const reviewCount = Number.isFinite(product.review_count) ? product.review_count : derivedCount;
+      let rating = Number(product.rating);
+      if ((!rating || rating <= 0) && derivedCount) {
+        const sum = reviews.reduce((acc, r) => acc + (Number(r.rating) || 0), 0);
+        rating = sum ? Math.round((sum / derivedCount) * 10) / 10 : undefined;
+      }
+      return { rating, reviewCount: reviewCount || derivedCount, reviews };
+    };
+
     const buildStructuredData = (product, canonicalUrl) => {
       if (!product) return null;
       const data = {
@@ -148,11 +166,12 @@
           category: product.pricing.model
         };
       }
-      if (product.rating && Number(product.rating) > 0) {
+      const stats = deriveReviewStats(product);
+      if (stats.reviewCount > 0 && stats.rating) {
         data.aggregateRating = {
           '@type': 'AggregateRating',
-          ratingValue: product.rating,
-          reviewCount: product.review_count || 0
+          ratingValue: stats.rating,
+          reviewCount: stats.reviewCount
         };
       }
       return data;
@@ -270,6 +289,46 @@
       `;
     };
 
+    const renderReviewBadges = (items = [], variant = '') => items.map(item => `<span class="chip ${variant}">${item}</span>`).join('');
+
+    const renderReviews = (product) => {
+      const { reviews, rating, reviewCount } = deriveReviewStats(product);
+      if (!reviews.length) {
+        return `
+          <div class="section">
+            <h3>Reviews</h3>
+            <p class="tagline">No reviews yet. Curated reviews coming soon.</p>
+          </div>`;
+      }
+
+      const sortedReviews = [...reviews].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0, 5);
+      return `
+        <div class="section">
+          <div class="alt-section-header">
+            <h3>Reviews</h3>
+            <div class="small-meta">${rating ? `<strong><i class='fa-solid fa-star' aria-hidden='true'></i> ${rating} / 5</strong>` : ''} ${reviewCount ? `(${reviewCount} review${reviewCount === 1 ? '' : 's'})` : ''}</div>
+          </div>
+          <div class="reviews-grid">
+            ${sortedReviews.map(review => `
+              <article class="review-card">
+                <div class="review-meta">
+                  <strong>${review.author || 'Curator'}</strong>
+                  ${review.rating ? `<span><i class='fa-solid fa-star' aria-hidden='true'></i> ${review.rating}/5</span>` : ''}
+                  ${review.date ? `<time datetime="${review.date}">${review.date}</time>` : ''}
+                </div>
+                <h4 class="review-title">${review.title || ''}</h4>
+                <p class="tagline">${review.body || ''}</p>
+                <div>
+                  ${renderReviewBadges(review.pros, '')}
+                  ${renderReviewBadges(review.cons, 'con')}
+                </div>
+              </article>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    };
+
     const renderProduct = (product, list) => {
       if (!product) {
         card.innerHTML = `<p>Product not found. <a href="/software.html">Back to Products</a></p>`;
@@ -280,6 +339,7 @@
       }
 
       hydrateSEO(product);
+      const { rating, reviewCount } = deriveReviewStats(product);
       const compareIds = getCompareIds();
       const categoryLink = `/category/${slugify(product.category)}`;
       crumbCategoryLink.textContent = product.category;
@@ -311,6 +371,7 @@
             <a class="badge cat" href="${categoryLink}"><i class="fa-solid fa-tag"></i> ${product.category}</a>
             <h1>${product.name}</h1>
             <p class="tagline">${product.tagline || ''}</p>
+            ${rating ? `<div class="small-meta"><i class='fa-solid fa-star' aria-hidden='true'></i> ${rating} • ${reviewCount || 0} review${(reviewCount || 0) === 1 ? '' : 's'}</div>` : ''}
           </div>
           <div class="action-row">
             <button class="ghost-btn" id="copyLinkBtn" type="button"><i class="fa-solid fa-link"></i> Copy link</button>
@@ -337,6 +398,7 @@
           <h3>Integrations</h3>
           <p class="tagline">${(product.integrations || []).join(', ')}</p>
         </div>
+        ${renderReviews(product)}
         ${renderScreenshots(product)}
         ${renderAlternatives(product, list)}
         ${renderCompareSuggestions(product, list)}
