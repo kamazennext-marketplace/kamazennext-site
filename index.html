@@ -27,594 +27,41 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" onload="this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet"></noscript>
     <script src="/assets/js/header.js" defer></script>
-    <style>
-        /* ===== ABOVE-THE-FOLD PERFORMANCE GUARDRAILS ===== */
-        body.preload *,
-        body.preload *::before,
-        body.preload *::after {
-            animation: none !important;
-            transition: none !important;
-        }
-
-        /* ================================
-        AI COMPARISON TABLE – HARD FIX
-        ================================ */
-        #ai-comparison-table table {
-            background: #ffffff;
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        #ai-comparison-table th {
-            background: #eef2ff;
-            color: #1A1A2E !important;
-            font-weight: 600;
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        #ai-comparison-table td {
-            background: #ffffff;
-            color: #1A1A2E !important;
-            font-weight: 500;
-            border: 1px solid #ddd;
-            padding: 12px;
-        }
-
-        #ai-comparison-table tr:nth-child(even) td {
-            background: #f8fafc;
-        }
-
-        /* ===== GLOBAL STYLES ===== */
-        :root {
-            --primary: #6366f1; --primary-dark: #4f46e5; --secondary: #22c55e;
-            --pink: #ec4899; --orange: #f97316; --dark: #020617;
-            --darker: #0F0F1A; --light: #F5F5F7; --gray: #8E8E93;
-            --success: #10B981; --warning: #F59E0B; --danger: #EF4444; --info: #3B82F6;
-            --card-bg: #24243D; --ai-color: #10B981; --finance-color: #8B5CF6; --security-color: #3B82F6;
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; }
-        body { background-color: var(--darker); color: var(--light); line-height: 1.6; overflow-x: hidden; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
-        
-        /* ===== HEADER ===== */
-        header {
-            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px);
-            position: sticky; top: 0; z-index: 1000; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-        .header-container { 
-            display: flex; align-items: center; justify-content: space-between; 
-            gap: 30px; padding: 18px 0;
-        }
-        .logo { 
-            font-size: 2rem; font-weight: 800; 
-            background: linear-gradient(90deg, var(--primary), var(--pink));
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            white-space: nowrap; display: flex; align-items: center; gap: 12px;
-        }
-        .logo i { color: var(--primary); font-size: 2.2rem; }
-        .search { flex: 1; max-width: 600px; }
-        .search input {
-            width: 100%; padding: 16px 24px; border-radius: 14px;
-            border: 1px solid #e5e7eb; font-size: 1rem;
-            color: #1A1A2E;
-        }
-        nav ul { display: flex; list-style: none; gap: 2rem; }
-        nav a {
-            color: #1A1A2E;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-            padding-bottom: 5px;
-        }
-        nav a:hover { color: var(--primary); }
-        nav a::after { 
-            content: ''; position: absolute; bottom: 0; left: 0; 
-            width: 0; height: 2px; background: var(--primary); transition: width 0.3s;
-        }
-        nav a:hover::after { width: 100%; }
-        .cta-button {
-            background: var(--gradient); color: white;
-            padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;
-            transition: all 0.3s; border: none; cursor: pointer; display: inline-block;
-        }
-        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4); }
-        .mobile-menu-btn { display: none; font-size: 1.5rem; background: none; border: none; color: white; cursor: pointer; }
-
-        /* ===== HERO ===== */
-        .hero {
-            padding: 5rem 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, #4f46e5, #9333ea, #ec4899);
-            color: #fff;
-        }
-        .hero::after {
-            content: ""; position: absolute; inset: 0;
-            background: radial-gradient(600px 300px at 20% 30%, rgba(255, 255, 255, 0.18), transparent 60%),
-                        radial-gradient(500px 300px at 80% 70%, rgba(255, 255, 255, 0.15), transparent 60%);
-            pointer-events: none;
-        }
-        .hero-content { position: relative; z-index: 1; }
-        .hero h1 { font-size: 3.8rem; margin-bottom: 1rem; line-height: 1.2; color: white; }
-        .hero-gradient { background: linear-gradient(90deg, var(--light), var(--primary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .hero p { font-size: 1.2rem; color: rgba(255,255,255,0.9); max-width: 700px; margin: 0 auto 2rem; }
-        .feature-badges { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 2rem 0; }
-        .badge {
-            padding: 0.5rem 1rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem;
-            display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.22); color: white;
-        }
-        .badge-ai { background: rgba(16, 185, 129, 0.15); color: var(--ai-color); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .badge-finance { background: rgba(139, 92, 246, 0.15); color: var(--finance-color); border: 1px solid rgba(139, 92, 246, 0.3); }
-        .badge-security { background: rgba(59, 130, 246, 0.15); color: var(--security-color); border: 1px solid rgba(59, 130, 246, 0.3); }
-
-        /* ===== HOMEPAGE CATALOG BLOCKS ===== */
-        .catalog-block { color: #0f172a; }
-        .catalog-block .section-title { color: #0f172a; }
-        .catalog-block .section-subtitle { color: #475569; }
-        .catalog-block .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
-        .catalog-block .card h3 { margin: 0; font-size: 1.1rem; color: #0f172a; }
-        .catalog-block .card p { margin: 0; color: #475569; }
-        .catalog-block .meta { color: #64748b; font-size: 0.9rem; }
-        .catalog-block .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
-        .catalog-block .badge.category { background: #eef2ff; color: #312e81; }
-        .catalog-block .badge.api { background: #ecfeff; color: #155e75; }
-        .catalog-block .badge.pricing { background: #fef3c7; color: #92400e; }
-        .catalog-block .badge.featured-label { background: #e0f2fe; color: #0ea5e9; }
-        .catalog-block .badge.sponsored-label { background: #fef3c7; color: #b45309; }
-        .catalog-block .actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .catalog-block .cta-button { background: linear-gradient(135deg, var(--primary), #a855f7); color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; border: none; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
-        .catalog-block .secondary-link { color: #4f46e5; font-weight: 700; text-decoration: none; }
-        .catalog-block .section-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
-        .catalog-block .category-header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 24px 0 10px; }
-    
-        /* ===== AI ASSISTANT SECTION ===== */
-        .ai-assistant-section {
-            background: #f8f9ff; padding: 80px 0;
-        }
-        .ai-input-box {
-            background: white; padding: 25px; border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); max-width: 800px; margin: 0 auto;
-        }
-        .section-title { 
-            font-size: 2.8rem; 
-            margin-bottom: 0.5rem; 
-            color: #1A1A2E;
-            text-align: center;
-        }
-        .section-subtitle { 
-            color: var(--gray); 
-            margin-bottom: 2rem; 
-            text-align: center;
-            color: #6B7280;
-        }
-        textarea {
-            width: 100%; height: 120px; padding: 15px; border-radius: 12px;
-            border: 1px solid #d1d5db; font-size: 1rem; resize: vertical; margin-bottom: 15px;
-            color: #1A1A2E;
-            font-family: 'Inter', sans-serif;
-        }
-        textarea::placeholder {
-            color: #9CA3AF;
-        }
-        
-        .ai-card {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            font-size: 15px;
-            color: #1A1A2E;
-            margin-top: 15px;
-        }
-
-        .ai-card h3 {
-            margin-top: 14px;
-            color: #4f46e5;
-            font-size: 17px;
-        }
-
-        .ai-card ul {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        .ai-card li {
-            margin-bottom: 6px;
-        }
-
-        .ai-cta {
-            display: flex;
-            gap: 10px;
-            margin-top: 18px;
-            flex-wrap: wrap;
-        }
-
-        .ai-cta button {
-            background: linear-gradient(135deg, #6366f1, #22c55e);
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.3s;
-        }
-
-        .ai-cta button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
-        }
-        
-        /* ===== CATEGORIES ===== */
-        .categories { padding: 4rem 0; }
-        .category-filters { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; justify-content: center; }
-        .cat-filter {
-            padding: 0.75rem 1.5rem; background-color: var(--card-bg); border-radius: 50px;
-            cursor: pointer; transition: all 0.3s; font-weight: 500; border: 1px solid transparent;
-            color: white;
-        }
-        .cat-filter:hover { background-color: rgba(108, 99, 255, 0.1); border-color: rgba(108, 99, 255, 0.3); }
-        .cat-filter.active { background: var(--gradient); color: white; border: none; }
-        .software-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem; margin-bottom: 4rem;
-        }
-        .software-card {
-            background-color: var(--card-bg); border-radius: 12px; padding: 1.5rem;
-            transition: all 0.3s; border: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex; flex-direction: column; height: 100%; position: relative; overflow: hidden;
-        }
-        .software-card::before {
-            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 6px;
-            background: linear-gradient(90deg, #6366f1, #ec4899); border-radius: 12px 12px 0 0;
-        }
-        .software-card:hover {
-            transform: translateY(-8px); border-color: rgba(108, 99, 255, 0.3);
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
-        }
-        .card-header { display: flex; align-items: flex-start; margin-bottom: 1.2rem; }
-        .software-icon {
-            width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            margin-right: 1rem; font-size: 1.8rem; color: white;
-        }
-        .finance-icon { background: linear-gradient(135deg, var(--finance-color), #A78BFA); }
-        .security-icon { background: linear-gradient(135deg, var(--security-color), #60A5FA); }
-        .ai-icon { background: linear-gradient(135deg, var(--ai-color), #34D399); }
-        .crm-icon { background: linear-gradient(135deg, #EC4899, #F472B6); }
-        .card-title h3 { font-size: 1.3rem; margin-bottom: 0.3rem; color: white; }
-        .software-category { 
-            font-size: 0.9rem; font-weight: 500; padding: 0.2rem 0.8rem; 
-            border-radius: 4px; display: inline-block; 
-        }
-        .finance-category { background: rgba(139, 92, 246, 0.15); color: var(--finance-color); }
-        .security-category { background: rgba(59, 130, 246, 0.15); color: var(--security-color); }
-        .ai-category { background: rgba(16, 185, 129, 0.15); color: var(--ai-color); }
-        .crm-category { background: rgba(236, 72, 153, 0.15); color: #EC4899; }
-        .software-description { color: var(--gray); margin-bottom: 1.5rem; flex-grow: 1; font-size: 0.95rem; }
-        .software-features { margin-bottom: 1.5rem; }
-        .feature { display: flex; align-items: center; margin-bottom: 0.5rem; font-size: 0.9rem; color: #CBD5E1; }
-        .feature i { color: var(--success); margin-right: 0.5rem; font-size: 0.8rem; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
-        .free-badge { background-color: rgba(16, 185, 129, 0.15); color: var(--success); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
-        .trial-badge { background-color: rgba(245, 158, 11, 0.15); color: var(--warning); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
-        .paid-badge { background-color: rgba(239, 68, 68, 0.15); color: var(--danger); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
-        .visit-button {
-            background-color: rgba(108, 99, 255, 0.1); color: var(--primary); padding: 0.5rem 1.2rem;
-            border-radius: 6px; text-decoration: none; font-weight: 500; transition: all 0.3s;
-            border: 1px solid rgba(108, 99, 255, 0.3); font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem;
-        }
-        .visit-button:hover { background-color: var(--primary); color: white; }
-        
-        /* ===== OPEN SOURCE AI BOT INFO ===== */
-        .bot-options { background: var(--dark); border-radius: 15px; padding: 2rem; margin-top: 3rem; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .bot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-        .bot-card {
-            background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s;
-        }
-        .bot-card:hover { border-color: var(--ai-color); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2); }
-        .bot-card h4 { color: var(--ai-color); margin-bottom: 0.5rem; }
-        .bot-card p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
-        .bot-tag { display: inline-block; background: rgba(108, 99, 255, 0.15); color: var(--primary); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; margin-right: 0.5rem; margin-bottom: 0.5rem; }
-        .deploy-box { margin-top: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 10px; border-left: 4px solid var(--ai-color); }
-        
-        /* ===== MONETIZATION & ADS ===== */
-        .ad-section {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(108, 99, 255, 0.1));
-            padding: 3rem; border-radius: 15px; margin: 3rem 0;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-        }
-        .ad-placeholder {
-            background: rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 2rem;
-            text-align: center; margin: 1.5rem 0; border: 1px dashed rgba(255, 255, 255, 0.1);
-        }
-        .ad-label { color: var(--info); font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }
-        
-        /* ===== STATS ===== */
-        .stats {
-            padding: 4rem 0; background-color: var(--dark); text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .stats-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem; max-width: 1200px; margin: 0 auto;
-        }
-        .stat-item { padding: 1.5rem; }
-        .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem; }
-        .stat-label { color: var(--gray); font-size: 1rem; }
-        
-        /* ===== FOOTER ===== */
-        footer { 
-            padding: 3rem 0; text-align: center; color: var(--gray); font-size: 0.9rem; 
-            border-top: 1px solid rgba(255, 255, 255, 0.05); background: var(--dark);
-        }
-        .footer-logo { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 1rem; }
-        .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; flex-wrap: wrap; }
-        .footer-links a { color: var(--gray); text-decoration: none; transition: color 0.3s; }
-        .footer-links a:hover { color: var(--primary); }
-        .copyright { margin-top: 1rem; font-size: 0.8rem; color: #6B7280; }
-        
-        /* ===== FLOATING AI BUTTON ===== */
-        #ai-chat-btn {
-            position: fixed; bottom: 25px; right: 25px;
-            background: linear-gradient(90deg, #6366f1, #ec4899);
-            width: 65px; height: 65px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 30px; cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25); z-index: 1000;
-            transition: transform 0.3s ease; border: none;
-        }
-        #ai-chat-btn:hover { transform: scale(1.1); }
-        
-        /* ===== SCROLL TO TOP ===== */
-        .scroll-top {
-            position: fixed; bottom: 2rem; left: 2rem; width: 50px; height: 50px;
-            background: rgba(108, 99, 255, 0.2); color: var(--primary); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-            cursor: pointer; z-index: 1000; border: 1px solid rgba(108, 99, 255, 0.3);
-            opacity: 0; visibility: hidden; transition: all 0.3s;
-        }
-        .scroll-top.show { opacity: 1; visibility: visible; }
-        .scroll-top:hover { background: rgba(108, 99, 255, 0.3); }
-        
-        /* ===== AI CHATBOX ===== */
-        #ai-chatbox {
-            position: fixed; bottom: 20px; right: 20px; width: 320px; height: 420px;
-            background: white; border-radius: 18px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-            display: flex; flex-direction: column; overflow: hidden; z-index: 9999; display: none;
-        }
-        #ai-header {
-            background: linear-gradient(90deg, #6366f1, #ec4899);
-            padding: 12px;
-            color: white;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #ai-close-btn {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            font-weight: bold;
-            padding: 0;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #ai-close-btn:hover {
-            opacity: 0.7;
-        }
-        #ai-messages {
-            flex: 1; padding: 10px; overflow-y: auto; font-size: 0.9rem;
-            background: #F9FAFB;
-        }
-        .ai-msg-user {
-            background: #eef2ff;
-            color: #1A1A2E;
-            padding: 8px 12px;
-            margin-bottom: 6px;
-            border-radius: 10px;
-            max-width: 80%;
-            align-self: flex-end;
-            margin-left: auto;
-        }
-
-        .ai-msg-bot {
-            background: #fdf2f8;
-            color: #1A1A2E;
-            padding: 8px 12px;
-            margin-bottom: 6px;
-            border-radius: 10px;
-            max-width: 80%;
-            align-self: flex-start;
-        }
-
-        #ai-input-area {
-            display: flex; border-top: 1px solid #ddd; padding: 10px;
-            background: white;
-        }
-        #ai-input {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-            color: #1A1A2E;
-            border-radius: 8px 0 0 8px;
-            border: 1px solid #ddd;
-        }
-        #ai-send {
-            background: #6366f1; color: white; border: none;
-            padding: 10px 16px; cursor: pointer; border-radius: 0 8px 8px 0;
-            transition: background 0.3s;
-        }
-        #ai-send:hover {
-            background: #4f46e5;
-        }
-        
-        /* ===== MODALS & FORMS ===== */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1002; align-items: center; justify-content: center; }
-        .modal.active { display: flex; }
-        .modal-content {
-            background: var(--dark); padding: 2rem; border-radius: 15px; width: 90%; max-width: 500px;
-            border: 1px solid rgba(108, 99, 255, 0.3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-        }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-label { display: block; margin-bottom: 0.5rem; color: var(--light); font-weight: 500; }
-        .form-input {
-            width: 100%; padding: 0.8rem 1rem; background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white;
-            font-size: 1rem; transition: border-color 0.3s;
-        }
-        .form-input:focus { outline: none; border-color: var(--primary); }
-        .form-select { width: 100%; padding: 0.8rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; font-size: 1rem; }
-        
-        /* ===== AD BLOCKER DETECTION ===== */
-        .ad-blocker-warning {
-            background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3);
-            padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: center;
-            display: none;
-            color: #EF4444;
-        }
-        
-        /* ===== NOTIFICATIONS ===== */
-        .notification {
-            position: fixed; top: 1rem; right: 1rem; padding: 1rem 1.5rem; border-radius: 8px;
-            color: white; z-index: 1003; display: flex; align-items: center; gap: 0.5rem;
-            transform: translateX(150%); transition: transform 0.3s;
-            max-width: 350px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .notification.show { transform: translateX(0); }
-        .notification.success { background: var(--success); }
-        .notification.error { background: var(--danger); }
-        .notification.info { background: var(--info); }
-        
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 992px) {
-            .software-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-        }
-        @media (max-width: 768px) {
-            .header-container { flex-direction: column; gap: 1.5rem; }
-            nav ul { gap: 1rem; flex-wrap: wrap; justify-content: center; }
-            .hero h1 { font-size: 2.5rem; }
-            .software-grid, .bot-grid { grid-template-columns: 1fr; }
-            .stats-container { grid-template-columns: repeat(2, 1fr); }
-            .section-title { font-size: 1.8rem; }
-            .scroll-top { bottom: 1rem; left: 1rem; width: 45px; height: 45px; }
-            .mobile-menu-btn { display: block; color: #1A1A2E; }
-            nav { display: none; width: 100%; }
-            nav.active { display: block; }
-            nav ul { flex-direction: column; gap: 1rem; }
-            #ai-chatbox { width: calc(100% - 40px); right: 20px; bottom: 80px; }
-        }
-        @media (max-width: 480px) {
-            .category-filters { justify-content: center; }
-            .feature-badges { flex-direction: column; align-items: center; }
-            .stats-container { grid-template-columns: 1fr; }
-            .modal-content { padding: 1.5rem; }
-            .hero h1 { font-size: 2rem; }
-        }
-
-        /* ===== Header alignment fix ===== */
-        header, .header, .site-header { width: 100%; }
-
-        header .container,
-        .header .container,
-        .site-header .container {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        header .logo,
-        header .navbar-brand,
-        .header .logo,
-        .site-header .logo {
-          display: flex;
-          align-items: center;
-          line-height: 1;
-        }
-
-        header nav ul,
-        .header nav ul,
-        .site-header nav ul,
-        .navbar-nav {
-          display: flex;
-          align-items: center;
-          gap: 18px;
-          margin: 0;
-          padding: 0;
-          list-style: none;
-        }
-
-        header nav a,
-        .header nav a,
-        .site-header nav a,
-        .navbar-nav .nav-link {
-          display: inline-flex;
-          align-items: center;
-          line-height: 1;
-          padding: 10px 0;
-        }
-
-        header, .header, .site-header, .navbar { min-height: 64px; }
-
-        header * { box-sizing: border-box; }
-
-        /* Bootstrap navbar alignment fix (safe even if Bootstrap not used) */
-        .navbar .container,
-        .navbar .container-fluid { align-items: center !important; }
-        .navbar-brand {
-          display: inline-flex;
-          align-items: center;
-          line-height: 1;
-        }
-    </style>
-  <script src="/assets/js/security.js"></script>
+    <script src="/assets/js/security.js"></script>
 </head>
-<body class="preload">
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            requestAnimationFrame(() => document.body.classList.remove('preload'));
-        });
-    </script>
+<body>
     <div id="site-header"></div>
 
     <!-- HERO SECTION -->
     <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <div class="feature-badges">
-                    <span class="badge badge-ai"><i class="fas fa-brain"></i> AI-Powered Marketplace</span>
-                    <span class="badge badge-finance"><i class="fas fa-chart-line"></i> Financial Software</span>
-                    <span class="badge badge-security"><i class="fas fa-shield-alt"></i> Cybersecurity Tools</span>
+        <div class="container hero-grid">
+            <div>
+                <span class="hero-eyebrow">Trusted marketplace for teams</span>
+                <h1>Discover, compare, and launch software faster.</h1>
+                <p>Curated AI and SaaS tools with transparent comparisons, premium visuals, and a smooth buying journey built for 2026.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="/software.html">Browse tools</a>
+                    <a class="btn btn-secondary" href="/compare.html">Compare</a>
                 </div>
-                <h1><span class="hero-gradient">Discover. Compare.</span><br>Monetize Software</h1>
-                <p>World's next-gen AI software marketplace. Explore hundreds of financial, cybersecurity, and business tools with intelligent recommendations.</p>
-                <a href="#software" class="cta-button">Explore Software</a>
-                <a href="#ai-assistant" class="cta-button" style="background: transparent; border: 1px solid white; margin-left: 1rem;">Try AI Assistant</a>
+                <div class="hero-metrics">
+                    <div class="metric"><span>Listings</span><strong>300+</strong></div>
+                    <div class="metric"><span>Curated drops</span><strong>Weekly</strong></div>
+                    <div class="metric"><span>Coverage</span><strong>AI · SaaS · Security</strong></div>
+                </div>
+            </div>
+            <div class="card hero-card">
+                <h3 style="margin:0;">What’s new</h3>
+                <p style="margin:0; color: var(--muted);">Featured releases, verified by the ZenNext team.</p>
+                <div class="hero-metrics">
+                    <div class="metric"><span>Automation</span><strong>FlowDesk</strong></div>
+                    <div class="metric"><span>AI Studio</span><strong>VisionaryOS</strong></div>
+                    <div class="metric"><span>Compliance</span><strong>ShieldPro</strong></div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="categories" style="background: #f8fafc; padding-top: 3rem; padding-bottom: 2rem;">
+    <section class="categories section">
         <div class="container catalog-block">
             <div class="section-header">
                 <div>
@@ -627,7 +74,7 @@
         </div>
     </section>
 
-    <section class="categories" style="background: #f8fafc; padding-top: 0;">
+    <section class="categories section">
         <div class="container catalog-block" id="featuredSection">
             <div class="section-header">
                 <div>
@@ -640,7 +87,7 @@
         </div>
     </section>
 
-    <section class="categories" style="background: #f8fafc; padding-top: 0;">
+    <section class="categories section">
         <div class="container catalog-block">
             <div class="section-header">
                 <div>
@@ -653,11 +100,11 @@
         </div>
     </section>
 
-    <section class="categories" style="background: #f8fafc; padding-top: 0; padding-bottom: 3rem;">
+    <section class="categories section">
         <div class="container catalog-block">
             <div class="section-header">
                 <h2 class="section-title">Best in Automation / Chatbots / Image Generation</h2>
-                <p class="section-subtitle" style="margin-bottom: 0;">Hand-picked winners from our catalog.</p>
+                <p class="section-subtitle">Hand-picked winners from our catalog.</p>
             </div>
             <div id="bestByCategory"></div>
         </div>
@@ -666,46 +113,40 @@
     <!-- AD SECTION (MONETIZATION) -->
     <section class="ad-section" id="monetization">
         <div class="container">
-            <h2 class="section-title" style="color: #1A1A2E;">💰 Monetization Ready</h2>
-            <p class="section-subtitle" style="color: #6B7280;">Integrated advertising system with multiple revenue streams</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px;">
-                    <h3 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-ad"></i> Ad Placements</h3>
-                    <p style="color: #6B7280;">Strategic ad placements integrated throughout the platform. Fully responsive and optimized for maximum revenue.</p>
-                    
-                    <!-- Ad Placeholder 1 -->
+            <h2 class="section-title">💰 Monetization Ready</h2>
+            <p class="section-subtitle">Integrated advertising system with multiple revenue streams</p>
+
+            <div class="homeGrid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 24px;">
+                <div class="card" style="padding:24px;">
+                    <h3 style="margin-top:0; color: var(--primary);"><i class="fas fa-ad"></i> Ad Placements</h3>
+                    <p style="color: var(--muted);">Strategic ad placements integrated throughout the platform. Fully responsive and optimized for maximum revenue.</p>
                     <div class="ad-placeholder">
                         <span class="ad-label">Sponsored Software</span>
-                        <div style="font-weight: bold; color: var(--light);">Premium Accounting Suite</div>
-                        <small style="color: var(--gray);">Special offer for KAMA users</small>
+                        <div style="font-weight: bold; color: var(--text);">Premium Accounting Suite</div>
+                        <small style="color: var(--muted);">Special offer for KAMA users</small>
                     </div>
                 </div>
-                
-                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px;">
-                    <h3 style="color: var(--success); margin-bottom: 1rem;"><i class="fas fa-handshake"></i> Affiliate Marketing</h3>
-                    <p style="color: #6B7280;">Commission-based referrals to software vendors. Track conversions and optimize earnings.</p>
-                    
-                    <!-- Ad Placeholder 2 -->
+
+                <div class="card" style="padding:24px;">
+                    <h3 style="margin-top:0; color: var(--primary2);"><i class="fas fa-handshake"></i> Affiliate Marketing</h3>
+                    <p style="color: var(--muted);">Commission-based referrals to software vendors. Track conversions and optimize earnings.</p>
                     <div class="ad-placeholder">
                         <span class="ad-label">Featured Partner</span>
-                        <div style="font-weight: bold; color: var(--light);">Security Pro 2024</div>
-                        <small style="color: var(--gray);">20% commission on referrals</small>
+                        <div style="font-weight: bold; color: var(--text);">Security Pro 2024</div>
+                        <small style="color: var(--muted);">20% commission on referrals</small>
                     </div>
                 </div>
             </div>
-            
-            <!-- Ad Blocker Detection -->
+
             <div class="ad-blocker-warning" id="adBlockerWarning">
                 <i class="fas fa-exclamation-triangle"></i>
                 <span>Ad blocker detected. Please consider disabling it to support our platform.</span>
             </div>
-            
-            <!-- Privacy Compliance -->
-            <div style="margin-top: 2rem; padding: 1rem; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border-left: 4px solid var(--info);">
-                <h4 style="color: var(--info); margin-bottom: 0.5rem;"><i class="fas fa-shield-alt"></i> Privacy Compliant</h4>
-                <p style="font-size: 0.9rem; color: #6B7280;">Our advertising system is compliant with GDPR, CCPA, and other privacy regulations. Users have full control over their data.</p>
-                <button onclick="openPrivacyModal()" style="background: transparent; border: 1px solid var(--info); color: var(--info); padding: 0.5rem 1rem; border-radius: 6px; margin-top: 1rem; cursor: pointer;">Privacy Settings</button>
+
+            <div class="card" style="margin-top: 24px; border-left:4px solid var(--primary);">
+                <h4 style="margin:0 0 8px; color: var(--text);"><i class="fas fa-shield-alt"></i> Privacy Compliant</h4>
+                <p style="font-size: 0.95rem; color: var(--muted); margin:0 0 12px;">Our advertising system is compliant with GDPR, CCPA, and other privacy regulations. Users have full control over their data.</p>
+                <button onclick="openPrivacyModal()" class="btn" style="width:auto;">Privacy Settings</button>
             </div>
         </div>
     </section>
@@ -715,17 +156,14 @@
         <div class="container">
             <h2 class="section-title">🤖 AI Assistant – Ask Anything</h2>
             <p class="section-subtitle">Your AI guide to software suggestions, comparisons & marketplace help.</p>
-            
+
             <div class="ai-input-box">
                 <textarea id="ai-question" placeholder="Ask: 'Recommend CRM for startups', 'Compare ZenNext vs HubSpot', 'Find free accounting software'..."></textarea>
-                <button id="ask-ai-btn" class="cta-button" style="width: 100%;">Ask AI</button>
+                <button id="ask-ai-btn" class="btn btn-primary" style="width: 100%;">Ask AI</button>
                 <div id="ai-response"></div>
-                <small style="display:block;margin-top:8px;color:#6B7280;font-size:12px;">
-AI responses are generated automatically and may be inaccurate.
-</small>
-                
-                <!-- AI Comparison Table -->
-                <div id="ai-comparison-table" style="display:none; margin-top:20px;">
+                <small style="display:block;margin-top:8px;color:var(--muted);font-size:12px;">AI responses are generated automatically and may be inaccurate.</small>
+
+                <div id="ai-comparison-table" class="table-shell" style="display:none; margin-top:20px;">
                     <table>
                         <thead>
                             <tr>
@@ -734,21 +172,18 @@ AI responses are generated automatically and may be inaccurate.
                                 <th id="comp-col-b">Product B</th>
                             </tr>
                         </thead>
-                        <tbody id="comp-body">
-                            <!-- Rows will be added dynamically -->
-                        </tbody>
+                        <tbody id="comp-body"></tbody>
                     </table>
                 </div>
             </div>
-            
-            <!-- Quick Questions -->
+
             <div style="margin-top: 2rem; text-align: center;">
-                <h4 style="color: #1A1A2E; margin-bottom: 1rem;">Try asking:</h4>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <button onclick="quickQuestion('Find free CRM software')" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: rgba(108, 99, 255, 0.1); color: var(--primary); border: 1px solid rgba(108, 99, 255, 0.3);">Find free CRM software</button>
-                    <button onclick="quickQuestion('Best accounting tools for small business')" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: rgba(108, 99, 255, 0.1); color: var(--primary); border: 1px solid rgba(108, 99, 255, 0.3);">Best accounting tools</button>
-                    <button onclick="quickQuestion('Cybersecurity software for startups')" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: rgba(108, 99, 255, 0.1); color: var(--primary); border: 1px solid rgba(108, 99, 255, 0.3);">Cybersecurity for startups</button>
-                    <button onclick="quickQuestion('Compare financial software')" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: rgba(108, 99, 255, 0.1); color: var(--primary); border: 1px solid rgba(108, 99, 255, 0.3);">Compare financial software</button>
+                <h4 style="color: var(--text); margin-bottom: 1rem;">Try asking:</h4>
+                <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="quickQuestion('Find free CRM software')" class="btn" style="padding: 10px 14px; height:auto;">Find free CRM software</button>
+                    <button onclick="quickQuestion('Best accounting tools for small business')" class="btn" style="padding: 10px 14px; height:auto;">Best accounting tools</button>
+                    <button onclick="quickQuestion('Cybersecurity software for startups')" class="btn" style="padding: 10px 14px; height:auto;">Cybersecurity for startups</button>
+                    <button onclick="quickQuestion('Compare financial software')" class="btn" style="padding: 10px 14px; height:auto;">Compare financial software</button>
                 </div>
             </div>
         </div>
