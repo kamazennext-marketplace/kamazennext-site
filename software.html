@@ -13,48 +13,43 @@
   <script src="/assets/js/header.js" defer></script>
   <script src="/assets/js/mobile-nav.js" defer></script>
   <style>
-    main { max-width: var(--maxw); margin: 40px auto 60px; padding: 0 18px; }
-    .page-title { display: flex; align-items: center; gap: 12px; margin: 10px 0 12px; }
-    .page-title h1 { margin: 0; font-size: 2rem; color: var(--text); }
-    .page-title i { color: var(--primary); }
-    .intro { color: var(--muted); margin-top: 0; }
-    .filters { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); box-shadow: var(--shadow2); }
-    .filters label { display: block; font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; font-weight: 700; }
+    main { max-width: var(--maxw); margin: 40px auto 72px; padding: 0 18px; }
+    .page-hero { display: flex; flex-direction: column; gap: 12px; margin: 10px 0 24px; }
+    .page-hero h1 { margin: 0; font-size: 2.4rem; letter-spacing: -0.02em; }
+    .page-hero p { margin: 0; color: var(--muted); max-width: 780px; }
+    .chip-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .chip { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; padding: 8px 12px; font-weight: 700; box-shadow: var(--shadow2); cursor: pointer; transition: all 0.15s ease; }
+    .chip:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+    .chip.active { background: var(--primarySoft); color: var(--primary); border-color: rgba(109,40,217,0.25); }
+    .filters { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius2); padding: 16px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); box-shadow: var(--shadow2); }
+    .filters label { display: block; font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; font-weight: 700; letter-spacing: 0.01em; }
     .filters input, .filters select { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid var(--border); font-size: 0.95rem; background: var(--surface2); color: var(--text); box-shadow: var(--shadow2); }
-    .products-grid { margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-    .card { padding: 18px; }
-    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
-    .badge.category { background: var(--primarySoft); color: var(--primary); }
-    .badge.api { background: rgba(16,185,129,0.12); color: #065f46; }
-    .badge.pricing { background: rgba(15,23,42,0.04); color: var(--muted); }
+    .card h3 { margin: 0; font-size: 1.25rem; }
+    .platforms, .meta, .tagline { color: var(--muted); font-size: 0.95rem; }
+    .tagline { margin: 0; }
+    .meta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; color: var(--muted); font-size: 0.9rem; }
+    .count { color: var(--muted); margin: 16px 0 10px; font-size: 0.95rem; }
+    .empty { background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); padding: 24px; text-align: center; color: var(--muted); margin-top: 20px; box-shadow: var(--shadow2); }
     .badge.featured-label { background: rgba(16,185,129,0.12); color: #065f46; }
     .badge.sponsored-label { background: rgba(252,211,77,0.35); color: #92400e; }
-    .platforms, .meta, .tagline { color: var(--muted); font-size: 0.95rem; }
-    .card h3 { margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; color: var(--text); }
-    .tagline { margin: 0; }
-    .actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .compare-btn { border: 1px solid var(--primary); color: var(--primary); background: var(--surface2); padding: 8px 12px; border-radius: 12px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow2); }
-    .compare-btn.remove { background: rgba(239,68,68,0.12); border-color: #ef4444; color: #b91c1c; }
-    .count { color: var(--muted); margin-top: 12px; font-size: 0.95rem; }
-    .empty { background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); padding: 24px; text-align: center; color: var(--muted); margin-top: 20px; box-shadow: var(--shadow2); }
-    @media (max-width: 640px) { .page-title { flex-direction: column; align-items: flex-start; } }
+    .compare-btn.remove { background: rgba(239,68,68,0.12); color: #b91c1c; border-color: rgba(239,68,68,0.35); }
   </style>
   <script src="/assets/js/security.js"></script>
 </head>
-<body>
-  <div id="site-header"></div>
+  <body>
+    <div id="site-header"></div>
 
-  <main>
-    <div class="page-title">
-      <i class="fa-solid fa-box-open" style="color: var(--primary);"></i>
-      <h1>Products</h1>
-    </div>
-    <p class="intro">Browse AI products curated by Kama ZenNext. Filter, sort, and add tools to your comparison tray.</p>
+    <main>
+      <section class="page-hero">
+        <h1>Browse AI &amp; SaaS tools</h1>
+        <p>Filter, compare, and discover software faster.</p>
+        <div class="chip-row" id="categoryChips"></div>
+      </section>
 
-    <div class="filters">
-      <div>
-        <label for="search">Search</label>
-        <input id="search" type="search" placeholder="Search by name or tagline">
+      <section class="filters card sticky-filters">
+        <div>
+          <label for="search">Search</label>
+          <input id="search" type="search" placeholder="Search by name or tagline">
       </div>
       <div>
         <label for="category">Category</label>
@@ -86,18 +81,18 @@
           <option value="name">Name</option>
         </select>
       </div>
-      <div>
-        <label for="featuredOnly">Featured</label>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <input id="featuredOnly" type="checkbox"> <span class="meta">Featured only</span>
-        </div>
-      </div>
-    </div>
+          <div>
+            <label for="featuredOnly">Featured</label>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <input id="featuredOnly" type="checkbox"> <span class="meta">Featured only</span>
+            </div>
+          </div>
+      </section>
 
-    <div class="count" id="count"></div>
-    <div class="products-grid" id="productsGrid"></div>
-    <div class="empty" id="emptyState" style="display:none;">No products found. Try adjusting your filters.</div>
-  </main>
+      <div class="count" id="count"></div>
+      <div class="products-grid" id="productsGrid"></div>
+      <div class="empty" id="emptyState" style="display:none;">No products found. Try adjusting your filters.</div>
+    </main>
 
   <script>
     const productsGrid = document.getElementById('productsGrid');
@@ -105,6 +100,7 @@
     const countEl = document.getElementById('count');
     const searchInput = document.getElementById('search');
     const categorySelect = document.getElementById('category');
+    const categoryChips = document.getElementById('categoryChips');
     const pricingSelect = document.getElementById('pricing');
     const apiSelect = document.getElementById('api');
     const sortSelect = document.getElementById('sort');
@@ -122,12 +118,20 @@
       featured: params.get('featured') === '1'
     };
 
+    const setActiveChip = (value) => {
+      if (!categoryChips) return;
+      categoryChips.querySelectorAll('.chip').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.value === value);
+      });
+    };
+
     searchInput.value = state.q;
     categorySelect.value = state.cat;
     pricingSelect.value = state.pricing;
     apiSelect.value = state.api;
     sortSelect.value = state.sort;
     featuredCheckbox.checked = state.featured;
+    setActiveChip(state.cat);
 
     let products = [];
 
@@ -203,22 +207,26 @@
       const compareIds = getCompareIds();
       filtered.forEach(p => {
         const card = document.createElement('article');
-        card.className = 'card';
+        const compareActive = compareIds.includes(p.id);
+        card.className = 'product-card card';
         const catLink = `/category/${slugify(p.category)}`;
         card.innerHTML = `
-          <div class="actions">
-            <a class="badge category" href="${catLink}"><i class="fa-solid fa-tag"></i> ${p.category}</a>
-            <span class="badge pricing">${p.pricing ? p.pricing.model : 'Pricing'}</span>
+          <div class="pc-top">
+            <a class="badge" href="${catLink}">${p.category}</a>
+            <span class="badge badge-soft">${p.pricing ? formatPricing(p.pricing) : 'Pricing'}</span>
+            <span class="badge badge-soft">API: ${p.api ? 'Yes' : 'No'}</span>
             ${promoLabel(p)}
           </div>
           <h3><a href="/p/${encodeURIComponent(p.id)}">${p.name}</a></h3>
-          <p class="tagline">${p.tagline || ''}</p>
-          <div class="platforms"><i class="fa-solid fa-laptop"></i> ${p.platforms ? p.platforms.join(', ') : 'N/A'}</div>
-          <div class="platforms"><i class="fa-regular fa-calendar"></i> Updated ${p.last_updated}</div>
-          <div class="actions">
-            <span class="badge api"><i class="fa-solid fa-code"></i> ${p.api ? 'API available' : 'No API'}</span>
-            <button class="compare-btn ${compareIds.includes(p.id) ? 'remove' : ''}" data-id="${p.id}">
-              ${compareIds.includes(p.id) ? 'Remove Compare' : 'Add Compare'}
+          <p class="muted">${p.tagline || ''}</p>
+          <div class="meta-row">
+            <span class="meta"><i class="fa-solid fa-laptop"></i> ${p.platforms ? p.platforms.join(', ') : 'N/A'}</span>
+            <span class="meta"><i class="fa-regular fa-calendar"></i> Updated ${p.last_updated}</span>
+          </div>
+          <div class="pc-actions">
+            <a class="btn" href="/p/${encodeURIComponent(p.id)}">View</a>
+            <button class="btn compare-btn ${compareActive ? 'btn-secondary remove' : 'btn-primary'}" data-id="${p.id}">
+              ${compareActive ? 'Remove Compare' : 'Add Compare'}
             </button>
           </div>
         `;
@@ -229,7 +237,7 @@
 
     const bindFilters = () => {
       searchInput.addEventListener('input', (e) => { state.q = e.target.value.trim(); updateQuery(); renderProducts(); });
-      categorySelect.addEventListener('change', (e) => { state.cat = e.target.value; updateQuery(); renderProducts(); });
+      categorySelect.addEventListener('change', (e) => { state.cat = e.target.value; updateQuery(); setActiveChip(state.cat); renderProducts(); });
       pricingSelect.addEventListener('change', (e) => { state.pricing = e.target.value; updateQuery(); renderProducts(); });
       apiSelect.addEventListener('change', (e) => { state.api = e.target.value; updateQuery(); renderProducts(); });
       sortSelect.addEventListener('change', (e) => { state.sort = e.target.value; updateQuery(); renderProducts(); });
@@ -238,6 +246,26 @@
 
     const populateCategories = () => {
       const cats = Array.from(new Set(products.map(p => p.category))).sort();
+      if (categoryChips) {
+        categoryChips.innerHTML = '';
+        const addChip = (label, value) => {
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = `chip${state.cat === value ? ' active' : ''}`;
+          chip.dataset.value = value;
+          chip.textContent = label;
+          chip.addEventListener('click', () => {
+            state.cat = value;
+            categorySelect.value = value;
+            updateQuery();
+            setActiveChip(value);
+            renderProducts();
+          });
+          categoryChips.appendChild(chip);
+        };
+        addChip('All', 'all');
+        cats.forEach(cat => addChip(cat, cat));
+      }
       cats.forEach(cat => {
         const opt = document.createElement('option');
         opt.value = cat; opt.textContent = cat; opt.selected = cat === state.cat;
