@@ -1,13 +1,21 @@
-RewriteEngine On
-RewriteRule ^contact-test\.html$ - [L]
-RewriteRule ^api/ - [L]
+# Custom error page
+ErrorDocument 404 /404.html
 
-# SEO-friendly category URLs
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^category/([^/]+)/?$ /category.html?cat=$1 [L,QSA]
+<IfModule mod_rewrite.c>
+  RewriteEngine On
 
-# SEO-friendly product URLs
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^p/([^/]+)/?$ /product.html?id=$1 [L,QSA]
+  # Allow specific paths
+  RewriteRule ^contact-test\.html$ - [L]
+  RewriteRule ^api/ - [L]
+
+  # Don’t rewrite real files/dirs
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Clean category URL -> category.html
+  RewriteRule ^category/([^/]+)/?$ category.html?cat=$1 [L,QSA,NC]
+
+  # Clean product URL -> product.html
+  RewriteRule ^p/([^/]+)/?$ product.html?id=$1 [L,QSA,NC]
+</IfModule>
