@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/assets/css/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="/assets/js/header.js" defer></script>
   <style>
     :root { --primary: #6366f1; --dark: #0f172a; --muted: #64748b; --border: #e2e8f0; --bg: #f8fafc; }
     * { box-sizing: border-box; }
@@ -66,29 +67,7 @@
   <script src="/assets/js/security.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="/">
-        <i class="fas fa-robot"></i>
-        <span>Kama ZenNext</span>
-      </a>
-      <form class="header-search" action="/software.html" method="GET">
-        <input type="search" name="q" placeholder="Search software, AI tools, SaaS platforms..." aria-label="Search software">
-      </form>
-      <nav class="header-nav">
-        <a href="/">Home</a>
-        <a href="/software.html">Products</a>
-        <a href="/compare.html">Compare</a>
-        <a href="/ai-assistant.html">AI Assistant</a>
-        <a href="/open-source.html">Open Source</a>
-        <a href="/contact.html">Contact</a>
-      </nav>
-      <a class="header-cta" href="/submit-tool.html">
-        <span>Submit a tool</span>
-        <span class="cta-badge">Coming soon</span>
-      </a>
-    </div>
-  </header>
+  <div id="site-header"></div>
 
   <main>
     <nav class="breadcrumbs" aria-label="Breadcrumb">

@@ -26,6 +26,7 @@
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" onload="this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet"></noscript>
+    <script src="/assets/js/header.js" defer></script>
     <style>
         /* ===== ABOVE-THE-FOLD PERFORMANCE GUARDRAILS ===== */
         body.preload *,
@@ -594,33 +595,7 @@
             requestAnimationFrame(() => document.body.classList.remove('preload'));
         });
     </script>
-    <!-- HEADER -->
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="/" class="logo">
-                <i class="fas fa-robot"></i>
-                <span>KAMA ZENNEXT</span>
-            </a>
-            <form class="header-search" action="/software.html" method="GET">
-                <input type="search" name="q" placeholder="Search software, AI tools, SaaS platforms..." aria-label="Search software">
-            </form>
-            <nav class="header-nav" id="mainNav">
-                <a href="#home">Home</a>
-                <a href="/software.html">Products</a>
-                <a href="/compare.html">Compare</a>
-                <a href="/ai-assistant.html">AI Assistant</a>
-                <a href="/open-source.html">Open Source</a>
-                <a href="/contact.html">Contact</a>
-            </nav>
-            <a class="header-cta" href="/submit-tool.html">
-                <span>Submit a tool</span>
-                <span class="cta-badge">Coming soon</span>
-            </a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </header>
+    <div id="site-header"></div>
 
     <!-- HERO SECTION -->
     <section class="hero" id="home">
