@@ -14,7 +14,14 @@
     "logo": "https://dummyimage.com/80x80/6366f1/ffffff&text=ZA",
     "rating": 4.7,
     "review_count": 184,
-    "last_updated": "2024-12-18"
+    "last_updated": "2024-12-18",
+    "pros": ["Flexible dashboard builder", "Strong governance controls", "Great customer support"],
+    "cons": ["Setup requires data engineer", "Limited offline access"],
+    "use_cases": ["Executive reporting", "Marketing attribution", "Board packs"],
+    "screenshots": [
+      "https://dummyimage.com/600x360/eff6ff/0f172a&text=Analytics+Dashboard",
+      "https://dummyimage.com/600x360/f1f5f9/0f172a&text=Customer+Journey"
+    ]
   },
   {
     "id": "kz-assist",
@@ -31,7 +38,10 @@
     "logo": "https://dummyimage.com/80x80/22c55e/ffffff&text=AS",
     "rating": 4.6,
     "review_count": 142,
-    "last_updated": "2025-01-05"
+    "last_updated": "2025-01-05",
+    "pros": ["Fast responses", "Simple admin setup"],
+    "cons": ["Limited brand voice controls"],
+    "use_cases": ["Tier 1 support", "Employee self-serve", "Sales enablement"]
   },
   {
     "id": "kz-studio",
@@ -48,7 +58,9 @@
     "logo": "https://dummyimage.com/80x80/f97316/ffffff&text=WS",
     "rating": 4.5,
     "review_count": 203,
-    "last_updated": "2024-11-30"
+    "last_updated": "2024-11-30",
+    "use_cases": ["Customer onboarding", "Finance automations"],
+    "screenshots": ["https://dummyimage.com/600x360/fff7ed/0f172a&text=Workflow+Builder"]
   },
   {
     "id": "kz-guard",
