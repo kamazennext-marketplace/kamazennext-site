@@ -1,4 +1,9 @@
 <?php
+ini_set('session.cookie_httponly', '1');
+if (!empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off') {
+    ini_set('session.cookie_secure', '1');
+}
+
 session_start();
 
 $productsFile = __DIR__ . '/../data/products.json';
@@ -25,13 +30,36 @@ $isAuthenticated = !empty($_SESSION['admin_authenticated']);
 $error = '';
 $success = '';
 
+$maxFailedAttempts = 5;
+$cooldownSeconds = 60;
+$failCount = (int)($_SESSION['fail_count'] ?? 0);
+$lastFailTime = (int)($_SESSION['last_fail_time'] ?? 0);
+
+function inCooldown(int $failCount, int $lastFailTime, int $maxFailedAttempts, int $cooldownSeconds): bool
+{
+    if ($failCount < $maxFailedAttempts) {
+        return false;
+    }
+
+    return (time() - $lastFailTime) < $cooldownSeconds;
+}
+
 if (isset($_POST['login_password'])) {
     if (!$configLoaded) {
         $error = 'Configuration file not found. Create admin_config.php before logging in.';
+    } elseif (inCooldown($failCount, $lastFailTime, $maxFailedAttempts, $cooldownSeconds)) {
+        $remaining = max(0, $cooldownSeconds - (time() - $lastFailTime));
+        $error = "Too many failed attempts. Please wait {$remaining} seconds before trying again.";
     } elseif (password_verify($_POST['login_password'], ADMIN_PASSWORD_HASH)) {
         $_SESSION['admin_authenticated'] = true;
+        $_SESSION['fail_count'] = 0;
+        $_SESSION['last_fail_time'] = 0;
         $isAuthenticated = true;
     } else {
+        sleep(1);
+        $failCount++;
+        $_SESSION['fail_count'] = $failCount;
+        $_SESSION['last_fail_time'] = time();
         $error = 'Invalid password.';
     }
 }
@@ -224,6 +252,9 @@ $isAdding = $isAuthenticated && isset($_GET['add']);
     <?php if (!$configLoaded): ?>
         <div class="alert alert-warning">
             <strong>Configuration missing.</strong> Create <code>admin_config.php</code> outside the web root (recommended path: <code><?= h(dirname(__DIR__, 2)) ?>/admin_config.php</code>) based on <code>admin/admin_config.example.php</code>.
+            <div style="margin-top:8px;">
+                <a class="button" href="/admin/setup.php">Run Admin Setup</a>
+            </div>
         </div>
     <?php endif; ?>
 

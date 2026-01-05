@@ -1,4 +1,9 @@
 <?php
+ini_set('session.cookie_httponly', '1');
+if (!empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off') {
+    ini_set('session.cookie_secure', '1');
+}
+
 session_start();
 header('Content-Type: application/json');
 
@@ -21,6 +26,13 @@ if (!empty($file['error'])) {
     exit;
 }
 
+$maxFileSize = 2 * 1024 * 1024; // 2MB
+if (!empty($file['size']) && $file['size'] > $maxFileSize) {
+    http_response_code(400);
+    echo json_encode(['error' => 'File too large. Max 2MB.']);
+    exit;
+}
+
 $allowedExtensions = ['png', 'jpg', 'jpeg', 'svg', 'webp'];
 $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 if (!in_array($extension, $allowedExtensions, true)) {
@@ -29,23 +41,49 @@ if (!in_array($extension, $allowedExtensions, true)) {
     exit;
 }
 
+$finfo = new finfo(FILEINFO_MIME_TYPE);
+$mime = $finfo->file($file['tmp_name']) ?: '';
+
+$allowedMimes = [
+    'png' => ['image/png'],
+    'jpg' => ['image/jpeg'],
+    'jpeg' => ['image/jpeg'],
+    'webp' => ['image/webp'],
+];
+
+if ($extension === 'svg') {
+    $svgContent = file_get_contents($file['tmp_name']);
+    if ($svgContent === false) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid SVG content.']);
+        exit;
+    }
+
+    if (!in_array($mime, ['image/svg+xml', 'text/xml', 'application/xml'], true)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid SVG MIME type.']);
+        exit;
+    }
+
+    if (preg_match('/<\s*script/i', $svgContent) || preg_match('/on[a-z]+\s*=\s*/i', $svgContent)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'SVG contains potentially unsafe content.']);
+        exit;
+    }
+} elseif (!in_array($mime, $allowedMimes[$extension] ?? [], true)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'File MIME type does not match extension.']);
+    exit;
+}
+
 $logosDir = __DIR__ . '/../assets/logos';
 if (!is_dir($logosDir)) {
     mkdir($logosDir, 0777, true);
 }
 
-$baseName = preg_replace('/[^a-zA-Z0-9-_\.]/', '', pathinfo($file['name'], PATHINFO_FILENAME));
-if ($baseName === '') {
-    $baseName = 'logo';
-}
-$targetName = $baseName . '.' . $extension;
+$randomSuffix = bin2hex(random_bytes(4));
+$targetName = 'tool-logo-' . time() . '-' . $randomSuffix . '.' . $extension;
 $targetPath = $logosDir . '/' . $targetName;
-$counter = 1;
-while (file_exists($targetPath)) {
-    $targetName = $baseName . '-' . $counter . '.' . $extension;
-    $targetPath = $logosDir . '/' . $targetName;
-    $counter++;
-}
 
 if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
     http_response_code(500);
