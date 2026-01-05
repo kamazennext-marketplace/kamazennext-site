@@ -142,11 +142,22 @@ if ($isAuthenticated) {
                     throw new RuntimeException('Product name is required.');
                 }
 
+                $existingProduct = null;
+                foreach ($products as $candidate) {
+                    if (($candidate['id'] ?? '') === $originalId) {
+                        $existingProduct = $candidate;
+                        break;
+                    }
+                }
+
                 $pricing = [
                     'model' => trim($_POST['pricing_model'] ?? ''),
                     'starting_price' => $_POST['pricing_starting_price'] !== '' ? (float) $_POST['pricing_starting_price'] : 0,
                     'free_trial' => isset($_POST['pricing_free_trial']),
                 ];
+                $featured = isset($_POST['featured']);
+                $sponsoredRankInput = trim($_POST['sponsored_rank'] ?? '');
+                $sponsoredRank = $sponsoredRankInput === '' ? null : (float) $sponsoredRankInput;
 
                 $platforms = sanitizeList($_POST['platforms'] ?? '');
                 $bestFor = sanitizeList($_POST['best_for'] ?? '');
@@ -170,10 +181,56 @@ if ($isAuthenticated) {
                     'website' => trim($_POST['website'] ?? ''),
                     'logo' => trim($_POST['logo'] ?? ''),
                     'last_updated' => trim($_POST['last_updated'] ?? ''),
+                    'featured' => $featured,
+                    'sponsored_rank' => $sponsoredRank,
+                    'rating' => $existingProduct['rating'] ?? null,
+                    'review_count' => $existingProduct['review_count'] ?? null,
+                    'reviews' => $existingProduct['reviews'] ?? [],
                     'pros' => $pros,
                     'cons' => $cons,
                     'use_cases' => $useCases,
                 ];
+
+                $reviewAuthors = $_POST['review_author'] ?? [];
+                $reviewRatings = $_POST['review_rating'] ?? [];
+                $reviewTitles = $_POST['review_title'] ?? [];
+                $reviewBodies = $_POST['review_body'] ?? [];
+                $reviewPros = $_POST['review_pros'] ?? [];
+                $reviewCons = $_POST['review_cons'] ?? [];
+                $reviewDates = $_POST['review_date'] ?? [];
+                $reviewIds = $_POST['review_id'] ?? [];
+
+                $reviews = [];
+                foreach ($reviewAuthors as $idx => $author) {
+                    $author = trim((string) $author);
+                    $title = trim((string) ($reviewTitles[$idx] ?? ''));
+                    $body = trim((string) ($reviewBodies[$idx] ?? ''));
+                    $ratingValue = isset($reviewRatings[$idx]) && $reviewRatings[$idx] !== '' ? (float) $reviewRatings[$idx] : null;
+                    $date = trim((string) ($reviewDates[$idx] ?? ''));
+
+                    if ($author === '' && $title === '' && $body === '') {
+                        continue;
+                    }
+
+                    $ratingValue = $ratingValue !== null ? max(1, min(5, $ratingValue)) : null;
+                    $reviews[] = [
+                        'id' => trim((string) ($reviewIds[$idx] ?? '')) ?: uniqid('rev-', true),
+                        'author' => $author,
+                        'rating' => $ratingValue,
+                        'title' => $title,
+                        'body' => $body,
+                        'pros' => sanitizeList($reviewPros[$idx] ?? ''),
+                        'cons' => sanitizeList($reviewCons[$idx] ?? ''),
+                        'date' => $date,
+                    ];
+                }
+
+                if ($reviews) {
+                    $total = array_reduce($reviews, fn($carry, $review) => $carry + ((float) ($review['rating'] ?? 0)), 0);
+                    $productData['rating'] = round($total / count($reviews), 1);
+                    $productData['review_count'] = count($reviews);
+                }
+                $productData['reviews'] = $reviews;
 
                 $editingIndex = null;
                 foreach ($products as $index => $existing) {
@@ -287,6 +344,7 @@ $isAdding = $isAuthenticated && isset($_GET['add']);
                         <th>Category</th>
                         <th>Pricing Model</th>
                         <th>API</th>
+                        <th>Featured/Sponsored</th>
                         <th>Updated</th>
                         <th></th>
                     </tr>
@@ -298,6 +356,7 @@ $isAdding = $isAuthenticated && isset($_GET['add']);
                             <td><?= h($product['category'] ?? '') ?></td>
                             <td><?= h($product['pricing']['model'] ?? '') ?></td>
                             <td><?= !empty($product['api']) ? 'Yes' : 'No' ?></td>
+                            <td><?= !empty($product['sponsored_rank']) ? 'Sponsored (#'.h($product['sponsored_rank']).')' : (!empty($product['featured']) ? 'Featured' : '') ?></td>
                             <td><?= h($product['last_updated'] ?? '') ?></td>
                             <td class="row-actions">
                                 <a class="link" href="?edit=<?= urlencode($product['id']) ?>">Edit</a>
@@ -329,6 +388,11 @@ $isAdding = $isAuthenticated && isset($_GET['add']);
                 'website' => '',
                 'logo' => '',
                 'last_updated' => '',
+                'featured' => false,
+                'sponsored_rank' => '',
+                'rating' => '',
+                'review_count' => '',
+                'reviews' => [],
                 'pros' => [],
                 'cons' => [],
                 'use_cases' => [],
@@ -367,9 +431,34 @@ $isAdding = $isAuthenticated && isset($_GET['add']);
                         <input type="file" id="logoFile" accept="image/png,image/jpeg,image/svg+xml,image/webp" style="display:none">
                     </label>
                     <label>Last Updated<input type="date" name="last_updated" value="<?= h($formData['last_updated']) ?>"></label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="featured" <?= !empty($formData['featured']) ? 'checked' : '' ?>> Featured
+                    </label>
+                    <label>Sponsored Rank<input type="number" name="sponsored_rank" step="1" min="1" value="<?= h($formData['sponsored_rank'] ?? '') ?>" placeholder="Lower shows first"></label>
                     <label>Pros (comma separated)<input type="text" name="pros" value="<?= h(implode(', ', $formData['pros'] ?? [])) ?>"></label>
                     <label>Cons (comma separated)<input type="text" name="cons" value="<?= h(implode(', ', $formData['cons'] ?? [])) ?>"></label>
                     <label>Use Cases (comma separated)<input type="text" name="use_cases" value="<?= h(implode(', ', $formData['use_cases'] ?? [])) ?>"></label>
+
+                    <div style="grid-column: 1 / -1; margin-top: 10px;">
+                        <h3>Reviews</h3>
+                        <p class="meta" style="margin-bottom:8px;">Curated reviews power on-site badges and aggregate rating.</p>
+                        <div id="reviewsList" class="form-grid" style="gap:12px;">
+                            <?php foreach (($formData['reviews'] ?? []) as $review): ?>
+                                <div class="review-item" style="border:1px solid #e2e8f0; border-radius:10px; padding:12px;">
+                                    <input type="hidden" name="review_id[]" value="<?= h($review['id'] ?? '') ?>">
+                                    <label>Author<input type="text" name="review_author[]" value="<?= h($review['author'] ?? '') ?>"></label>
+                                    <label>Rating (1-5)<input type="number" step="0.1" min="1" max="5" name="review_rating[]" value="<?= h($review['rating'] ?? '') ?>"></label>
+                                    <label>Title<input type="text" name="review_title[]" value="<?= h($review['title'] ?? '') ?>"></label>
+                                    <label style="grid-column:1 / -1;">Body<textarea name="review_body[]" rows="2" style="width:100%; padding:8px; border-radius:8px; border:1px solid #e2e8f0; font: inherit;"><?= h($review['body'] ?? '') ?></textarea></label>
+                                    <label>Pros (comma)<input type="text" name="review_pros[]" value="<?= h(implode(', ', $review['pros'] ?? [])) ?>"></label>
+                                    <label>Cons (comma)<input type="text" name="review_cons[]" value="<?= h(implode(', ', $review['cons'] ?? [])) ?>"></label>
+                                    <label>Date<input type="date" name="review_date[]" value="<?= h($review['date'] ?? '') ?>"></label>
+                                    <button type="button" class="button secondary remove-review" style="justify-self:start;">Remove</button>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <button type="button" class="button secondary" id="addReviewBtn">Add review</button>
+                    </div>
 
                     <div class="form-actions">
                         <button type="submit" class="button">Save Product</button>
@@ -407,6 +496,43 @@ if (uploadButton && fileInput && logoField) {
             uploadButton.textContent = 'Upload logo';
             fileInput.value = '';
         }
+    });
+}
+
+const reviewsContainer = document.getElementById('reviewsList');
+const addReviewBtn = document.getElementById('addReviewBtn');
+
+const buildReviewRow = (data = {}) => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'review-item';
+    wrapper.style.border = '1px solid #e2e8f0';
+    wrapper.style.borderRadius = '10px';
+    wrapper.style.padding = '12px';
+    wrapper.innerHTML = `
+        <input type="hidden" name="review_id[]" value="${data.id || ''}">
+        <label>Author<input type="text" name="review_author[]" value="${data.author || ''}"></label>
+        <label>Rating (1-5)<input type="number" step="0.1" min="1" max="5" name="review_rating[]" value="${data.rating || ''}"></label>
+        <label>Title<input type="text" name="review_title[]" value="${data.title || ''}"></label>
+        <label style="grid-column:1 / -1;">Body<textarea name="review_body[]" rows="2" style="width:100%; padding:8px; border-radius:8px; border:1px solid #e2e8f0; font: inherit;">${data.body || ''}</textarea></label>
+        <label>Pros (comma)<input type="text" name="review_pros[]" value="${(data.pros || []).join(', ')}"></label>
+        <label>Cons (comma)<input type="text" name="review_cons[]" value="${(data.cons || []).join(', ')}"></label>
+        <label>Date<input type="date" name="review_date[]" value="${data.date || ''}"></label>
+        <button type="button" class="button secondary remove-review" style="justify-self:start;">Remove</button>
+    `;
+    const removeBtn = wrapper.querySelector('.remove-review');
+    removeBtn.addEventListener('click', () => wrapper.remove());
+    return wrapper;
+};
+
+if (reviewsContainer && addReviewBtn) {
+    addReviewBtn.addEventListener('click', () => {
+        reviewsContainer.appendChild(buildReviewRow());
+    });
+    reviewsContainer.querySelectorAll('.remove-review').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.review-item');
+            if (item) item.remove();
+        });
     });
 }
 </script>

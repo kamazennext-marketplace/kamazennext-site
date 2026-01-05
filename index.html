@@ -167,6 +167,8 @@
         .catalog-block .badge.category { background: #eef2ff; color: #312e81; }
         .catalog-block .badge.api { background: #ecfeff; color: #155e75; }
         .catalog-block .badge.pricing { background: #fef3c7; color: #92400e; }
+        .catalog-block .badge.featured-label { background: #e0f2fe; color: #0ea5e9; }
+        .catalog-block .badge.sponsored-label { background: #fef3c7; color: #b45309; }
         .catalog-block .actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
         .catalog-block .cta-button { background: linear-gradient(135deg, var(--primary), #a855f7); color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; border: none; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
         .catalog-block .secondary-link { color: #4f46e5; font-weight: 700; text-decoration: none; }
@@ -618,7 +620,7 @@
                         <li><a href="/contact.html">Contact</a></li>
                     </ul>
                 </nav>
-                <a href="/sell.html" class="cta-button">Submit a tool (Coming soon)</a>
+                <a href="/submit-tool.html" class="cta-button">Submit a tool (Coming soon)</a>
             </div>
         </div>
     </header>
@@ -650,6 +652,19 @@
                 <a class="secondary-link" href="/software.html">View all products</a>
             </div>
             <div class="homeGrid" id="categoryGrid"></div>
+        </div>
+    </section>
+
+    <section class="categories" style="background: #f8fafc; padding-top: 0;">
+        <div class="container catalog-block" id="featuredSection">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Featured Tools</h2>
+                    <p class="section-subtitle">Sponsored and curated listings from our team.</p>
+                </div>
+                <a class="secondary-link" href="/software.html">Browse catalog</a>
+            </div>
+            <div class="homeGrid" id="featuredGrid"></div>
         </div>
     </section>
 
@@ -1098,12 +1113,15 @@ docker run -d --name kama-ai-bot \
             loadProducts,
             getCategories,
             getTrending,
+            getFeatured,
             pickBestInCategory,
             urlForCategory,
             urlForProduct
         } from '/assets/js/catalog.js';
 
         const categoryGrid = document.getElementById('categoryGrid');
+        const featuredGrid = document.getElementById('featuredGrid');
+        const featuredSection = document.getElementById('featuredSection');
         const trendingGrid = document.getElementById('trendingGrid');
         const bestByCategory = document.getElementById('bestByCategory');
 
@@ -1117,6 +1135,12 @@ docker run -d --name kama-ai-bot \
             if (!pricing || !pricing.model) return null;
             const label = pricing.model.replace(/-/g, ' ');
             return label.charAt(0).toUpperCase() + label.slice(1);
+        };
+
+        const promoLabel = (product) => {
+            if (product?.sponsored_rank !== undefined) return '<span class="badge sponsored-label">Sponsored</span>';
+            if (product?.featured) return '<span class="badge featured-label">Featured</span>';
+            return '';
         };
 
         const renderCategories = (products) => {
@@ -1134,6 +1158,40 @@ docker run -d --name kama-ai-bot \
                     <span style="color:#cbd5e1; font-size:1.1rem;">➜</span>
                 `;
                 categoryGrid.appendChild(tile);
+            });
+        };
+
+        const renderFeatured = (products) => {
+            const featured = getFeatured(products);
+            if (!featuredSection) return;
+            if (!featured.length) { featuredSection.style.display = 'none'; return; }
+            featuredGrid.innerHTML = '';
+            featured.forEach((product) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const pricingLabel = buildPricingLabel(product.pricing);
+                card.innerHTML = `
+                    <div style="display:flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+                        <div>
+                            <h3>${product.name}</h3>
+                            <p class="meta">${product.tagline || ''}</p>
+                        </div>
+                        <div style="display:flex; flex-direction: column; gap: 6px; align-items: flex-end;">
+                            ${promoLabel(product)}
+                            <div style="display:flex; gap:6px; flex-wrap: wrap; justify-content: flex-end;">
+                                <span class="badge category">${product.category || 'Software'}</span>
+                                ${pricingLabel ? `<span class="badge pricing">${pricingLabel}</span>` : ''}
+                                ${product.api ? '<span class="badge api">API</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meta">Updated ${formatDate(product.last_updated)}</div>
+                    <div class="actions">
+                        <a class="cta-button" href="${urlForProduct(product.id)}">View</a>
+                        <a class="secondary-link" href="${product.website || urlForProduct(product.id)}" target="_blank" rel="noopener">Visit site</a>
+                    </div>
+                `;
+                featuredGrid.appendChild(card);
             });
         };
 
@@ -1220,6 +1278,7 @@ docker run -d --name kama-ai-bot \
         loadProducts()
             .then((products) => {
                 renderCategories(products);
+                renderFeatured(products);
                 renderTrending(products);
                 renderBestByCategory(products);
             })

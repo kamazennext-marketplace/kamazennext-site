@@ -38,6 +38,8 @@
     .badge.category { background: #eef2ff; color: #312e81; }
     .badge.api { background: #ecfeff; color: #155e75; }
     .badge.pricing { background: #fef3c7; color: #92400e; }
+    .badge.featured-label { background: #e0f2fe; color: #0ea5e9; }
+    .badge.sponsored-label { background: #fef3c7; color: #b45309; }
     .platforms, .meta { color: var(--muted); font-size: 0.9rem; }
     .card h3 { margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
     .tagline { color: var(--muted); margin: 0; }
@@ -61,7 +63,7 @@
         <a href="/ai-assistant.html">AI Assistant</a>
         <a href="/contact.html">Contact</a>
       </nav>
-      <a class="cta" href="/sell.html">Submit a tool (Coming soon)</a>
+      <a class="cta" href="/submit-tool.html">Submit a tool (Coming soon)</a>
     </div>
   </header>
 
@@ -107,6 +109,12 @@
           <option value="name">Name</option>
         </select>
       </div>
+      <div>
+        <label for="featuredOnly">Featured</label>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <input id="featuredOnly" type="checkbox"> <span class="meta">Featured only</span>
+        </div>
+      </div>
     </div>
 
     <div class="count" id="count"></div>
@@ -123,6 +131,7 @@
     const pricingSelect = document.getElementById('pricing');
     const apiSelect = document.getElementById('api');
     const sortSelect = document.getElementById('sort');
+    const featuredCheckbox = document.getElementById('featuredOnly');
 
     const slugify = (str) => (str || '').toString().toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
@@ -132,7 +141,8 @@
       cat: params.get('cat') || 'all',
       pricing: params.get('pricing') || 'all',
       api: params.get('api') || 'all',
-      sort: params.get('sort') || 'recent'
+      sort: params.get('sort') || 'recent',
+      featured: params.get('featured') === '1'
     };
 
     searchInput.value = state.q;
@@ -140,6 +150,7 @@
     pricingSelect.value = state.pricing;
     apiSelect.value = state.api;
     sortSelect.value = state.sort;
+    featuredCheckbox.checked = state.featured;
 
     let products = [];
 
@@ -168,9 +179,16 @@
       if (state.pricing !== 'all') newParams.set('pricing', state.pricing);
       if (state.api !== 'all') newParams.set('api', state.api);
       if (state.sort !== 'recent') newParams.set('sort', state.sort);
+      if (state.featured) newParams.set('featured', '1');
       const qs = newParams.toString();
       const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
       history.replaceState({}, '', newUrl);
+    };
+
+    const promoLabel = (product) => {
+      if (product?.sponsored_rank !== undefined) return '<span class="badge sponsored-label">Sponsored</span>';
+      if (product?.featured) return '<span class="badge featured-label">Featured</span>';
+      return '';
     };
 
     const formatPricing = (p) => {
@@ -188,6 +206,7 @@
         .filter(p => state.cat === 'all' || p.category === state.cat)
         .filter(p => state.pricing === 'all' || (p.pricing && p.pricing.model === state.pricing))
         .filter(p => state.api === 'all' || (state.api === 'yes' ? p.api : !p.api))
+        .filter(p => !state.featured || p.featured || p.sponsored_rank !== undefined)
         .sort((a, b) => {
           if (state.sort === 'name') return a.name.localeCompare(b.name);
           return new Date(b.last_updated) - new Date(a.last_updated);
@@ -213,6 +232,7 @@
           <div class="actions">
             <a class="badge category" href="${catLink}"><i class="fa-solid fa-tag"></i> ${p.category}</a>
             <span class="badge pricing">${p.pricing ? p.pricing.model : 'Pricing'}</span>
+            ${promoLabel(p)}
           </div>
           <h3><a href="/p/${encodeURIComponent(p.id)}">${p.name}</a></h3>
           <p class="tagline">${p.tagline || ''}</p>
@@ -236,6 +256,7 @@
       pricingSelect.addEventListener('change', (e) => { state.pricing = e.target.value; updateQuery(); renderProducts(); });
       apiSelect.addEventListener('change', (e) => { state.api = e.target.value; updateQuery(); renderProducts(); });
       sortSelect.addEventListener('change', (e) => { state.sort = e.target.value; updateQuery(); renderProducts(); });
+      featuredCheckbox.addEventListener('change', (e) => { state.featured = e.target.checked; updateQuery(); renderProducts(); });
     };
 
     const populateCategories = () => {

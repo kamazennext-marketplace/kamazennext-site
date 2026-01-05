@@ -12,8 +12,42 @@
     "integrations": ["HubSpot", "Salesforce", "Snowflake"],
     "website": "https://example.com/analytics",
     "logo": "https://dummyimage.com/80x80/6366f1/ffffff&text=ZA",
+    "featured": true,
+    "sponsored_rank": 1,
     "rating": 4.7,
-    "review_count": 184,
+    "review_count": 3,
+    "reviews": [
+      {
+        "id": "za-r1",
+        "author": "Priya K.",
+        "rating": 5,
+        "title": "Executive dashboards in a week",
+        "body": "We replaced three BI tools and shipped board-ready dashboards without engineering rework.",
+        "pros": ["Fast setup", "Great templates"],
+        "cons": ["Needs more PDF export options"],
+        "date": "2025-01-08"
+      },
+      {
+        "id": "za-r2",
+        "author": "Marcus L.",
+        "rating": 4,
+        "title": "Governance that satisfies security",
+        "body": "RBAC and audit history helped us pass internal reviews. We just want SOC 2 docs directly in app.",
+        "pros": ["RBAC", "Audit logs"],
+        "cons": ["Docs hard to find"],
+        "date": "2024-12-14"
+      },
+      {
+        "id": "za-r3",
+        "author": "Emily Z.",
+        "rating": 5,
+        "title": "Best UI for revenue analytics",
+        "body": "Attribution models are easy to compare. Support team replies within the same day.",
+        "pros": ["Attribution", "Support"],
+        "cons": [],
+        "date": "2024-11-28"
+      }
+    ],
     "last_updated": "2024-12-18",
     "pros": ["Flexible dashboard builder", "Strong governance controls", "Great customer support"],
     "cons": ["Setup requires data engineer", "Limited offline access"],
@@ -36,8 +70,31 @@
     "integrations": ["Zendesk", "Intercom", "Slack"],
     "website": "https://example.com/assist",
     "logo": "https://dummyimage.com/80x80/22c55e/ffffff&text=AS",
+    "featured": true,
     "rating": 4.6,
-    "review_count": 142,
+    "review_count": 2,
+    "reviews": [
+      {
+        "id": "as-r1",
+        "author": "Nate R.",
+        "rating": 5,
+        "title": "Instant deflection wins",
+        "body": "Bot-to-agent routing feels natural and our deflection rate improved 18% in two weeks.",
+        "pros": ["Fast answers", "Great routing"],
+        "cons": ["Analytics UI could be clearer"],
+        "date": "2025-01-02"
+      },
+      {
+        "id": "as-r2",
+        "author": "Hannah D.",
+        "rating": 4,
+        "title": "Solid AI support sidekick",
+        "body": "Knowledge syncs are reliable. Would love a built-in tone checker for responses.",
+        "pros": ["Reliable sync", "Good handoffs"],
+        "cons": ["Needs more tone controls"],
+        "date": "2024-12-18"
+      }
+    ],
     "last_updated": "2025-01-05",
     "pros": ["Fast responses", "Simple admin setup"],
     "cons": ["Limited brand voice controls"],
@@ -56,8 +113,31 @@
     "integrations": ["Zapier", "Make", "Notion"],
     "website": "https://example.com/studio",
     "logo": "https://dummyimage.com/80x80/f97316/ffffff&text=WS",
+    "featured": true,
     "rating": 4.5,
-    "review_count": 203,
+    "review_count": 2,
+    "reviews": [
+      {
+        "id": "ws-r1",
+        "author": "Tanya S.",
+        "rating": 5,
+        "title": "Great for experimentation",
+        "body": "Drag-and-drop builder makes it easy to A/B flows before handing off to engineering.",
+        "pros": ["Versioning", "Quick testing"],
+        "cons": [],
+        "date": "2024-12-01"
+      },
+      {
+        "id": "ws-r2",
+        "author": "Leo F.",
+        "rating": 4,
+        "title": "Solid automation starter",
+        "body": "Webhooks are reliable. I wish there were more enterprise auth providers out-of-the-box.",
+        "pros": ["Reliable webhooks", "Clear logging"],
+        "cons": ["Needs more SSO options"],
+        "date": "2024-11-10"
+      }
+    ],
     "last_updated": "2024-11-30",
     "use_cases": ["Customer onboarding", "Finance automations"],
     "screenshots": ["https://dummyimage.com/600x360/fff7ed/0f172a&text=Workflow+Builder"]
@@ -75,8 +155,31 @@
     "integrations": ["Okta", "Datadog", "PagerDuty"],
     "website": "https://example.com/guard",
     "logo": "https://dummyimage.com/80x80/ef4444/ffffff&text=MG",
+    "sponsored_rank": 2,
     "rating": 4.8,
-    "review_count": 96,
+    "review_count": 2,
+    "reviews": [
+      {
+        "id": "mg-r1",
+        "author": "Allison P.",
+        "rating": 5,
+        "title": "Compliance ready out of the box",
+        "body": "Policies shipped with sane defaults let us clear a security review in a day.",
+        "pros": ["Policy packs", "Easy audit exports"],
+        "cons": ["UI is dense"],
+        "date": "2024-12-04"
+      },
+      {
+        "id": "mg-r2",
+        "author": "Roberto Q.",
+        "rating": 4,
+        "title": "Great guardrails for prototypes",
+        "body": "Prompt filtering is strict enough for pilots. Alerts could group by service better.",
+        "pros": ["Prompt filters", "Good logging"],
+        "cons": ["Alert noise"],
+        "date": "2024-11-27"
+      }
+    ],
     "last_updated": "2024-12-02"
   },
   {
@@ -109,6 +212,7 @@
     "integrations": ["Twilio", "Salesforce", "HubSpot"],
     "website": "https://example.com/voice",
     "logo": "https://dummyimage.com/80x80/0ea5e9/ffffff&text=VO",
+    "featured": true,
     "rating": 4.3,
     "review_count": 122,
     "last_updated": "2024-11-15"
@@ -126,6 +230,7 @@
     "integrations": ["BigQuery", "Redshift", "Snowflake"],
     "website": "https://example.com/datahub",
     "logo": "https://dummyimage.com/80x80/a855f7/ffffff&text=DH",
+    "sponsored_rank": 3,
     "rating": 4.6,
     "review_count": 74,
     "last_updated": "2024-12-28"
@@ -160,6 +265,7 @@
     "integrations": ["GitLab", "PagerDuty", "Datadog"],
     "website": "https://example.com/devops-copilot",
     "logo": "https://dummyimage.com/80x80/2563eb/ffffff&text=DC",
+    "featured": true,
     "rating": 4.5,
     "review_count": 165,
     "last_updated": "2024-12-08"
