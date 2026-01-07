@@ -13,6 +13,7 @@ ErrorDocument 404 /404.html
   RewriteEngine On
   RewriteCond %{HTTP_HOST} ^www\.kamazennext\.com$ [NC]
   RewriteRule ^(.*)$ https://kamazennext.com/$1 [L,R=301]
+  RewriteRule ^best/([a-z0-9-]+)-tools/?$ /best/category.html?c=$1 [L,QSA]
 </IfModule>
 
 # Enable gzip/deflate compression for text assets
