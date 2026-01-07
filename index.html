@@ -191,40 +191,22 @@
         </div>
     </section>
 
-    <!-- SOFTWARE CATEGORIES -->
-    <section class="categories" id="software">
+    <section class="section">
         <div class="container">
-            <h2 class="section-title">📁 Software Marketplace</h2>
-            <p class="section-subtitle">Browse by category. Click any category to filter.</p>
-            
-            <div class="category-filters">
-                <div class="cat-filter active" data-filter="all">All Software</div>
-                <div class="cat-filter" data-filter="finance">Financial</div>
-                <div class="cat-filter" data-filter="cybersecurity">Cybersecurity</div>
-                <div class="cat-filter" data-filter="crm">CRM</div>
-                <div class="cat-filter" data-filter="ai">AI Tools</div>
+            <div class="section-head">
+                <h2>Featured tools</h2>
+                <p class="muted">A quick preview. Browse the full marketplace to filter and compare.</p>
             </div>
-            
-            <div class="software-grid" id="softwareGrid">
-                <!-- Software cards will be loaded here by JavaScript -->
-            </div>
-            
-            <!-- In-content ad placement -->
-            <div class="ad-placeholder" style="margin: 2rem auto; max-width: 728px;">
-                <span class="ad-label">Premium Software Showcase</span>
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), var(--primary2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white;">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                    <div>
-                        <h4 style="color: var(--text); margin-bottom: 0.5rem;">Enterprise Security Suite</h4>
-                        <p style="color: var(--muted); font-size: 0.9rem;">Advanced protection for businesses. Special offer: 30% off for KAMA users.</p>
-                        <button onclick="trackAdClick('security_suite')" style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; margin-top: 0.5rem;">Learn More</button>
-                    </div>
-                </div>
+
+            <div id="homeProducts" class="products-grid"></div>
+
+            <div class="section-cta">
+                <a class="btn btn-primary" href="/software.html">Browse all products</a>
             </div>
         </div>
     </section>
+
+    <script src="/assets/js/home-products.js" defer></script>
 
     <!-- OPEN SOURCE AI BOT SECTION -->
     <section class="categories" id="open-source">
