@@ -23,13 +23,13 @@
     if (!drawer || !menuBtn || !menuClose) return false;
 
     const openDrawer = () => {
-      drawer.style.display = 'flex';
+      drawer.classList.add('open');
       drawer.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     };
 
     const closeDrawer = () => {
-      drawer.style.display = 'none';
+      drawer.classList.remove('open');
       drawer.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     };
