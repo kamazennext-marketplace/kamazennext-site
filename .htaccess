@@ -9,6 +9,12 @@ ErrorDocument 404 /404.html
 </IfModule>
 # php -- END cPanel-generated handler, do not edit
 
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.kamazennext\.com$ [NC]
+  RewriteRule ^(.*)$ https://kamazennext.com/$1 [L,R=301]
+</IfModule>
+
 # Enable gzip/deflate compression for text assets
 <IfModule mod_deflate.c>
   <IfModule mod_filter.c>
