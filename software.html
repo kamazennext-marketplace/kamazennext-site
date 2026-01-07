@@ -36,68 +36,72 @@
         <p>Filter, compare, and discover software faster.</p>
       </section>
 
-      <div id="categoryChips" class="chip-row" aria-label="Popular categories"></div>
+      <section class="section band">
+        <div id="categoryChips" class="chip-row" aria-label="Popular categories"></div>
 
-      <!-- REVIEW: Sticky filters must remain usable on mobile; avoid horizontal overflow. -->
-      <form id="filtersForm" class="card sticky-filters" autocomplete="off">
-        <div class="filters-row">
-          <div>
-            <label class="muted" for="searchInput">Search</label>
-            <input id="searchInput" name="q" type="search" placeholder="Search by name or tagline">
-          </div>
-          <div>
-            <label class="muted" for="categorySelect">Category</label>
-            <select id="categorySelect" name="cat">
-              <option value="all">All</option>
-            </select>
-          </div>
-          <div>
-            <label class="muted" for="pricingSelect">Pricing</label>
-            <select id="pricingSelect" name="pricing">
-              <option value="all">All</option>
-              <option value="free">Free</option>
-              <option value="freemium">Freemium</option>
-              <option value="paid">Paid</option>
-            </select>
-          </div>
-          <div>
-            <label class="muted" for="apiToggle">API</label>
-            <div class="toggle-row">
-              <input id="apiToggle" name="api" type="checkbox" value="1">
-              <span class="muted">API only</span>
+        <!-- REVIEW: Sticky filters must remain usable on mobile; avoid horizontal overflow. -->
+        <form id="filtersForm" class="card sticky-filters" autocomplete="off">
+          <div class="filters-row">
+            <div>
+              <label class="muted" for="searchInput">Search</label>
+              <input id="searchInput" name="q" type="search" placeholder="Search by name or tagline">
+            </div>
+            <div>
+              <label class="muted" for="categorySelect">Category</label>
+              <select id="categorySelect" name="cat">
+                <option value="all">All</option>
+              </select>
+            </div>
+            <div>
+              <label class="muted" for="pricingSelect">Pricing</label>
+              <select id="pricingSelect" name="pricing">
+                <option value="all">All</option>
+                <option value="free">Free</option>
+                <option value="freemium">Freemium</option>
+                <option value="paid">Paid</option>
+              </select>
+            </div>
+            <div>
+              <label class="muted" for="apiToggle">API</label>
+              <div class="toggle-row">
+                <input id="apiToggle" name="api" type="checkbox" value="1">
+                <span class="muted">API only</span>
+              </div>
+            </div>
+            <div>
+              <label class="muted" for="sortSelect">Sort</label>
+              <select id="sortSelect" name="sort">
+                <option value="featured">Featured</option>
+                <option value="newest">Newest</option>
+                <option value="name_az">Name (A-Z)</option>
+              </select>
+            </div>
+            <div>
+              <label class="muted" for="perSelect">Per page</label>
+              <select id="perSelect" name="per">
+                <option value="12">12</option>
+                <option value="24">24</option>
+                <option value="48">48</option>
+              </select>
+            </div>
+            <div>
+              <label class="muted">Reset</label>
+              <button class="btn" type="button" id="clearFilters">Clear</button>
             </div>
           </div>
-          <div>
-            <label class="muted" for="sortSelect">Sort</label>
-            <select id="sortSelect" name="sort">
-              <option value="featured">Featured</option>
-              <option value="newest">Newest</option>
-              <option value="name_az">Name (A-Z)</option>
-            </select>
-          </div>
-          <div>
-            <label class="muted" for="perSelect">Per page</label>
-            <select id="perSelect" name="per">
-              <option value="12">12</option>
-              <option value="24">24</option>
-              <option value="48">48</option>
-            </select>
-          </div>
-          <div>
-            <label class="muted">Reset</label>
-            <button class="btn" type="button" id="clearFilters">Clear</button>
-          </div>
+        </form>
+      </section>
+
+      <section class="section">
+        <div class="results-row">
+          <div class="count" id="resultsCount">Showing 0 of 0 tools</div>
+          <div class="pager" id="pagerTop"></div>
         </div>
-      </form>
 
-      <div class="results-row">
-        <div class="count" id="resultsCount">Showing 0 of 0 tools</div>
-        <div class="pager" id="pagerTop"></div>
-      </div>
-
-      <!-- REVIEW: productsGrid must be the only render root for product cards. -->
-      <div id="productsGrid" class="products-grid"></div>
-      <div class="empty card" id="emptyState" style="display:none;">No products found. Try adjusting your filters.</div>
+        <!-- REVIEW: productsGrid must be the only render root for product cards. -->
+        <div id="productsGrid" class="products-grid"></div>
+        <div class="empty card" id="emptyState" style="display:none;">No products found. Try adjusting your filters.</div>
+      </section>
     </main>
 
   <script src="/assets/js/software-page.js" defer></script>
