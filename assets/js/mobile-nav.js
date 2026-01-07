@@ -1,12 +1,25 @@
+/**
+ * PURPOSE:
+ * - Handle the legacy mobile drawer open/close interactions.
+ *
+ * DEPENDS ON:
+ * - #hamburger
+ * - #menuClose
+ * - #mobileMenu
+ *
+ * NOTES:
+ * - Keep IDs unique. Rendering twice = duplicate sections.
+ * - Log failures to console for debugging (never silent).
+ */
 (function(){
   let initialized = false;
 
   const initNav = () => {
     if (initialized) return true;
 
-    const menuBtn = document.getElementById('menuBtn');
+    const menuBtn = document.getElementById('hamburger');
     const menuClose = document.getElementById('menuClose');
-    const drawer = document.getElementById('mobileDrawer');
+    const drawer = document.getElementById('mobileMenu');
     if (!drawer || !menuBtn || !menuClose) return false;
 
     const openDrawer = () => {

@@ -27,14 +27,25 @@
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" onload="this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet"></noscript>
+    <!-- JS order:
+      - nav.js first (header interactions)
+      - render scripts after DOM ready (use defer)
+    -->
+    <script src="/assets/js/nav.js" defer></script>
     <script src="/assets/js/header.js" defer></script>
     <script src="/assets/js/mobile-nav.js" defer></script>
     <script src="/assets/js/security.js"></script>
 </head>
 <body>
+    <!-- HEADER
+      - Sticky header shared across pages
+      - Mobile menu handled by /assets/js/nav.js
+    -->
     <div id="site-header"></div>
 
-    <!-- HERO SECTION -->
+    <!-- HERO
+      - Keep copy short for above-the-fold performance
+    -->
     <section class="hero" id="home">
         <div class="container hero-grid">
             <div>
@@ -178,11 +189,9 @@
         </div>
     </section>
 
-    <!--
-    FEATURED TOOLS (Homepage)
-    - This section intentionally shows a small preview (6 items) to push users to /software.html
-    - Keep only ONE #homeProducts container on the page (IDs must be unique)
-    - Data comes from the same source as /software.html to avoid duplicates/inconsistency
+    <!-- FEATURED TOOLS
+      - Rendered by /assets/js/home-products.js
+      - IMPORTANT: Only ONE #homeProducts on the page
     -->
     <section class="section">
         <div class="container">
@@ -349,6 +358,9 @@ docker run -d --name kama-ai-bot \
     </section>
 
     <!-- FOOTER -->
+    <!-- FOOTER
+      - Links to legal pages + sitemap
+    -->
     <footer>
         <div class="container">
             <div class="footer-logo">
@@ -962,6 +974,9 @@ docker run -d --name kama-ai-bot \
                                 this.addMessage("I'm having trouble processing that. Could you rephrase?", false);
                             }
                             return;
+                        } else {
+                            // Always log status/body so production failures can be debugged quickly.
+                            console.error("API failed", { status: response.status, body: await response.text() });
                         }
                     }
                     
@@ -1003,6 +1018,9 @@ docker run -d --name kama-ai-bot \
     responseDiv.innerHTML = formatAIResponse(data.reply);
     return;
 }
+                        } else {
+                            // Always log status/body so production failures can be debugged quickly.
+                            console.error("API failed", { status: response.status, body: await response.text() });
                         }
                     }
                     
