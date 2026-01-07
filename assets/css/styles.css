@@ -242,22 +242,65 @@ textarea{min-height:120px; padding:12px 14px; resize:vertical;}
 .grid{ display:grid; gap:16px; }
 @media (max-width: 900px){ .grid.cols-3{ grid-template-columns:1fr !important; } }
 
-.sticky-filters{ position:sticky; top:74px; z-index:10; }
 .muted{ color: var(--muted); }
-/* Featured tools grid — used on homepage and can be reused elsewhere */
 /* ==========================
-   Product Cards
-   - Shared across homepage + software listing
+   Marketplace listing (Products page)
    ========================== */
-.products-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; }
-/* Product card layout — keep spacing and badges consistent across site */
-.product-card{ padding:16px; }
-.pc-top{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+.sticky-filters{ position:sticky; top:72px; z-index:20; padding:14px; background: var(--surface); }
+@media(max-width:700px){ .sticky-filters{ top:64px; } }
+
+.filters-row{
+  display:grid;
+  grid-template-columns: 1.2fr 1fr 1fr auto 1fr auto auto;
+  gap:10px;
+  align-items:center;
+}
+.toggle-row{ display:flex; align-items:center; gap:8px; }
+/* REVIEW: make filters stack on small screens to prevent overflow */
+@media(max-width:900px){ .filters-row{ grid-template-columns: 1fr 1fr; } }
+@media(max-width:600px){ .filters-row{ grid-template-columns: 1fr; } }
+
+.products-grid{
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:16px;
+  margin-top:14px;
+}
+@media(max-width:1000px){ .products-grid{ grid-template-columns: repeat(2,1fr); } }
+@media(max-width:700px){ .products-grid{ grid-template-columns: 1fr; } }
+
+.product-card{ padding:16px; display:flex; flex-direction:column; gap:10px; }
+.pc-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.pc-badges{ display:flex; gap:8px; flex-wrap:wrap; }
 .pc-actions{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
-.badge-soft{ background: rgba(109,40,217,0.08); border-color: rgba(109,40,217,0.18); color: #4c1d95; }
-@media (max-width: 1000px){ .products-grid{ grid-template-columns: repeat(2, 1fr); } }
-/* NOTE: 700px is the mobile breakpoint used site-wide. Keep consistent. */
-@media (max-width: 700px){ .products-grid{ grid-template-columns: 1fr; } .sticky-filters{ top:64px; } }
+.meta-row{ display:flex; gap:12px; flex-wrap:wrap; color: var(--muted); font-size:0.9rem; }
+.meta{ color: var(--muted); }
+
+.badge-soft{
+  background: var(--primarySoft);
+  border-color: rgba(109,40,217,0.22);
+  color: #4c1d95;
+}
+.badge-green{
+  background: var(--greenSoft);
+  border-color: rgba(16,185,129,0.28);
+  color: #065f46;
+}
+
+.pc-flag{
+  font-size:12px; font-weight:900;
+  padding:6px 10px; border-radius:999px;
+  border:1px solid var(--border);
+  background: var(--surface2);
+}
+.pc-flag.sponsored{ background: var(--greenSoft); border-color: rgba(16,185,129,0.28); }
+.pc-flag.featured{ background: var(--primarySoft); border-color: rgba(109,40,217,0.22); }
+
+.pager{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:12px; }
+.pager .btn{ height:40px; }
+
+/* REVIEW: consistent focus states for accessibility */
+.btn:focus, input:focus, select:focus, textarea:focus{ outline:none; box-shadow: var(--ring); }
 
 /* Marketplace cards */
 .marketplace-grid{ margin-top: 16px; }

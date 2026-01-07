@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kama ZenNext Products</title>
+  <link rel="canonical" href="/software.html">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260106">
   <link rel="stylesheet" href="/assets/css/theme-light.css?v=20260106">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,25 +15,15 @@
   <script src="/assets/js/mobile-nav.js" defer></script>
   <style>
     main { max-width: var(--maxw); margin: 40px auto 72px; padding: 0 18px; }
-    .page-hero { display: flex; flex-direction: column; gap: 12px; margin: 10px 0 24px; }
+    .page-hero { display: flex; flex-direction: column; gap: 10px; margin: 10px 0 18px; }
     .page-hero h1 { margin: 0; font-size: 2.4rem; letter-spacing: -0.02em; }
     .page-hero p { margin: 0; color: var(--muted); max-width: 780px; }
     .chip-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .chip { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; padding: 8px 12px; font-weight: 700; box-shadow: var(--shadow2); cursor: pointer; transition: all 0.15s ease; }
     .chip:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
     .chip.active { background: var(--primarySoft); color: var(--primary); border-color: rgba(109,40,217,0.25); }
-    .filters { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius2); padding: 16px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); box-shadow: var(--shadow2); }
-    .filters label { display: block; font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; font-weight: 700; letter-spacing: 0.01em; }
-    .filters input, .filters select { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid var(--border); font-size: 0.95rem; background: var(--surface2); color: var(--text); box-shadow: var(--shadow2); }
-    .card h3 { margin: 0; font-size: 1.25rem; }
-    .platforms, .meta, .tagline { color: var(--muted); font-size: 0.95rem; }
-    .tagline { margin: 0; }
-    .meta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; color: var(--muted); font-size: 0.9rem; }
-    .count { color: var(--muted); margin: 16px 0 10px; font-size: 0.95rem; }
-    .empty { background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); padding: 24px; text-align: center; color: var(--muted); margin-top: 20px; box-shadow: var(--shadow2); }
-    .badge.featured-label { background: rgba(16,185,129,0.12); color: #065f46; }
-    .badge.sponsored-label { background: rgba(252,211,77,0.35); color: #92400e; }
-    .compare-btn.remove { background: rgba(239,68,68,0.12); color: #b91c1c; border-color: rgba(239,68,68,0.35); }
+    .empty { border: 1px dashed var(--border); border-radius: var(--radius); padding: 24px; text-align: center; color: var(--muted); margin-top: 20px; box-shadow: var(--shadow2); }
+    .results-row { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top: 16px; flex-wrap:wrap; }
   </style>
   <script src="/assets/js/security.js"></script>
 </head>
@@ -43,58 +34,73 @@
       <section class="page-hero">
         <h1>Browse AI &amp; SaaS tools</h1>
         <p>Filter, compare, and discover software faster.</p>
-        <div class="chip-row" id="categoryChips"></div>
       </section>
 
-      <section class="filters card sticky-filters">
-        <div>
-          <label for="search">Search</label>
-          <input id="search" type="search" placeholder="Search by name or tagline">
-      </div>
-      <div>
-        <label for="category">Category</label>
-        <select id="category">
-          <option value="all">All</option>
-        </select>
-      </div>
-      <div>
-        <label for="pricing">Pricing</label>
-        <select id="pricing">
-          <option value="all">All</option>
-          <option value="freemium">Freemium</option>
-          <option value="subscription">Subscription</option>
-          <option value="usage-based">Usage-based</option>
-        </select>
-      </div>
-      <div>
-        <label for="api">API</label>
-        <select id="api">
-          <option value="all">All</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
-      <div>
-        <label for="sort">Sort</label>
-        <select id="sort">
-          <option value="recent">Recently updated</option>
-          <option value="name">Name</option>
-        </select>
-      </div>
+      <div id="categoryChips" class="chip-row" aria-label="Popular categories"></div>
+
+      <!-- REVIEW: Sticky filters must remain usable on mobile; avoid horizontal overflow. -->
+      <form id="filtersForm" class="card sticky-filters" autocomplete="off">
+        <div class="filters-row">
           <div>
-            <label for="featuredOnly">Featured</label>
-            <div style="display:flex; align-items:center; gap:8px;">
-              <input id="featuredOnly" type="checkbox"> <span class="meta">Featured only</span>
+            <label class="muted" for="searchInput">Search</label>
+            <input id="searchInput" name="q" type="search" placeholder="Search by name or tagline">
+          </div>
+          <div>
+            <label class="muted" for="categorySelect">Category</label>
+            <select id="categorySelect" name="cat">
+              <option value="all">All</option>
+            </select>
+          </div>
+          <div>
+            <label class="muted" for="pricingSelect">Pricing</label>
+            <select id="pricingSelect" name="pricing">
+              <option value="all">All</option>
+              <option value="free">Free</option>
+              <option value="freemium">Freemium</option>
+              <option value="paid">Paid</option>
+            </select>
+          </div>
+          <div>
+            <label class="muted" for="apiToggle">API</label>
+            <div class="toggle-row">
+              <input id="apiToggle" name="api" type="checkbox" value="1">
+              <span class="muted">API only</span>
             </div>
           </div>
-      </section>
+          <div>
+            <label class="muted" for="sortSelect">Sort</label>
+            <select id="sortSelect" name="sort">
+              <option value="featured">Featured</option>
+              <option value="newest">Newest</option>
+              <option value="name_az">Name (A-Z)</option>
+            </select>
+          </div>
+          <div>
+            <label class="muted" for="perSelect">Per page</label>
+            <select id="perSelect" name="per">
+              <option value="12">12</option>
+              <option value="24">24</option>
+              <option value="48">48</option>
+            </select>
+          </div>
+          <div>
+            <label class="muted">Reset</label>
+            <button class="btn" type="button" id="clearFilters">Clear</button>
+          </div>
+        </div>
+      </form>
 
-      <div class="count" id="count"></div>
-      <div class="products-grid" id="productsGrid"></div>
-      <div class="empty" id="emptyState" style="display:none;">No products found. Try adjusting your filters.</div>
+      <div class="results-row">
+        <div class="count" id="resultsCount">Showing 0 of 0 tools</div>
+        <div class="pager" id="pagerTop"></div>
+      </div>
+
+      <!-- REVIEW: productsGrid must be the only render root for product cards. -->
+      <div id="productsGrid" class="products-grid"></div>
+      <div class="empty card" id="emptyState" style="display:none;">No products found. Try adjusting your filters.</div>
     </main>
 
-  <script src="/assets/js/products.js" defer></script>
+  <script src="/assets/js/software-page.js" defer></script>
   <script type="module">
     import { injectBaseSchema } from '/assets/js/seo-schema.js';
     const siteUrl = window.location.origin;
