@@ -210,7 +210,9 @@ textarea{min-height:120px; padding:12px 14px; resize:vertical;}
 
 .sticky-filters{ position:sticky; top:74px; z-index:10; }
 .muted{ color: var(--muted); }
+/* Featured tools grid — used on homepage and can be reused elsewhere */
 .products-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; }
+/* Product card layout — keep spacing and badges consistent across site */
 .product-card{ padding:16px; }
 .pc-top{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
 .pc-actions{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }

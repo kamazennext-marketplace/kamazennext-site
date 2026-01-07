@@ -1,3 +1,15 @@
+/**
+ * home-products.js
+ * Homepage “Featured tools” renderer.
+ *
+ * WHY:
+ * - Avoid hardcoding featured items in HTML.
+ * - Reuse the same product data source as /software.html.
+ *
+ * RULES:
+ * - Only one container with id="homeProducts" should exist on the page.
+ * - Render only a small subset (6) to keep homepage fast.
+ */
 (() => {
   const grid = document.getElementById("homeProducts");
   if (!grid) return;
@@ -58,6 +70,8 @@
     return;
   }
 
+  // Fallback order: try common JSON locations used by the site.
+  // Keep this list short; homepage must remain fast.
   const urls = ["/data/products.json", "/assets/data/products.json", "/products.json"];
   (async () => {
     for (const u of urls) {
@@ -74,7 +88,9 @@
           render(items);
           return;
         }
-      } catch (e) {}
+      } catch (e) {
+        // Fail silently and try next URL so the homepage doesn't break if one path is missing.
+      }
     }
     grid.innerHTML =
       '<div class="card" style="padding:16px">No products loaded. Open <a href="/software.html">Products</a>.</div>';
