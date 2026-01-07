@@ -1,18 +1,25 @@
 /**
- * home-products.js
- * Homepage “Featured tools” renderer.
+ * PURPOSE:
+ * - Render the homepage featured tools grid from product data.
  *
- * WHY:
- * - Avoid hardcoding featured items in HTML.
- * - Reuse the same product data source as /software.html.
+ * DEPENDS ON:
+ * - #homeProducts
+ * - /data/products.json, /assets/data/products.json, /products.json
  *
- * RULES:
- * - Only one container with id="homeProducts" should exist on the page.
- * - Render only a small subset (6) to keep homepage fast.
+ * NOTES:
+ * - Keep IDs unique. Rendering twice = duplicate sections.
+ * - Log failures to console for debugging (never silent).
  */
 (() => {
-  const grid = document.getElementById("homeProducts");
-  if (!grid) return;
+  const root = document.getElementById("homeProducts");
+  if (!root) return;
+
+  // Guard against accidental double-inclusion causing duplicate sections.
+  if (root.dataset.rendered === "1") {
+    console.warn("homeProducts already rendered; skipping duplicate run.");
+    return;
+  }
+  root.dataset.rendered = "1";
 
   const esc = (s = "") =>
     String(s).replace(/[&<>"']/g, (c) => ({
@@ -24,7 +31,7 @@
     })[c]);
 
   const render = (items) => {
-    grid.innerHTML = items
+    root.innerHTML = items
       .slice(0, 6)
       .map((p) => {
         const name = esc(p.name || "Tool");
@@ -77,7 +84,10 @@
     for (const u of urls) {
       try {
         const r = await fetch(u, { cache: "no-store" });
-        if (!r.ok) continue;
+        if (!r.ok) {
+          console.error("Home products fetch failed", { status: r.status, url: u });
+          continue;
+        }
         const data = await r.json();
         const items = Array.isArray(data)
           ? data
@@ -89,10 +99,10 @@
           return;
         }
       } catch (e) {
-        // Fail silently and try next URL so the homepage doesn't break if one path is missing.
+        console.error("Home products fetch error", { error: e, url: u });
       }
     }
-    grid.innerHTML =
+    root.innerHTML =
       '<div class="card" style="padding:16px">No products loaded. Open <a href="/software.html">Products</a>.</div>';
   })();
 })();
