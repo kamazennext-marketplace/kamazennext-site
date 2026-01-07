@@ -32,6 +32,7 @@
   const perSelect = document.getElementById("perSelect");
   const clearBtn = document.getElementById("clearFilters");
   const chipsContainer = document.getElementById("categoryChips");
+  const bestCategoryLink = document.getElementById("bestCategoryLink");
   const countEl = document.getElementById("resultsCount");
   const pagerTop = document.getElementById("pagerTop");
   const emptyState = document.getElementById("emptyState");
@@ -72,6 +73,26 @@
     return raw;
   };
 
+  const toSlug = (value) =>
+    value
+      .toString()
+      .trim()
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+  const updateBestCategoryLink = () => {
+    if (!bestCategoryLink) return;
+    if (state.cat === "all") {
+      bestCategoryLink.textContent = "Browse best tools by category";
+      bestCategoryLink.href = "/best/";
+      return;
+    }
+    bestCategoryLink.textContent = `View best ${state.cat} tools`;
+    bestCategoryLink.href = `/best/${toSlug(state.cat)}-tools`;
+  };
+
   const normalizeProduct = (p) => {
     const pricingStr = p?.pricing?.model || p?.pricing || "—";
     return {
@@ -106,6 +127,7 @@
   apiToggle.checked = state.api;
   sortSelect.value = state.sort;
   perSelect.value = state.per;
+  updateBestCategoryLink();
 
   const getCompareIds = () => {
     try {
@@ -300,6 +322,7 @@
       state.page = 1;
       updateQuery();
       setActiveChip(state.cat);
+      updateBestCategoryLink();
       render();
     });
     pricingSelect.addEventListener("change", (event) => {
@@ -337,6 +360,7 @@
       perSelect.value = state.per;
       updateQuery();
       setActiveChip(state.cat);
+      updateBestCategoryLink();
       render();
     });
   };
