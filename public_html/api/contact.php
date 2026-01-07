@@ -105,7 +105,12 @@ $subject = $SUBJECT_PREFIX . $name;
 $headers = [];
 $headers[] = "MIME-Version: 1.0";
 $headers[] = "Content-Type: text/plain; charset=UTF-8";
-$headers[] = "From: {$FROM_NAME} <no-reply@{$_SERVER['HTTP_HOST']}>";
+$host = $_SERVER['HTTP_HOST'] ?? '';
+$host = preg_replace('/[^a-z0-9.-]/i', '', $host);
+if ($host === '') {
+  $host = 'kamazennext.com';
+}
+$headers[] = "From: {$FROM_NAME} <no-reply@{$host}>";
 $headers[] = "Reply-To: {$safeName} <{$safeEmail}>";
 
 $ok = @mail($TO_EMAIL, $subject, $body, implode("\r\n", $headers));

@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
+// REVIEW: Remove or protect this diagnostic endpoint in production deployments.
 echo json_encode([
   "ok" => true,
   "time" => date('c'),

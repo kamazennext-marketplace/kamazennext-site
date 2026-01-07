@@ -1,45 +1,15 @@
-# Canonical HTTPS + non-www + category routing
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-
-  # Force HTTPS
-  RewriteCond %{HTTPS} !=on
-  RewriteCond %{HTTP_HOST} !^www\. [NC]
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-  # Redirect www -> non-www
-  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
-
-  # Clean category URL -> category.html
-  RewriteRule ^category/([^/]+)/?$ /category.html?slug=$1 [L,QSA,NC]
-</IfModule>
-
-# Custom error pages
-ErrorDocument 403 /403.html
-ErrorDocument 404 /404.html
-
-Redirect 301 /software/software/index.php /software.html
+Options -Indexes
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-
-  # Don’t rewrite real files/dirs
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
-
-  # Allow specific paths
-  RewriteRule ^contact-test\.html$ - [L]
-  RewriteRule ^api/ - [L]
-
-  # Clean product URL -> product.html
-  RewriteRule ^p/([^/]+)/?$ product.html?id=$1 [L,QSA,NC]
+  RewriteRule ^category/?$ /category.html [L]
+  RewriteRule ^category/[^/]+/?$ /category.html [L]
 </IfModule>
 
-<IfModule mod_headers.c>
-  Header always set X-Content-Type-Options "nosniff"
-  Header always set X-Frame-Options "SAMEORIGIN"
-  Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-</IfModule>
+<Files "contact-test.html">
+  Require all denied
+</Files>
+
+<Files "probe.php">
+  Require all denied
+</Files>
