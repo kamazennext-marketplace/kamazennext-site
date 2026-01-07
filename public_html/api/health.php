@@ -21,5 +21,6 @@ echo json_encode([
     'ok' => true,
     'has_key' => $fileHasKey || $envHasKey,
     'time' => gmdate('c'),
+    // REVIEW: Consider omitting PHP version in public responses for reduced fingerprinting.
     'php' => PHP_VERSION,
 ], JSON_UNESCAPED_SLASHES);
