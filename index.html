@@ -90,23 +90,33 @@
     <section class="categories section">
         <div class="container catalog-block">
             <div class="section-header">
-                <div>
-                    <h2 class="section-title">Trending Tools</h2>
-                    <p class="section-subtitle">Freshly updated products across the marketplace.</p>
-                </div>
-                <a class="secondary-link" href="/software.html">Browse more</a>
-            </div>
-            <div class="homeGrid" id="trendingGrid"></div>
-        </div>
-    </section>
-
-    <section class="categories section">
-        <div class="container catalog-block">
-            <div class="section-header">
                 <h2 class="section-title">Best in Automation / Chatbots / Image Generation</h2>
                 <p class="section-subtitle">Hand-picked winners from our catalog.</p>
             </div>
             <div id="bestByCategory"></div>
+        </div>
+    </section>
+
+    <section class="section" id="software">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Marketplace highlights</h2>
+                    <p class="section-subtitle">Explore top tools across finance, security, CRM, and AI.</p>
+                </div>
+                <a class="secondary-link" href="/software.html">View all products</a>
+            </div>
+            <div class="category-filters">
+                <button class="cat-filter active" data-filter="all">All tools</button>
+                <button class="cat-filter" data-filter="finance">Finance</button>
+                <button class="cat-filter" data-filter="cybersecurity">Cybersecurity</button>
+                <button class="cat-filter" data-filter="crm">CRM</button>
+                <button class="cat-filter" data-filter="ai">AI</button>
+            </div>
+            <div class="products-grid marketplace-grid" id="softwareGrid"></div>
+            <div class="section-cta">
+                <a class="btn btn-secondary" href="/software.html">Explore the full marketplace</a>
+            </div>
         </div>
     </section>
 
@@ -210,85 +220,6 @@
 
     <script src="/assets/js/home-products.js" defer></script>
 
-    <!-- OPEN SOURCE AI BOT SECTION -->
-    <section class="categories" id="open-source">
-        <div class="container">
-            <h2 class="section-title">🛠️ Open Source AI Bot</h2>
-            <p class="section-subtitle">This AI assistant is powered by open-source technology. Deploy your own version.</p>
-            
-            <div class="bot-options">
-                <h3 style="color: var(--ai-color); margin-bottom: 1rem;">Self-Hosted AI Bot Frameworks</h3>
-                
-                <div class="bot-grid">
-                    <div class="bot-card">
-                        <h4><i class="fab fa-node-js"></i> Botpress</h4>
-                        <p>Node.js based open-source bot builder with visual workflow editor and NLP</p>
-                        <div>
-                            <span class="bot-tag">Open Source</span>
-                            <span class="bot-tag">Visual Editor</span>
-                            <span class="bot-tag">Self-Hosted</span>
-                        </div>
-                        <a href="https://botpress.com/" target="_blank" class="visit-button" style="margin-top: 1rem;">Get Started</a>
-                    </div>
-                    
-                    <div class="bot-card">
-                        <h4><i class="fab fa-python"></i> Rasa</h4>
-                        <p>Python-based conversational AI with machine learning and custom actions</p>
-                        <div>
-                            <span class="bot-tag">Open Source</span>
-                            <span class="bot-tag">ML Powered</span>
-                            <span class="bot-tag">Customizable</span>
-                        </div>
-                        <a href="https://rasa.com/" target="_blank" class="visit-button" style="margin-top: 1rem;">Get Started</a>
-                    </div>
-                    
-                    <div class="bot-card">
-                        <h4><i class="fab fa-google"></i> Dialogflow CX</h4>
-                        <p>Google's enterprise dialog management with visual builder (free tier)</p>
-                        <div>
-                            <span class="bot-tag">Google Cloud</span>
-                            <span class="bot-tag">Visual Builder</span>
-                            <span class="bot-tag">Enterprise</span>
-                        </div>
-                        <a href="https://cloud.google.com/dialogflow" target="_blank" class="visit-button" style="margin-top: 1rem;">Get Started</a>
-                    </div>
-                    
-                    <div class="bot-card">
-                        <h4><i class="fab fa-microsoft"></i> Bot Framework</h4>
-                        <p>Microsoft's framework for building enterprise bots with Azure integration</p>
-                        <div>
-                            <span class="bot-tag">Microsoft</span>
-                            <span class="bot-tag">Multi-Channel</span>
-                            <span class="bot-tag">Azure</span>
-                        </div>
-                        <a href="https://dev.botframework.com/" target="_blank" class="visit-button" style="margin-top: 1rem;">Get Started</a>
-                    </div>
-                </div>
-                
-                <div class="deploy-box">
-                    <h4 style="color: var(--ai-color); margin-bottom: 1rem;"><i class="fas fa-rocket"></i> Quick Deploy: Botpress (Recommended)</h4>
-                    <p style="margin-bottom: 1rem;">Deploy your own AI bot with one command using Docker:</p>
-                    <pre style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: monospace; color: var(--text); margin: 1rem 0;">
-# Install Docker first
-docker run -d --name kama-ai-bot \
-  -p 3000:3000 \
-  -v botpress_data:/botpress/data \
-  botpress/server:latest</pre>
-                    <p style="font-size: 0.9rem; color: var(--muted);">Then connect to your bot at: <code style="background: rgba(108,99,255,0.1); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--primary);">http://your-server:3000</code></p>
-                    
-                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                        <button onclick="copyDockerCommand()" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
-                            <i class="fas fa-copy"></i> Copy Command
-                        </button>
-                        <button onclick="testDeployment()" class="cta-button" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: transparent; border: 1px solid var(--primary);">
-                            <i class="fas fa-play"></i> Test Deployment
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- VENDOR SECTION -->
     <section class="categories" id="vendors">
         <div class="container">
@@ -361,31 +292,50 @@ docker run -d --name kama-ai-bot \
     <!-- FOOTER
       - Links to legal pages + sitemap
     -->
-    <footer>
-        <div class="container">
-            <div class="footer-logo">
-                <i class="fas fa-robot" style="color: var(--primary); font-size: 2rem;"></i>
-                <span style="font-size: 1.5rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent;">KAMA ZENNEXT</span>
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <i class="fas fa-robot" style="color: var(--primary); font-size: 1.6rem;"></i>
+                    <span>Kama ZenNext</span>
+                </div>
+                <p>Curated AI + SaaS tools with transparent comparisons and premium buying guidance.</p>
             </div>
-            <p style="max-width: 600px; margin: 0 auto;">World's first open-source AI-powered software marketplace</p>
-            <div class="footer-links">
-                <a href="#home">Home</a><a href="#ai-assistant">AI Assistant</a><a href="#software">Software</a><a href="#open-source">Open Source</a><a href="#monetization">Monetize</a><a href="#vendors">For Vendors</a><a href="#privacy">Privacy</a><a href="#terms">Terms</a>
+            <div class="footer-column">
+                <h4>Marketplace</h4>
+                <ul>
+                    <li><a href="/software.html">Browse tools</a></li>
+                    <li><a href="/compare.html">Compare</a></li>
+                    <li><a href="/category.html">Categories</a></li>
+                    <li><a href="/submit-tool.html">Submit a tool</a></li>
+                </ul>
             </div>
-            <p style="margin: 1rem 0; color: var(--ai-color);">
-                <i class="fas fa-code"></i> Powered by Open Source AI • Botpress • Self-Hostable
-            </p>
-            <div class="copyright">
-                &copy; 2024 KAMA ZENNEXT AI Software Marketplace. All rights reserved.<br>
-                <small style="color: #6B7280;">This demo includes simulated ads and monetization features.</small>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/about-us.html">About</a></li>
+                    <li><a href="/open-source.html">Open Source</a></li>
+                    <li><a href="/contact-us.html">Contact</a></li>
+                    <li><a href="/ai-assistant.html">AI Assistant</a></li>
+                </ul>
             </div>
-            
-            <!-- Privacy & Cookie Notice -->
-            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                <p style="font-size: 0.8rem; color: var(--muted);">
-                    <i class="fas fa-cookie-bite"></i> This site uses cookies for essential functionality and analytics. By using our site, you consent to our use of cookies.
-                    <button onclick="openPrivacyModal()" style="background: transparent; border: none; color: var(--primary); cursor: pointer; margin-left: 0.5rem;">Learn More</button>
-                </p>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/privacy-policy.html">Privacy policy</a></li>
+                    <li><a href="/terms.html">Terms of service</a></li>
+                    <li><a href="/sitemap.xml">Sitemap</a></li>
+                </ul>
             </div>
+        </div>
+        <div class="container footer-bottom">
+            <span>&copy; 2026 KAMA ZENNEXT. All rights reserved.</span>
+            <span>Trusted marketplace for modern teams.</span>
+        </div>
+        <div class="container footer-consent">
+            <i class="fas fa-cookie-bite"></i>
+            This site uses cookies for essential functionality and analytics.
+            <button onclick="openPrivacyModal()" type="button">Learn more</button>
         </div>
     </footer>
 
@@ -471,12 +421,12 @@ docker run -d --name kama-ai-bot \
     <!-- NOTIFICATIONS -->
     <div class="notification" id="successNotification">
         <i class="fas fa-check-circle"></i>
-        <span>Action completed successfully!</span>
+        <span>Saved successfully.</span>
     </div>
     
     <div class="notification error" id="errorNotification">
         <i class="fas fa-exclamation-circle"></i>
-        <span>An error occurred. Please try again.</span>
+        <span>Something went wrong. Please try again.</span>
     </div>
 
     <!-- AI CHATBOX -->
@@ -592,6 +542,7 @@ docker run -d --name kama-ai-bot \
         };
 
         const renderTrending = (products) => {
+            if (!trendingGrid) return;
             const trending = getTrending(products);
             trendingGrid.innerHTML = '';
             trending.forEach((product) => {
@@ -1158,6 +1109,9 @@ docker run -d --name kama-ai-bot \
             } else {
                 softwareToShow = softwareDatabase.filter(software => software.category === filter);
             }
+
+            const MAX_MARKETPLACE_ITEMS = 12;
+            const visibleTools = softwareToShow.slice(0, MAX_MARKETPLACE_ITEMS);
             
             if (softwareToShow.length === 0) {
                 grid.innerHTML = `
@@ -1170,14 +1124,9 @@ docker run -d --name kama-ai-bot \
                 return;
             }
             
-            softwareToShow.forEach((software, index) => {
-                // Insert ad after every 5th item
+            visibleTools.forEach((software, index) => {
                 if (index > 0 && index % 5 === 0) {
-                    const adCard = document.createElement('div');
-                    adCard.className = 'software-card';
-                    adCard.style.borderColor = 'rgba(59, 130, 246, 0.3)';
-                    adCard.style.background = 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(108, 99, 255, 0.1))';
-                    
+                    const adCard = document.createElement('article');
                     const adTitles = [
                         'Enterprise Security Suite',
                         'Premium Accounting Pro',
@@ -1185,83 +1134,60 @@ docker run -d --name kama-ai-bot \
                         'Cloud Infrastructure Bundle'
                     ];
                     const adTitle = adTitles[Math.floor(Math.random() * adTitles.length)];
-                    
+                    adCard.className = 'product-card card';
                     adCard.innerHTML = `
-                        <div class="card-header">
-                            <div class="software-icon" style="background: linear-gradient(135deg, #3B82F6, #6C63FF);">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="card-title">
-                                <h3>${adTitle}</h3>
-                                <div class="software-category" style="background: rgba(59, 130, 246, 0.15); color: #3B82F6;">SPONSORED</div>
-                            </div>
+                        <div class="pc-top">
+                            <span class="badge sponsored-label">Sponsored</span>
+                            <span class="badge badge-soft">Featured partner</span>
                         </div>
-                        <p class="software-description">Premium solution featured by our partners. Special offer available for KAMA users.</p>
-                        <div class="software-features">
-                            <div class="feature"><i class="fas fa-check"></i><span>Advanced features</span></div>
-                            <div class="feature"><i class="fas fa-check"></i><span>Priority support</span></div>
-                            <div class="feature"><i class="fas fa-check"></i><span>Enterprise-grade</span></div>
+                        <h3>${adTitle}</h3>
+                        <p class="muted">Premium solution featured by our partners. Special offer available for KAMA teams.</p>
+                        <div class="feature-tags">
+                            <span class="feature-tag">Enterprise-grade</span>
+                            <span class="feature-tag">Priority support</span>
+                            <span class="feature-tag">Secure by default</span>
                         </div>
-                        <div class="card-footer">
-                            <div class="paid-badge">SPECIAL OFFER</div>
-                            <button onclick="trackAdClick('${adTitle.replace(/\s+/g, '_').toLowerCase()}')" class="visit-button">
+                        <div class="pc-actions">
+                            <button onclick="trackAdClick('${adTitle.replace(/\s+/g, '_').toLowerCase()}')" class="btn btn-secondary">
                                 <i class="fas fa-external-link-alt"></i> Learn More
                             </button>
+                            <a class="btn btn-ghost" href="/software.html">Browse catalog</a>
                         </div>
                     `;
                     grid.appendChild(adCard);
                 }
-                
-                const card = document.createElement('div');
-                card.className = 'software-card';
+
+                const card = document.createElement('article');
+                card.className = 'product-card card';
                 card.setAttribute('data-category', software.category);
-                
-                let iconClass = '';
-                if (software.category === 'finance') iconClass = 'finance-icon';
-                else if (software.category === 'cybersecurity') iconClass = 'security-icon';
-                else if (software.category === 'ai') iconClass = 'ai-icon';
-                else if (software.category === 'crm') iconClass = 'crm-icon';
-                
-                let categoryClass = '';
-                if (software.category === 'finance') categoryClass = 'finance-category';
-                else if (software.category === 'cybersecurity') categoryClass = 'security-category';
-                else if (software.category === 'ai') categoryClass = 'ai-category';
-                else if (software.category === 'crm') categoryClass = 'crm-category';
-                
-                let badgeClass = 'free-badge';
-                let badgeText = 'FREE';
-                if (software.type === 'trial') {
-                    badgeClass = 'trial-badge';
-                    badgeText = 'FREE TRIAL';
-                } else if (software.type === 'paid') {
-                    badgeClass = 'paid-badge';
-                    badgeText = 'PAID';
-                }
-                
+
+                const typeLabel = software.type === 'trial'
+                    ? 'Free trial'
+                    : software.type === 'paid'
+                        ? 'Paid'
+                        : 'Free';
+
                 card.innerHTML = `
-                    <div class="card-header">
-                        <div class="software-icon ${iconClass}">
-                            <i class="${software.icon}"></i>
-                        </div>
-                        <div class="card-title">
-                            <h3>${software.name}</h3>
-                            <div class="software-category ${categoryClass}">${software.category.toUpperCase()}</div>
-                        </div>
+                    <div class="pc-top">
+                        <span class="badge">${software.category.toUpperCase()}</span>
+                        <span class="badge badge-soft">${typeLabel}</span>
+                        <span class="badge badge-soft">Marketplace pick</span>
                     </div>
-                    <p class="software-description">${software.description}</p>
-                    <div class="software-features">
-                        ${software.features.map(feature => `
-                            <div class="feature"><i class="fas fa-check"></i><span>${feature}</span></div>
+                    <h3>${software.name}</h3>
+                    <p class="muted">${software.description}</p>
+                    <div class="feature-tags">
+                        ${software.features.slice(0, 3).map(feature => `
+                            <span class="feature-tag">${feature}</span>
                         `).join('')}
                     </div>
-                    <div class="card-footer">
-                        <div class="${badgeClass}">${badgeText}</div>
-                        <a href="${software.link}" target="_blank" class="visit-button">
+                    <div class="pc-actions">
+                        <a class="btn btn-primary" href="${software.link}" target="_blank" rel="noopener">
                             <i class="fas fa-external-link-alt"></i> Visit
                         </a>
+                        <a class="btn btn-ghost" href="/software.html?cat=${encodeURIComponent(software.category)}">Explore category</a>
                     </div>
                 `;
-                
+
                 grid.appendChild(card);
             });
         }
