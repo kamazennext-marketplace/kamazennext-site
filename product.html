@@ -385,7 +385,7 @@
         ${renderAlternatives(product, list)}
         ${renderCompareSuggestions(product, list)}
         <div class="section">
-          <a class="cta" href="${product.website}" target="_blank" rel="noopener">Visit website</a>
+          <a class="cta" href="/go/${encodeURIComponent(product.id)}" target="_blank" rel="noopener">Visit website</a>
         </div>
       `;
 

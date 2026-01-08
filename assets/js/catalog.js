@@ -72,3 +72,4 @@ const slugify = (value = '') =>
 
 export const urlForCategory = (name) => `/category/${slugify(name)}`;
 export const urlForProduct = (id) => `/p/${encodeURIComponent(id || '')}`;
+export const urlForOutbound = (id) => `/go/${encodeURIComponent(id || '')}`;
