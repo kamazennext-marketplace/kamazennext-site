@@ -84,13 +84,13 @@
 
   const updateBestCategoryLink = () => {
     if (!bestCategoryLink) return;
-    if (state.cat === "all") {
-      bestCategoryLink.textContent = "Browse best tools by category";
-      bestCategoryLink.href = "/best/";
+    if (state.cat !== "Automation") {
+      bestCategoryLink.style.display = "none";
       return;
     }
-    bestCategoryLink.textContent = `View best ${state.cat} tools`;
-    bestCategoryLink.href = `/best/${toSlug(state.cat)}-tools`;
+    bestCategoryLink.textContent = "View best automation tools";
+    bestCategoryLink.href = "/best/automation-tools";
+    bestCategoryLink.style.display = "inline-flex";
   };
 
   const normalizeProduct = (p) => {

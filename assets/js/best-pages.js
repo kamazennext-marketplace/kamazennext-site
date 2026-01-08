@@ -1,22 +1,41 @@
 import { injectBaseSchema, injectBreadcrumbs, setMeta } from '/assets/js/seo-schema.js';
 
+/**
+ * CATEGORY_CONTENT
+ * - Hand-curated copy for SEO landing pages.
+ * - Keep language helpful (not keyword stuffing).
+ * - Add new categories by slug (e.g., “chatbots”, “video”, “image”).
+ */
 const CATEGORY_CONTENT = {
   automation: {
-    intro: "Automation platforms help teams orchestrate workflows, connect apps, and ship reliable processes at scale.",
+    title: "Best Automation Tools (2026)",
+    h1: "Best automation tools (2026)",
+    intro: "Discover top automation tools to connect apps, reduce manual work, and build reliable workflows for sales, marketing, support, and operations. Compare features like triggers, integrations, approvals, and API support — then pick the best fit for your team.",
+    bullets: [
+      "Workflow builders (no-code / low-code)",
+      "Zapier alternatives & enterprise automation",
+      "RPA, approvals, and scheduled jobs",
+      "Webhooks, API-first tools, and connectors"
+    ],
     faqs: [
       {
-        question: "What should I look for in automation tools?",
-        answer: "Prioritize workflow flexibility, pre-built integrations, and observability so you can track every step."
+        q: "What is an automation tool?",
+        a: "Automation tools connect apps and systems to run workflows automatically — for example, moving leads into a CRM, sending notifications, creating tasks, or syncing data between platforms."
       },
       {
-        question: "Do automation tools support non-technical teams?",
-        answer: "Yes. Most provide no-code builders and reusable templates so business teams can launch automations quickly."
+        q: "Which automation tool is best for beginners?",
+        a: "Beginners usually do best with simple visual workflow builders and strong templates. Choose one with good integrations, clear logs, and easy error handling."
       },
       {
-        question: "How do I compare automation platforms?",
-        answer: "Review connector coverage, pricing per run, and how they handle errors or approvals."
+        q: "What should I compare before choosing an automation tool?",
+        a: "Compare integrations, triggers/actions, reliability (retries, logs), team features (roles, approvals), pricing, and whether it supports webhooks and API calls."
+      },
+      {
+        q: "Can automation tools replace manual work completely?",
+        a: "They can remove repetitive steps, but most teams still keep human approvals for sensitive actions. The best setup mixes automation with checkpoints."
       }
-    ]
+    ],
+    metaDescription: "Browse and compare the best automation tools in 2026. Filter by pricing, API support, and category to find the right workflow platform for your team."
   },
   chatbots: {
     intro: "Chatbot platforms combine AI, workflow rules, and channel integrations to deliver fast, branded customer support.",
@@ -214,13 +233,20 @@ const buildProductCard = (product) => {
   return card;
 };
 
+const resolveFaqText = (faq) => ({
+  question: faq.question || faq.q || "",
+  answer: faq.answer || faq.a || ""
+});
+
 const renderFaqs = (faqList, target) => {
   target.innerHTML = "";
   faqList.forEach((faq) => {
+    const { question, answer } = resolveFaqText(faq);
+    if (!question || !answer) return;
     const item = document.createElement("details");
     item.innerHTML = `
-      <summary>${faq.question}</summary>
-      <p>${faq.answer}</p>
+      <summary>${question}</summary>
+      <p>${answer}</p>
     `;
     target.appendChild(item);
   });
@@ -259,7 +285,8 @@ const renderCategoryIndex = (products) => {
 
 const renderCategoryPage = (products) => {
   const params = new URLSearchParams(window.location.search);
-  const slug = params.get("c") || "";
+  const pathMatch = window.location.pathname.match(/\/best\/([^/]+)-tools\/?$/);
+  const slug = pathMatch?.[1] || params.get("c") || "";
   const categories = Array.from(new Set(products.map((p) => p.category)));
   const slugMap = new Map(categories.map((cat) => [toSlug(cat), cat]));
   const category = slugMap.get(slug);
@@ -271,6 +298,8 @@ const renderCategoryPage = (products) => {
   const meta = CATEGORY_CONTENT[slug] || {};
   const categoryTitle = document.getElementById("categoryTitle");
   const categoryIntro = document.getElementById("categoryIntro");
+  const categoryBullets = document.getElementById("categoryBullets");
+  const trustNote = document.getElementById("trustNote");
   const grid = document.getElementById("categoryGrid");
   const featuredSection = document.getElementById("featuredSection");
   const featuredStrip = document.getElementById("featuredStrip");
@@ -279,8 +308,29 @@ const renderCategoryPage = (products) => {
   const items = products.filter((product) => product.category === category).sort(sortFeatured);
   const featured = items.filter((product) => product.featured || product.sponsoredRank !== undefined);
 
-  categoryTitle.textContent = `Best ${category} tools (2026)`;
-  categoryIntro.textContent = meta.intro || `Explore the best ${category} tools with verified listings and featured picks.`;
+  const pageTitle = meta.title || `Best ${category} tools (2026)`;
+  const pageH1 = meta.h1 || `Best ${category} tools (2026)`;
+  const introCopy = meta.intro || `Explore the best ${category} tools with verified listings and featured picks.`;
+  const description = meta.metaDescription || introCopy;
+
+  categoryTitle.textContent = pageH1;
+  categoryIntro.textContent = introCopy;
+  if (categoryBullets) {
+    categoryBullets.innerHTML = "";
+    if (Array.isArray(meta.bullets) && meta.bullets.length) {
+      meta.bullets.forEach((bullet) => {
+        const li = document.createElement("li");
+        li.textContent = bullet;
+        categoryBullets.appendChild(li);
+      });
+      categoryBullets.style.display = "grid";
+    } else {
+      categoryBullets.style.display = "none";
+    }
+  }
+  if (trustNote) {
+    trustNote.textContent = "We curate tools based on product clarity, usefulness, and category fit. Listings are updated as the catalog grows.";
+  }
 
   if (featured.length) {
     featuredSection.style.display = "block";
@@ -319,14 +369,13 @@ const renderCategoryPage = (products) => {
   renderFaqs(meta.faqs || defaultFaqs, faqList);
 
   const siteUrl = window.location.origin;
-  const canonicalUrl = `${siteUrl}/best/${slug}-tools`;
-  const description = meta.intro || `Discover the best ${category} tools curated by Kama ZenNext.`;
+  const canonicalUrl = `https://kamazennext.com/best/${slug}-tools`;
 
   setMeta({
-    title: `Best ${category} tools (2026) | Kama ZenNext`,
+    title: `${pageTitle} | Kama ZenNext`,
     description,
     canonicalUrl,
-    ogTitle: `Best ${category} tools (2026)`,
+    ogTitle: pageTitle,
     ogDescription: description,
     ogUrl: canonicalUrl,
     ogType: "website"
@@ -353,7 +402,7 @@ const renderCategoryPage = (products) => {
     `;
   }
 
-  const topItems = items.slice(0, 8).map((product, idx) => ({
+  const topItems = items.slice(0, 10).map((product, idx) => ({
     "@type": "ListItem",
     position: idx + 1,
     name: product.name,
@@ -367,10 +416,40 @@ const renderCategoryPage = (products) => {
     itemListElement: topItems
   };
 
-  const script = document.createElement("script");
-  script.type = "application/ld+json";
-  script.textContent = JSON.stringify(itemListSchema, null, 2);
-  document.head.appendChild(script);
+  const upsertSchema = (id, payload) => {
+    if (!payload) return;
+    const existing = document.getElementById(id);
+    if (existing) existing.remove();
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = id;
+    script.textContent = JSON.stringify(payload, null, 2);
+    document.head.appendChild(script);
+  };
+
+  upsertSchema("kz-itemlist-schema", itemListSchema);
+
+  if (Array.isArray(meta.faqs) && meta.faqs.length) {
+    const faqEntities = meta.faqs
+      .map((faq) => resolveFaqText(faq))
+      .filter((faq) => faq.question && faq.answer)
+      .map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer
+        }
+      }));
+
+    if (faqEntities.length) {
+      upsertSchema("kz-faq-schema", {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqEntities
+      });
+    }
+  }
 };
 
 const init = async () => {
