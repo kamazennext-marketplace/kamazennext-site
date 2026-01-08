@@ -16,6 +16,12 @@
   const grid = document.getElementById("productsGrid");
   if (!grid) return;
 
+  /**
+   * REVIEW: Audience filter
+   * - aud param is optional; if missing, show all.
+   * - If product.audience missing, treat as ["business","builder"] so older entries still show.
+   */
+
   // REVIEW: prevents duplicate sections if script accidentally included twice.
   if (grid.dataset.rendered === "1") {
     console.warn("productsGrid already rendered; skipping duplicate run.");
@@ -27,6 +33,7 @@
   const searchInput = document.getElementById("searchInput");
   const categorySelect = document.getElementById("categorySelect");
   const pricingSelect = document.getElementById("pricingSelect");
+  const audienceChips = document.getElementById("audienceChips");
   const apiToggle = document.getElementById("apiToggle");
   const sortSelect = document.getElementById("sortSelect");
   const perSelect = document.getElementById("perSelect");
@@ -41,6 +48,7 @@
     q: "",
     cat: "all",
     pricing: "all",
+    aud: "all",
     api: false,
     sort: "featured",
     page: 1,
@@ -60,6 +68,25 @@
       return ["1", "true", "yes"].includes(value.toLowerCase());
     }
     return false;
+  };
+
+  const normalizeAudience = (value) => {
+    if (Array.isArray(value) && value.length) {
+      return value.map((entry) => entry.toLowerCase());
+    }
+    if (typeof value === "string" && value.trim()) {
+      return value
+        .split(",")
+        .map((entry) => entry.trim().toLowerCase())
+        .filter(Boolean);
+    }
+    return ["business", "builder"];
+  };
+
+  const normalizeAudParam = (value) => {
+    if (!value) return "all";
+    const normalized = value.toLowerCase();
+    return ["business", "builder"].includes(normalized) ? normalized : "all";
   };
 
   const normalizePricingBucket = (pricingStr) => {
@@ -108,6 +135,7 @@
       sponsoredRank: p?.sponsored_rank,
       lastUpdated: p?.last_updated || "",
       platforms: Array.isArray(p?.platforms) ? p.platforms : [],
+      audience: normalizeAudience(p?.audience),
     };
   };
 
@@ -115,6 +143,7 @@
   state.q = params.get("q") || defaultState.q;
   state.cat = params.get("cat") || defaultState.cat;
   state.pricing = params.get("pricing") || defaultState.pricing;
+  state.aud = normalizeAudParam(params.get("aud"));
   state.api = normalizeApi(params.get("api"));
   state.sort = params.get("sort") || defaultState.sort;
   state.page = Math.max(1, toNumber(params.get("page"), defaultState.page));
@@ -161,6 +190,7 @@
     if (state.q) next.set("q", state.q);
     if (state.cat !== defaultState.cat) next.set("cat", state.cat);
     if (state.pricing !== defaultState.pricing) next.set("pricing", state.pricing);
+    if (state.aud !== defaultState.aud) next.set("aud", state.aud);
     if (state.api) next.set("api", "1");
     if (state.sort !== defaultState.sort) next.set("sort", state.sort);
     if (state.page !== defaultState.page) next.set("page", String(state.page));
@@ -199,6 +229,10 @@
       )
       .filter((p) => state.cat === "all" || p.category === state.cat)
       .filter((p) => state.pricing === "all" || p.pricingBucket === state.pricing)
+      .filter((p) => {
+        if (state.aud === "all") return true;
+        return (p.audience || ["business", "builder"]).includes(state.aud);
+      })
       .filter((p) => !state.api || p.api)
       .sort(sorters[state.sort] || sorters.featured);
   };
@@ -206,6 +240,13 @@
   const setActiveChip = (value) => {
     if (!chipsContainer) return;
     chipsContainer.querySelectorAll(".chip").forEach((chip) => {
+      chip.classList.toggle("active", chip.dataset.value === value);
+    });
+  };
+
+  const setActiveAudienceChip = (value) => {
+    if (!audienceChips) return;
+    audienceChips.querySelectorAll(".chip").forEach((chip) => {
       chip.classList.toggle("active", chip.dataset.value === value);
     });
   };
@@ -350,6 +391,17 @@
       updateQuery();
       render();
     });
+    if (audienceChips) {
+      audienceChips.addEventListener("click", (event) => {
+        const chip = event.target.closest(".chip");
+        if (!chip) return;
+        state.aud = chip.dataset.value;
+        state.page = 1;
+        updateQuery();
+        setActiveAudienceChip(state.aud);
+        render();
+      });
+    }
     clearBtn.addEventListener("click", () => {
       Object.assign(state, defaultState);
       searchInput.value = state.q;
@@ -360,6 +412,7 @@
       perSelect.value = state.per;
       updateQuery();
       setActiveChip(state.cat);
+      setActiveAudienceChip(state.aud);
       updateBestCategoryLink();
       render();
     });
@@ -399,6 +452,24 @@
     });
   };
 
+  const buildAudienceChips = () => {
+    if (!audienceChips) return;
+    const options = [
+      { value: "all", label: "All" },
+      { value: "business", label: "Business (No-code)" },
+      { value: "builder", label: "Builder (Dev/Agency)" },
+    ];
+    audienceChips.innerHTML = "";
+    options.forEach((option) => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = `chip${state.aud === option.value ? " active" : ""}`;
+      chip.dataset.value = option.value;
+      chip.textContent = option.label;
+      audienceChips.appendChild(chip);
+    });
+  };
+
   const populateCategories = (items) => {
     const categories = Array.from(new Set(items.map((p) => p.category))).sort();
     categories.forEach((cat) => {
@@ -431,7 +502,9 @@
       products = (data || []).map(normalizeProduct).filter((p) => p.id);
       populateCategories(products);
       buildChips(products);
+      buildAudienceChips();
       setActiveChip(state.cat);
+      setActiveAudienceChip(state.aud);
       bindFilters();
       render();
     })

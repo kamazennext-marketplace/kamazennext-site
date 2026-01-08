@@ -2,8 +2,17 @@ Options -Indexes
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
   RewriteRule ^category/?$ /category.html [L]
   RewriteRule ^category/[^/]+/?$ /category.html [L]
+
+  # REVIEW: Best pages route
+  RewriteRule ^best/([a-z0-9-]+)/?$ /best/page.html?s=$1 [L,QSA,NC]
+
+  # REVIEW: Compare SEO pages route
+  RewriteRule ^compare/([a-z0-9-]+)-vs-([a-z0-9-]+)/?$ /compare/page.html?a=$1&b=$2 [L,QSA,NC]
 </IfModule>
 
 <Files "contact-test.html">
