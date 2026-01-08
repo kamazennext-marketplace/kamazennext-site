@@ -574,10 +574,9 @@
     "name": "Zapier",
     "category": "Automation",
     "tagline": "Connect apps and automate workflows without code.",
+    "description": "A workflow automation platform for connecting apps, triggering actions, and building multi-step automations for teams.",
     "pricing": {
-      "model": "subscription",
-      "starting_price": 29,
-      "free_trial": true
+      "model": "Varies"
     },
     "platforms": [
       "Web"
@@ -598,11 +597,12 @@
       "Google Sheets",
       "Salesforce"
     ],
-    "website": "https://zapier.com",
+    "website": "",
     "logo": "https://dummyimage.com/80x80/6366f1/ffffff&text=Z",
+    "featured": true,
     "rating": 4.6,
     "review_count": 1200,
-    "last_updated": "2025-01-10",
+    "last_updated": "2026-01-08",
     "pros": [
       "Huge integration library",
       "Beginner-friendly",
@@ -626,11 +626,10 @@
     "slug": "make",
     "name": "Make",
     "category": "Automation",
-    "tagline": "Visual automation builder with advanced routing and flexibility.",
+    "tagline": "Visual automation builder for powerful workflows.",
+    "description": "A visual platform for building complex automation scenarios with integrations, routing, and multi-step logic.",
     "pricing": {
-      "model": "freemium",
-      "starting_price": 9,
-      "free_trial": true
+      "model": "Varies"
     },
     "platforms": [
       "Web"
@@ -651,11 +650,12 @@
       "Airtable",
       "Google Workspace"
     ],
-    "website": "https://www.make.com",
+    "website": "",
     "logo": "https://dummyimage.com/80x80/0ea5e9/ffffff&text=M",
+    "featured": true,
     "rating": 4.7,
     "review_count": 640,
-    "last_updated": "2025-01-06",
+    "last_updated": "2026-01-08",
     "pros": [
       "Powerful routing",
       "Great API modules",
@@ -679,11 +679,10 @@
     "slug": "n8n",
     "name": "n8n",
     "category": "Automation",
-    "tagline": "Workflow automation with self-hosting and code-friendly options.",
+    "tagline": "Workflow automation for technical teams and agencies.",
+    "description": "Build workflow automations with webhooks, API steps, and custom logic. Often used by developers and automation agencies.",
     "pricing": {
-      "model": "subscription",
-      "starting_price": 20,
-      "free_trial": true
+      "model": "Varies"
     },
     "platforms": [
       "Web",
@@ -705,11 +704,12 @@
       "Slack",
       "Postgres"
     ],
-    "website": "https://n8n.io",
+    "website": "",
     "logo": "https://dummyimage.com/80x80/f97316/ffffff&text=N8",
+    "featured": true,
     "rating": 4.5,
     "review_count": 420,
-    "last_updated": "2025-01-03",
+    "last_updated": "2026-01-08",
     "pros": [
       "Open-source friendly",
       "API-first",
@@ -727,5 +727,170 @@
       "builder",
       "business"
     ]
+  },
+  {
+    "id": "pipedream",
+    "slug": "pipedream",
+    "name": "Pipedream",
+    "category": "Automation",
+    "tagline": "Developer-focused automation with APIs and code steps.",
+    "description": "Build event-driven workflows, connect APIs quickly, and add custom code steps for advanced automations.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "builder"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "power-automate",
+    "slug": "power-automate",
+    "name": "Microsoft Power Automate",
+    "category": "Automation",
+    "tagline": "Automation across Microsoft and business apps.",
+    "description": "Automation tool for teams using Microsoft ecosystem, with connectors, approvals, and workflow automation for business processes.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business",
+      "builder"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "zoho-flow",
+    "slug": "zoho-flow",
+    "name": "Zoho Flow",
+    "category": "Automation",
+    "tagline": "Automation for Zoho users and business workflows.",
+    "description": "Workflow automation for connecting Zoho apps and common business tools to automate repetitive tasks.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "integrately",
+    "slug": "integrately",
+    "name": "Integrately",
+    "category": "Automation",
+    "tagline": "Quick automations with ready-made templates.",
+    "description": "Automation platform focused on fast setup using prebuilt templates and common integrations for teams.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "pabbly-connect",
+    "slug": "pabbly-connect",
+    "name": "Pabbly Connect",
+    "category": "Automation",
+    "tagline": "Budget-friendly workflow automation for SMBs.",
+    "description": "Connect apps and automate tasks with multi-step workflows, often chosen by SMBs for value-focused automation needs.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "ifttt",
+    "slug": "ifttt",
+    "name": "IFTTT",
+    "category": "Automation",
+    "tagline": "Simple automations for everyday apps and services.",
+    "description": "Entry-level automation for personal and lightweight business workflows using triggers and actions.",
+    "website": "",
+    "api": false,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "node-red",
+    "slug": "node-red",
+    "name": "Node-RED",
+    "category": "Automation",
+    "tagline": "Flow-based automation for APIs and IoT-style workflows.",
+    "description": "Flow-based tooling for wiring APIs and services together, often used for integrations and event-driven automation setups.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "builder"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "workato",
+    "slug": "workato",
+    "name": "Workato",
+    "category": "Automation",
+    "tagline": "Enterprise automation and integration platform.",
+    "description": "Enterprise-focused automation platform for complex integrations, governance, and large-scale workflow automation.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business",
+      "builder"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "tray-io",
+    "slug": "tray-io",
+    "name": "Tray.io",
+    "category": "Automation",
+    "tagline": "Enterprise integrations and automation workflows.",
+    "description": "Integration and automation platform built for larger teams that need advanced workflows and governance.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business",
+      "builder"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
   }
 ]
