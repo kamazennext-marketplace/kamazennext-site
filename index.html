@@ -484,7 +484,8 @@
             getFeatured,
             pickBestInCategory,
             urlForCategory,
-            urlForProduct
+            urlForProduct,
+            urlForOutbound
         } from '/assets/js/catalog.js';
 
         const categoryGrid = document.getElementById('categoryGrid');
@@ -511,6 +512,13 @@
             return '';
         };
 
+        const bySponsoredThenUpdated = (a, b) => {
+            const rankA = a?.sponsored_rank ?? Number.POSITIVE_INFINITY;
+            const rankB = b?.sponsored_rank ?? Number.POSITIVE_INFINITY;
+            if (rankA !== rankB) return rankA - rankB;
+            return new Date(b.last_updated || 0) - new Date(a.last_updated || 0);
+        };
+
         const renderCategories = (products) => {
             const categories = getCategories(products).slice(0, 8);
             categoryGrid.innerHTML = '';
@@ -533,8 +541,14 @@
             const featured = getFeatured(products);
             if (!featuredSection) return;
             if (!featured.length) { featuredSection.style.display = 'none'; return; }
+            const sponsored = [...products]
+                .filter((product) => product?.sponsored_rank !== undefined)
+                .sort(bySponsoredThenUpdated)
+                .slice(0, 2);
+            const sponsoredIds = new Set(sponsored.map((product) => product.id));
+            const ordered = [...sponsored, ...featured.filter((product) => !sponsoredIds.has(product.id))];
             featuredGrid.innerHTML = '';
-            featured.forEach((product) => {
+            ordered.forEach((product) => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 const pricingLabel = buildPricingLabel(product.pricing);
@@ -556,7 +570,7 @@
                     <div class="meta">Updated ${formatDate(product.last_updated)}</div>
                     <div class="actions">
                         <a class="cta-button" href="${urlForProduct(product.id)}">View</a>
-                        <a class="secondary-link" href="${product.website || urlForProduct(product.id)}" target="_blank" rel="noopener">Visit site</a>
+                        <a class="secondary-link" href="${urlForOutbound(product.id)}" target="_blank" rel="noopener">Visit site</a>
                     </div>
                 `;
                 featuredGrid.appendChild(card);

@@ -307,6 +307,7 @@ const renderCategoryPage = (products) => {
 
   const items = products.filter((product) => product.category === category).sort(sortFeatured);
   const featured = items.filter((product) => product.featured || product.sponsoredRank !== undefined);
+  const sponsoredTop = items.filter((product) => product.sponsoredRank !== undefined).sort(sortFeatured)[0];
 
   const pageTitle = meta.title || `Best ${category} tools (2026)`;
   const pageH1 = meta.h1 || `Best ${category} tools (2026)`;
@@ -332,10 +333,11 @@ const renderCategoryPage = (products) => {
     trustNote.textContent = "We curate tools based on product clarity, usefulness, and category fit. Listings are updated as the catalog grows.";
   }
 
-  if (featured.length) {
+  if (featured.length || sponsoredTop) {
     featuredSection.style.display = "block";
     featuredStrip.innerHTML = "";
-    featured.slice(0, 4).forEach((product) => {
+    const featuredItems = sponsoredTop ? [sponsoredTop] : featured.slice(0, 4);
+    featuredItems.forEach((product) => {
       const card = document.createElement("article");
       card.className = "card featured-card";
       card.innerHTML = `
@@ -343,6 +345,7 @@ const renderCategoryPage = (products) => {
           <div class="pc-badges">
             <span class="badge">${product.category}</span>
             <span class="badge badge-soft">${product.pricingStr}</span>
+            ${product.sponsoredRank !== undefined ? '<span class="badge sponsored-label">Sponsored</span>' : ""}
           </div>
         </div>
         <h3><a href="/p/${encodeURIComponent(product.slug || product.id)}">${product.name}</a></h3>

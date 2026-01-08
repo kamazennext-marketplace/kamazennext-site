@@ -9,6 +9,7 @@ session_start();
 $productsFile = __DIR__ . '/../data/products.json';
 $backupDir = __DIR__ . '/../data/backups';
 $logosDir = __DIR__ . '/../assets/logos';
+$clicksDir = __DIR__ . '/../data/clicks';
 
 $configLocations = [
     dirname(__DIR__, 2) . '/admin_config.php',
@@ -124,6 +125,44 @@ function saveProducts(array $products, string $file, string $backupDir): bool
     flock($lockHandle, LOCK_UN);
     fclose($lockHandle);
     return true;
+}
+
+function getLatestClickCount(string $slug, string $clicksDir): int
+{
+    if ($slug === '' || !is_dir($clicksDir)) {
+        return 0;
+    }
+
+    $files = glob(rtrim($clicksDir, '/') . '/clicks-*.jsonl');
+    if (!$files) {
+        return 0;
+    }
+
+    rsort($files, SORT_STRING);
+    $latest = $files[0];
+    if (!is_readable($latest)) {
+        return 0;
+    }
+
+    $count = 0;
+    $handle = fopen($latest, 'r');
+    if (!$handle) {
+        return 0;
+    }
+
+    while (($line = fgets($handle)) !== false) {
+        $line = trim($line);
+        if ($line === '') {
+            continue;
+        }
+        $entry = json_decode($line, true);
+        if (is_array($entry) && ($entry['slug'] ?? '') === $slug) {
+            $count++;
+        }
+    }
+
+    fclose($handle);
+    return $count;
 }
 
 if ($isAuthenticated) {
@@ -397,6 +436,7 @@ $isAdding = $isAuthenticated && isset($_GET['add']);
                 'cons' => [],
                 'use_cases' => [],
             ];
+            $clickCount = getLatestClickCount($formData['id'] ?? '', $clicksDir);
             ?>
             <section class="panel">
                 <div class="panel-header">
@@ -435,6 +475,7 @@ $isAdding = $isAuthenticated && isset($_GET['add']);
                         <input type="checkbox" name="featured" <?= !empty($formData['featured']) ? 'checked' : '' ?>> Featured
                     </label>
                     <label>Sponsored Rank<input type="number" name="sponsored_rank" step="1" min="1" value="<?= h($formData['sponsored_rank'] ?? '') ?>" placeholder="Lower shows first"></label>
+                    <label>Clicks (latest log)<input type="text" value="<?= h((string) $clickCount) ?>" readonly></label>
                     <label>Pros (comma separated)<input type="text" name="pros" value="<?= h(implode(', ', $formData['pros'] ?? [])) ?>"></label>
                     <label>Cons (comma separated)<input type="text" name="cons" value="<?= h(implode(', ', $formData['cons'] ?? [])) ?>"></label>
                     <label>Use Cases (comma separated)<input type="text" name="use_cases" value="<?= h(implode(', ', $formData['use_cases'] ?? [])) ?>"></label>
