@@ -1,0 +1,896 @@
+[
+  {
+    "id": "kz-analytics",
+    "name": "ZenNext Analytics",
+    "category": "Analytics",
+    "tagline": "Unified dashboards for modern go-to-market teams.",
+    "pricing": {
+      "model": "subscription",
+      "starting_price": 49,
+      "free_trial": true
+    },
+    "platforms": [
+      "Web",
+      "iOS",
+      "Android"
+    ],
+    "api": true,
+    "best_for": [
+      "Growth teams",
+      "RevOps",
+      "Founders"
+    ],
+    "key_features": [
+      "Real-time cohorting",
+      "Attribution modeling",
+      "Embedded dashboards"
+    ],
+    "integrations": [
+      "HubSpot",
+      "Salesforce",
+      "Snowflake"
+    ],
+    "website": "https://example.com/analytics",
+    "logo": "https://dummyimage.com/80x80/6366f1/ffffff&text=ZA",
+    "featured": true,
+    "sponsored_rank": 1,
+    "rating": 4.7,
+    "review_count": 3,
+    "reviews": [
+      {
+        "id": "za-r1",
+        "author": "Priya K.",
+        "rating": 5,
+        "title": "Executive dashboards in a week",
+        "body": "We replaced three BI tools and shipped board-ready dashboards without engineering rework.",
+        "pros": [
+          "Fast setup",
+          "Great templates"
+        ],
+        "cons": [
+          "Needs more PDF export options"
+        ],
+        "date": "2025-01-08"
+      },
+      {
+        "id": "za-r2",
+        "author": "Marcus L.",
+        "rating": 4,
+        "title": "Governance that satisfies security",
+        "body": "RBAC and audit history helped us pass internal reviews. We just want SOC 2 docs directly in app.",
+        "pros": [
+          "RBAC",
+          "Audit logs"
+        ],
+        "cons": [
+          "Docs hard to find"
+        ],
+        "date": "2024-12-14"
+      },
+      {
+        "id": "za-r3",
+        "author": "Emily Z.",
+        "rating": 5,
+        "title": "Best UI for revenue analytics",
+        "body": "Attribution models are easy to compare. Support team replies within the same day.",
+        "pros": [
+          "Attribution",
+          "Support"
+        ],
+        "cons": [],
+        "date": "2024-11-28"
+      }
+    ],
+    "last_updated": "2024-12-18",
+    "pros": [
+      "Flexible dashboard builder",
+      "Strong governance controls",
+      "Great customer support"
+    ],
+    "cons": [
+      "Setup requires data engineer",
+      "Limited offline access"
+    ],
+    "use_cases": [
+      "Executive reporting",
+      "Marketing attribution",
+      "Board packs"
+    ],
+    "screenshots": [
+      "https://dummyimage.com/600x360/eff6ff/0f172a&text=Analytics+Dashboard",
+      "https://dummyimage.com/600x360/f1f5f9/0f172a&text=Customer+Journey"
+    ],
+    "audience": [
+      "business"
+    ]
+  },
+  {
+    "id": "kz-assist",
+    "name": "ZenNext Assist",
+    "category": "AI Assistant",
+    "tagline": "Conversational agent that plugs into your stack.",
+    "pricing": {
+      "model": "usage-based",
+      "starting_price": 0.02,
+      "free_trial": false
+    },
+    "platforms": [
+      "Web",
+      "Slack"
+    ],
+    "api": true,
+    "best_for": [
+      "Support teams",
+      "Internal enablement"
+    ],
+    "key_features": [
+      "Retrieval augmented responses",
+      "Actionable playbooks",
+      "Conversation analytics"
+    ],
+    "integrations": [
+      "Zendesk",
+      "Intercom",
+      "Slack"
+    ],
+    "website": "https://example.com/assist",
+    "logo": "https://dummyimage.com/80x80/22c55e/ffffff&text=AS",
+    "featured": true,
+    "rating": 4.6,
+    "review_count": 2,
+    "reviews": [
+      {
+        "id": "as-r1",
+        "author": "Nate R.",
+        "rating": 5,
+        "title": "Instant deflection wins",
+        "body": "Bot-to-agent routing feels natural and our deflection rate improved 18% in two weeks.",
+        "pros": [
+          "Fast answers",
+          "Great routing"
+        ],
+        "cons": [
+          "Analytics UI could be clearer"
+        ],
+        "date": "2025-01-02"
+      },
+      {
+        "id": "as-r2",
+        "author": "Hannah D.",
+        "rating": 4,
+        "title": "Solid AI support sidekick",
+        "body": "Knowledge syncs are reliable. Would love a built-in tone checker for responses.",
+        "pros": [
+          "Reliable sync",
+          "Good handoffs"
+        ],
+        "cons": [
+          "Needs more tone controls"
+        ],
+        "date": "2024-12-18"
+      }
+    ],
+    "last_updated": "2025-01-05",
+    "pros": [
+      "Fast responses",
+      "Simple admin setup"
+    ],
+    "cons": [
+      "Limited brand voice controls"
+    ],
+    "use_cases": [
+      "Tier 1 support",
+      "Employee self-serve",
+      "Sales enablement"
+    ],
+    "audience": [
+      "business"
+    ]
+  },
+  {
+    "id": "kz-studio",
+    "name": "Workflow Studio",
+    "category": "Automation",
+    "tagline": "Visual builder for AI-first business automations.",
+    "pricing": {
+      "model": "freemium",
+      "starting_price": 0,
+      "free_trial": true
+    },
+    "platforms": [
+      "Web"
+    ],
+    "api": true,
+    "best_for": [
+      "Ops",
+      "Customer success",
+      "Agencies"
+    ],
+    "key_features": [
+      "Drag-and-drop flows",
+      "Branching logic",
+      "Webhooks"
+    ],
+    "integrations": [
+      "Zapier",
+      "Make",
+      "Notion"
+    ],
+    "website": "https://example.com/studio",
+    "logo": "https://dummyimage.com/80x80/f97316/ffffff&text=WS",
+    "featured": true,
+    "rating": 4.5,
+    "review_count": 2,
+    "reviews": [
+      {
+        "id": "ws-r1",
+        "author": "Tanya S.",
+        "rating": 5,
+        "title": "Great for experimentation",
+        "body": "Drag-and-drop builder makes it easy to A/B flows before handing off to engineering.",
+        "pros": [
+          "Versioning",
+          "Quick testing"
+        ],
+        "cons": [],
+        "date": "2024-12-01"
+      },
+      {
+        "id": "ws-r2",
+        "author": "Leo F.",
+        "rating": 4,
+        "title": "Solid automation starter",
+        "body": "Webhooks are reliable. I wish there were more enterprise auth providers out-of-the-box.",
+        "pros": [
+          "Reliable webhooks",
+          "Clear logging"
+        ],
+        "cons": [
+          "Needs more SSO options"
+        ],
+        "date": "2024-11-10"
+      }
+    ],
+    "last_updated": "2024-11-30",
+    "use_cases": [
+      "Customer onboarding",
+      "Finance automations"
+    ],
+    "screenshots": [
+      "https://dummyimage.com/600x360/fff7ed/0f172a&text=Workflow+Builder"
+    ],
+    "audience": [
+      "business",
+      "builder"
+    ]
+  },
+  {
+    "id": "kz-guard",
+    "name": "ModelGuard",
+    "category": "Security",
+    "tagline": "Safety and compliance layer for AI applications.",
+    "pricing": {
+      "model": "subscription",
+      "starting_price": 199,
+      "free_trial": true
+    },
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "api": true,
+    "best_for": [
+      "Security teams",
+      "Compliance",
+      "Enterprise IT"
+    ],
+    "key_features": [
+      "Policy checks",
+      "Prompt filtering",
+      "Audit trails"
+    ],
+    "integrations": [
+      "Okta",
+      "Datadog",
+      "PagerDuty"
+    ],
+    "website": "https://example.com/guard",
+    "logo": "https://dummyimage.com/80x80/ef4444/ffffff&text=MG",
+    "sponsored_rank": 2,
+    "rating": 4.8,
+    "review_count": 2,
+    "reviews": [
+      {
+        "id": "mg-r1",
+        "author": "Allison P.",
+        "rating": 5,
+        "title": "Compliance ready out of the box",
+        "body": "Policies shipped with sane defaults let us clear a security review in a day.",
+        "pros": [
+          "Policy packs",
+          "Easy audit exports"
+        ],
+        "cons": [
+          "UI is dense"
+        ],
+        "date": "2024-12-04"
+      },
+      {
+        "id": "mg-r2",
+        "author": "Roberto Q.",
+        "rating": 4,
+        "title": "Great guardrails for prototypes",
+        "body": "Prompt filtering is strict enough for pilots. Alerts could group by service better.",
+        "pros": [
+          "Prompt filters",
+          "Good logging"
+        ],
+        "cons": [
+          "Alert noise"
+        ],
+        "date": "2024-11-27"
+      }
+    ],
+    "last_updated": "2024-12-02",
+    "audience": [
+      "business"
+    ]
+  },
+  {
+    "id": "kz-studio-pro",
+    "name": "Studio Pro",
+    "category": "Automation",
+    "tagline": "Agent orchestration with governance baked in.",
+    "pricing": {
+      "model": "subscription",
+      "starting_price": 129,
+      "free_trial": false
+    },
+    "platforms": [
+      "Web"
+    ],
+    "api": true,
+    "best_for": [
+      "IT",
+      "Engineering",
+      "Platform teams"
+    ],
+    "key_features": [
+      "Role-based controls",
+      "Versioned workflows",
+      "Deployment previews"
+    ],
+    "integrations": [
+      "GitHub",
+      "Jira",
+      "ServiceNow"
+    ],
+    "website": "https://example.com/studio-pro",
+    "logo": "https://dummyimage.com/80x80/14b8a6/ffffff&text=SP",
+    "rating": 4.4,
+    "review_count": 87,
+    "last_updated": "2024-10-22",
+    "audience": [
+      "builder"
+    ]
+  },
+  {
+    "id": "kz-voice",
+    "name": "VoiceOps AI",
+    "category": "Voice AI",
+    "tagline": "Programmable voice agents for sales and support.",
+    "pricing": {
+      "model": "usage-based",
+      "starting_price": 0.05,
+      "free_trial": true
+    },
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "api": true,
+    "best_for": [
+      "Contact centers",
+      "B2B sales"
+    ],
+    "key_features": [
+      "Live call routing",
+      "Sentiment scoring",
+      "CRM logging"
+    ],
+    "integrations": [
+      "Twilio",
+      "Salesforce",
+      "HubSpot"
+    ],
+    "website": "https://example.com/voice",
+    "logo": "https://dummyimage.com/80x80/0ea5e9/ffffff&text=VO",
+    "featured": true,
+    "rating": 4.3,
+    "review_count": 122,
+    "last_updated": "2024-11-15",
+    "audience": [
+      "business"
+    ]
+  },
+  {
+    "id": "kz-datahub",
+    "name": "DataHub AI",
+    "category": "Data Stack",
+    "tagline": "Secure data activation layer for AI products.",
+    "pricing": {
+      "model": "subscription",
+      "starting_price": 299,
+      "free_trial": true
+    },
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "api": true,
+    "best_for": [
+      "Data teams",
+      "ML engineers"
+    ],
+    "key_features": [
+      "Row-level controls",
+      "Sync monitoring",
+      "Vector connectors"
+    ],
+    "integrations": [
+      "BigQuery",
+      "Redshift",
+      "Snowflake"
+    ],
+    "website": "https://example.com/datahub",
+    "logo": "https://dummyimage.com/80x80/a855f7/ffffff&text=DH",
+    "sponsored_rank": 3,
+    "rating": 4.6,
+    "review_count": 74,
+    "last_updated": "2024-12-28",
+    "audience": [
+      "builder"
+    ]
+  },
+  {
+    "id": "kz-notes",
+    "name": "Insight Notes",
+    "category": "Productivity",
+    "tagline": "AI note-taking with structured summaries.",
+    "pricing": {
+      "model": "freemium",
+      "starting_price": 0,
+      "free_trial": true
+    },
+    "platforms": [
+      "Web",
+      "iOS"
+    ],
+    "api": false,
+    "best_for": [
+      "Product managers",
+      "Analysts",
+      "Students"
+    ],
+    "key_features": [
+      "Call recording",
+      "Action items",
+      "Knowledge cards"
+    ],
+    "integrations": [
+      "Zoom",
+      "Google Drive",
+      "Slack"
+    ],
+    "website": "https://example.com/insight-notes",
+    "logo": "https://dummyimage.com/80x80/f59e0b/ffffff&text=IN",
+    "rating": 4.2,
+    "review_count": 211,
+    "last_updated": "2024-09-12",
+    "audience": [
+      "business"
+    ]
+  },
+  {
+    "id": "kz-copilot",
+    "name": "DevOps Copilot",
+    "category": "Developer Tools",
+    "tagline": "Proactive remediation and deployment guardrails.",
+    "pricing": {
+      "model": "subscription",
+      "starting_price": 79,
+      "free_trial": true
+    },
+    "platforms": [
+      "Web",
+      "VS Code",
+      "API"
+    ],
+    "api": true,
+    "best_for": [
+      "DevOps",
+      "SRE"
+    ],
+    "key_features": [
+      "Pipeline insights",
+      "Drift detection",
+      "Runbook suggestions"
+    ],
+    "integrations": [
+      "GitLab",
+      "PagerDuty",
+      "Datadog"
+    ],
+    "website": "https://example.com/devops-copilot",
+    "logo": "https://dummyimage.com/80x80/2563eb/ffffff&text=DC",
+    "featured": true,
+    "rating": 4.5,
+    "review_count": 165,
+    "last_updated": "2024-12-08",
+    "audience": [
+      "builder"
+    ]
+  },
+  {
+    "id": "kz-studio-lite",
+    "name": "Studio Lite",
+    "category": "Automation",
+    "tagline": "Lightweight automation for quick wins.",
+    "pricing": {
+      "model": "freemium",
+      "starting_price": 0,
+      "free_trial": true
+    },
+    "platforms": [
+      "Web"
+    ],
+    "api": false,
+    "best_for": [
+      "Solo builders",
+      "No-code teams"
+    ],
+    "key_features": [
+      "Template library",
+      "One-click deploys",
+      "Webhook triggers"
+    ],
+    "integrations": [
+      "Airtable",
+      "Sheets",
+      "Slack"
+    ],
+    "website": "https://example.com/studio-lite",
+    "logo": "https://dummyimage.com/80x80/10b981/ffffff&text=SL",
+    "rating": 4.1,
+    "review_count": 98,
+    "last_updated": "2024-08-25",
+    "audience": [
+      "business"
+    ]
+  },
+  {
+    "id": "zapier",
+    "slug": "zapier",
+    "name": "Zapier",
+    "category": "Automation",
+    "tagline": "Connect apps and automate workflows without code.",
+    "description": "A workflow automation platform for connecting apps, triggering actions, and building multi-step automations for teams.",
+    "pricing": {
+      "model": "Varies"
+    },
+    "platforms": [
+      "Web"
+    ],
+    "api": true,
+    "best_for": [
+      "No-code teams",
+      "Ops",
+      "Marketing"
+    ],
+    "key_features": [
+      "Multi-step Zaps",
+      "App integrations",
+      "Triggers and actions"
+    ],
+    "integrations": [
+      "Slack",
+      "Google Sheets",
+      "Salesforce"
+    ],
+    "website": "",
+    "logo": "https://dummyimage.com/80x80/6366f1/ffffff&text=Z",
+    "featured": true,
+    "rating": 4.6,
+    "review_count": 1200,
+    "last_updated": "2026-01-08",
+    "pros": [
+      "Huge integration library",
+      "Beginner-friendly",
+      "Strong templates"
+    ],
+    "cons": [
+      "Can get expensive at scale",
+      "Limited on-prem options"
+    ],
+    "use_cases": [
+      "Lead routing",
+      "Notifications",
+      "Data sync"
+    ],
+    "audience": [
+      "business"
+    ]
+  },
+  {
+    "id": "make",
+    "slug": "make",
+    "name": "Make",
+    "category": "Automation",
+    "tagline": "Visual automation builder for powerful workflows.",
+    "description": "A visual platform for building complex automation scenarios with integrations, routing, and multi-step logic.",
+    "pricing": {
+      "model": "Varies"
+    },
+    "platforms": [
+      "Web"
+    ],
+    "api": true,
+    "best_for": [
+      "Automation teams",
+      "Ops",
+      "Agencies"
+    ],
+    "key_features": [
+      "Visual scenarios",
+      "HTTP modules",
+      "Error handlers"
+    ],
+    "integrations": [
+      "Notion",
+      "Airtable",
+      "Google Workspace"
+    ],
+    "website": "",
+    "logo": "https://dummyimage.com/80x80/0ea5e9/ffffff&text=M",
+    "featured": true,
+    "rating": 4.7,
+    "review_count": 640,
+    "last_updated": "2026-01-08",
+    "pros": [
+      "Powerful routing",
+      "Great API modules",
+      "Flexible pricing tiers"
+    ],
+    "cons": [
+      "Learning curve for complex scenarios"
+    ],
+    "use_cases": [
+      "Data sync",
+      "Workflow orchestration",
+      "Webhook processing"
+    ],
+    "audience": [
+      "business",
+      "builder"
+    ]
+  },
+  {
+    "id": "n8n",
+    "slug": "n8n",
+    "name": "n8n",
+    "category": "Automation",
+    "tagline": "Workflow automation for technical teams and agencies.",
+    "description": "Build workflow automations with webhooks, API steps, and custom logic. Often used by developers and automation agencies.",
+    "pricing": {
+      "model": "Varies"
+    },
+    "platforms": [
+      "Web",
+      "Self-hosted"
+    ],
+    "api": true,
+    "best_for": [
+      "Developers",
+      "Agencies",
+      "Product teams"
+    ],
+    "key_features": [
+      "Self-hosting",
+      "Node-based workflows",
+      "Custom code steps"
+    ],
+    "integrations": [
+      "GitHub",
+      "Slack",
+      "Postgres"
+    ],
+    "website": "",
+    "logo": "https://dummyimage.com/80x80/f97316/ffffff&text=N8",
+    "featured": true,
+    "rating": 4.5,
+    "review_count": 420,
+    "last_updated": "2026-01-08",
+    "pros": [
+      "Open-source friendly",
+      "API-first",
+      "Flexible hosting"
+    ],
+    "cons": [
+      "Requires more setup for teams"
+    ],
+    "use_cases": [
+      "API orchestration",
+      "Data pipelines",
+      "Automation for dev teams"
+    ],
+    "audience": [
+      "builder",
+      "business"
+    ]
+  },
+  {
+    "id": "pipedream",
+    "slug": "pipedream",
+    "name": "Pipedream",
+    "category": "Automation",
+    "tagline": "Developer-focused automation with APIs and code steps.",
+    "description": "Build event-driven workflows, connect APIs quickly, and add custom code steps for advanced automations.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "builder"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "power-automate",
+    "slug": "power-automate",
+    "name": "Microsoft Power Automate",
+    "category": "Automation",
+    "tagline": "Automation across Microsoft and business apps.",
+    "description": "Automation tool for teams using Microsoft ecosystem, with connectors, approvals, and workflow automation for business processes.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business",
+      "builder"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "zoho-flow",
+    "slug": "zoho-flow",
+    "name": "Zoho Flow",
+    "category": "Automation",
+    "tagline": "Automation for Zoho users and business workflows.",
+    "description": "Workflow automation for connecting Zoho apps and common business tools to automate repetitive tasks.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "integrately",
+    "slug": "integrately",
+    "name": "Integrately",
+    "category": "Automation",
+    "tagline": "Quick automations with ready-made templates.",
+    "description": "Automation platform focused on fast setup using prebuilt templates and common integrations for teams.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "pabbly-connect",
+    "slug": "pabbly-connect",
+    "name": "Pabbly Connect",
+    "category": "Automation",
+    "tagline": "Budget-friendly workflow automation for SMBs.",
+    "description": "Connect apps and automate tasks with multi-step workflows, often chosen by SMBs for value-focused automation needs.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "ifttt",
+    "slug": "ifttt",
+    "name": "IFTTT",
+    "category": "Automation",
+    "tagline": "Simple automations for everyday apps and services.",
+    "description": "Entry-level automation for personal and lightweight business workflows using triggers and actions.",
+    "website": "",
+    "api": false,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "node-red",
+    "slug": "node-red",
+    "name": "Node-RED",
+    "category": "Automation",
+    "tagline": "Flow-based automation for APIs and IoT-style workflows.",
+    "description": "Flow-based tooling for wiring APIs and services together, often used for integrations and event-driven automation setups.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "builder"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "workato",
+    "slug": "workato",
+    "name": "Workato",
+    "category": "Automation",
+    "tagline": "Enterprise automation and integration platform.",
+    "description": "Enterprise-focused automation platform for complex integrations, governance, and large-scale workflow automation.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business",
+      "builder"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  },
+  {
+    "id": "tray-io",
+    "slug": "tray-io",
+    "name": "Tray.io",
+    "category": "Automation",
+    "tagline": "Enterprise integrations and automation workflows.",
+    "description": "Integration and automation platform built for larger teams that need advanced workflows and governance.",
+    "website": "",
+    "api": true,
+    "pricing": {
+      "model": "Varies"
+    },
+    "audience": [
+      "business",
+      "builder"
+    ],
+    "featured": false,
+    "last_updated": "2026-01-08"
+  }
+]

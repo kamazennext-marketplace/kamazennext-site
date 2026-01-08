@@ -1,5 +1,7 @@
 Options -Indexes
 
+SetEnv ADMIN_PASSWORD "CHANGE_ME_STRONG_PASSWORD"
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteCond %{REQUEST_FILENAME} -f [OR]
