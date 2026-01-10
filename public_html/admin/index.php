@@ -11,6 +11,7 @@
   <ul>
     <li><a href="/admin/catalog.php">Catalog Editor</a></li>
     <li><a href="/admin/bulk_import.php">Bulk Import (CSV)</a></li>
+    <li><a href="/admin/import-tools.php">Import Tools (CSV)</a></li>
     <li><a href="/admin/clicks.php">Click Report</a></li>
     <li><a href="/admin/migrate_clicks.php">Run Clicks Migration</a></li>
     <li><a href="/admin/migrate_products.php">Run Catalog Migration</a></li>
