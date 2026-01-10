@@ -10,6 +10,7 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260106" />
   <link rel="stylesheet" href="/assets/css/theme-light.css?v=20260106" />
+  <link rel="stylesheet" href="/assets/theme.css?v=1">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="/assets/js/header.js" defer></script>
@@ -385,7 +386,7 @@
         ${renderAlternatives(product, list)}
         ${renderCompareSuggestions(product, list)}
         <div class="section">
-          <a class="cta" href="/out.php?id=${encodeURIComponent(product.id)}&from=product" target="_blank" rel="nofollow sponsored noopener">Visit website</a>
+          <a class="cta" href="/out.php?slug=${encodeURIComponent(product.slug || product.id)}&from=product" target="_blank" rel="nofollow sponsored noopener">Visit website</a>
         </div>
       `;
 

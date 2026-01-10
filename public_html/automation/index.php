@@ -2,50 +2,67 @@
 
 declare(strict_types=1);
 
-$productsFile = __DIR__ . '/../data/products.json';
-if (!file_exists($productsFile)) {
-    $fallbackFile = __DIR__ . '/../../data/products.json';
-    if (file_exists($fallbackFile)) {
-        $productsFile = $fallbackFile;
+require_once __DIR__ . '/../admin/db.php';
+
+$automationTools = [];
+$topPicks = [];
+
+$normalizePlatforms = static function (?string $platforms): array {
+    if ($platforms === null || $platforms === '') {
+        return [];
     }
-}
-
-$products = [];
-if (file_exists($productsFile)) {
-    $raw = file_get_contents($productsFile);
-    $decoded = $raw ? json_decode($raw, true) : null;
-    if (is_array($decoded)) {
-        $products = $decoded;
+    if (str_contains($platforms, ',')) {
+        return array_filter(array_map('trim', explode(',', $platforms)));
     }
-}
+    return [$platforms];
+};
 
-$automationTools = array_values(array_filter($products, static function ($product): bool {
-    return is_array($product) && (($product['category'] ?? '') === 'Automation');
-}));
+$fetchTools = static function (int $limit = null) use ($conn, $normalizePlatforms): array {
+    $sql = 'SELECT id, name, slug, category, tagline, pricing_model, api_available, platforms, featured_rank, updated_at, last_updated
+            FROM products
+            WHERE category = ?
+            ORDER BY featured_rank IS NULL, featured_rank ASC, COALESCE(updated_at, last_updated) DESC';
 
-usort($automationTools, static function (array $a, array $b): int {
-    $rankA = $a['featured_rank'] ?? null;
-    $rankB = $b['featured_rank'] ?? null;
-    if ($rankA !== null || $rankB !== null) {
-        $rankA = $rankA === null ? PHP_INT_MAX : (int) $rankA;
-        $rankB = $rankB === null ? PHP_INT_MAX : (int) $rankB;
-        if ($rankA !== $rankB) {
-            return $rankA <=> $rankB;
+    if ($limit !== null) {
+        $sql .= ' LIMIT ?';
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            return [];
         }
+        $category = 'Automation';
+        $stmt->bind_param('si', $category, $limit);
+    } else {
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            return [];
+        }
+        $category = 'Automation';
+        $stmt->bind_param('s', $category);
     }
 
-    $featuredA = !empty($a['featured']);
-    $featuredB = !empty($b['featured']);
-    if ($featuredA !== $featuredB) {
-        return $featuredA ? -1 : 1;
+    if (!$stmt->execute()) {
+        $stmt->close();
+        return [];
     }
 
-    return strtotime((string) ($b['last_updated'] ?? '')) <=> strtotime((string) ($a['last_updated'] ?? ''));
-});
+    $result = $stmt->get_result();
+    $rows = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    $stmt->close();
 
-$topPicks = array_slice($automationTools, 0, 10);
-$compareIds = array_values(array_filter(array_map(static function ($product): string {
-    return (string) ($product['id'] ?? $product['slug'] ?? '');
+    foreach ($rows as &$row) {
+        $row['api_available'] = (bool) ($row['api_available'] ?? false);
+        $row['platforms'] = $normalizePlatforms($row['platforms'] ?? null);
+    }
+    unset($row);
+
+    return $rows;
+};
+
+$topPicks = $fetchTools(12);
+$automationTools = $fetchTools();
+
+$compareIds = array_values(array_filter(array_map(static function (array $product): string {
+    return (string) ($product['id'] ?? '');
 }, $topPicks)));
 $compareIds = array_slice($compareIds, 0, 4);
 
@@ -148,6 +165,7 @@ function h(string $value): string
   <link rel="canonical" href="<?php echo h($canonicalUrl); ?>">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260106">
   <link rel="stylesheet" href="/assets/css/theme-light.css?v=20260106">
+  <link rel="stylesheet" href="/assets/theme.css?v=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -216,11 +234,14 @@ function h(string $value): string
           <article class="card">
             <div class="meta-row">
               <span class="badge">Automation</span>
-              <?php if (!empty($tool['pricing']['model'])): ?>
-                <span class="badge badge-soft"><?php echo h((string) $tool['pricing']['model']); ?></span>
+              <?php if (!empty($tool['pricing_model'])): ?>
+                <span class="badge badge-soft"><?php echo h((string) $tool['pricing_model']); ?></span>
               <?php endif; ?>
-              <?php if (!empty($tool['api'])): ?>
+              <?php if (!empty($tool['api_available'])): ?>
                 <span class="badge badge-soft">API</span>
+              <?php endif; ?>
+              <?php if (!empty($tool['platforms'])): ?>
+                <span class="badge badge-soft"><?php echo h(implode(', ', $tool['platforms'])); ?></span>
               <?php endif; ?>
             </div>
             <h3><?php echo h((string) ($tool['name'] ?? 'Automation tool')); ?></h3>
@@ -228,6 +249,7 @@ function h(string $value): string
             <div class="card-actions">
               <a class="btn" href="/p/<?php echo rawurlencode((string) ($tool['slug'] ?? $tool['id'] ?? '')); ?>">View</a>
               <a class="btn btn-primary btn-primary-gradient" href="<?php echo h($buildOutUrl($tool, 'automation')); ?>" target="_blank" rel="nofollow sponsored noopener">Visit</a>
+              <button class="btn btn-secondary compare-btn" data-id="<?php echo h((string) ($tool['id'] ?? '')); ?>" type="button">Add Compare</button>
             </div>
           </article>
         <?php endforeach; ?>
@@ -237,13 +259,17 @@ function h(string $value): string
     <section class="section" id="all-tools">
       <h2>All Automation Tools</h2>
       <p>Explore the full automation catalog filtered by the Automation category.</p>
+      <div class="card-actions" style="margin-bottom: 16px;">
+        <a class="btn" href="/category/automation">View /category/automation</a>
+        <a class="btn btn-secondary" href="/software.html?cat=Automation">Open full catalog</a>
+      </div>
       <div class="grid">
         <?php foreach ($automationTools as $tool): ?>
           <article class="card">
             <div class="meta-row">
               <span class="badge">Automation</span>
               <?php if (!empty($tool['platforms'])): ?>
-                <span class="badge badge-soft"><?php echo h(is_array($tool['platforms']) ? implode(', ', $tool['platforms']) : (string) $tool['platforms']); ?></span>
+                <span class="badge badge-soft"><?php echo h(implode(', ', $tool['platforms'])); ?></span>
               <?php endif; ?>
             </div>
             <h3><?php echo h((string) ($tool['name'] ?? 'Automation tool')); ?></h3>
@@ -251,6 +277,7 @@ function h(string $value): string
             <div class="card-actions">
               <a class="btn" href="/p/<?php echo rawurlencode((string) ($tool['slug'] ?? $tool['id'] ?? '')); ?>">View</a>
               <a class="btn btn-secondary" href="<?php echo h($buildOutUrl($tool, 'automation')); ?>" target="_blank" rel="nofollow sponsored noopener">Visit</a>
+              <button class="btn btn-secondary compare-btn" data-id="<?php echo h((string) ($tool['id'] ?? '')); ?>" type="button">Add Compare</button>
             </div>
           </article>
         <?php endforeach; ?>
@@ -270,6 +297,38 @@ function h(string $value): string
 
   <script>
     const compareButton = document.getElementById('compareCta');
+    const compareButtons = document.querySelectorAll('.compare-btn');
+
+    const getCompareIds = () => {
+      try {
+        return JSON.parse(localStorage.getItem('kz_compare_ids')) || [];
+      } catch (error) {
+        return [];
+      }
+    };
+
+    const saveCompareIds = (ids) => {
+      localStorage.setItem('kz_compare_ids', JSON.stringify(ids.slice(0, 4)));
+    };
+
+    const toggleCompare = (id, button) => {
+      if (!id) return;
+      const ids = getCompareIds();
+      const idx = ids.indexOf(id);
+      if (idx >= 0) {
+        ids.splice(idx, 1);
+        if (button) button.textContent = 'Add Compare';
+      } else {
+        if (ids.length >= 4) {
+          alert('You can only compare up to 4 tools.');
+          return;
+        }
+        ids.push(id);
+        if (button) button.textContent = 'In Compare';
+      }
+      saveCompareIds(ids);
+    };
+
     if (compareButton) {
       compareButton.addEventListener('click', (event) => {
         const payload = compareButton.getAttribute('data-compare');
@@ -286,6 +345,16 @@ function h(string $value): string
         window.location.href = '/compare.html';
       });
     }
+
+    compareButtons.forEach((button) => {
+      const id = button.getAttribute('data-id');
+      if (!id) return;
+      const ids = getCompareIds();
+      if (ids.includes(id)) {
+        button.textContent = 'In Compare';
+      }
+      button.addEventListener('click', () => toggleCompare(id, button));
+    });
   </script>
 
   <script type="application/ld+json">

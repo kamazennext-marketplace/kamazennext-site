@@ -1,7 +1,7 @@
 <?php
 /**
- * Admin Bulk CSV Import
- * - Upload CSV, preview rows, validate, and import into products.json with upsert.
+ * Admin Bulk CSV Import (MySQL)
+ * - Upload CSV, preview rows, validate, and upsert into products table.
  * - Protected by env ADMIN_PASSWORD.
  */
 
@@ -23,28 +23,14 @@ if (!isset($_SERVER['PHP_AUTH_PW']) || !hash_equals($adminPassword, (string) $_S
     exit;
 }
 
+require_once __DIR__ . '/db.php';
+
 function h(string $value): string
 {
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 
-$productsFile = __DIR__ . '/../data/products.json';
-if (!file_exists($productsFile)) {
-    $fallbackFile = __DIR__ . '/../../data/products.json';
-    if (file_exists($fallbackFile)) {
-        $productsFile = $fallbackFile;
-    }
-}
-
-$products = [];
-if (file_exists($productsFile)) {
-    $raw = file_get_contents($productsFile);
-    $decoded = $raw ? json_decode($raw, true) : null;
-    if (is_array($decoded)) {
-        $products = $decoded;
-    }
-}
-
+$maxFileSize = 2 * 1024 * 1024;
 $errors = [];
 $status = '';
 $previewRows = [];
@@ -56,14 +42,16 @@ if ($csrfToken === '') {
     $_SESSION['csrf_token'] = $csrfToken;
 }
 
-$requiredColumns = ['name', 'category', 'tagline', 'website_url'];
+$requiredColumns = ['name', 'category', 'website_url'];
 $optionalColumns = [
     'slug',
+    'tagline',
     'pricing_model',
     'api_available',
     'platforms',
     'affiliate_url',
     'featured_rank',
+    'updated_at',
     'last_updated'
 ];
 
@@ -71,6 +59,49 @@ $slugify = static function (string $value): string {
     $slug = strtolower(trim($value));
     $slug = preg_replace('/[^a-z0-9]+/', '-', $slug) ?? '';
     return trim($slug, '-');
+};
+
+$getProductColumns = static function (mysqli $conn): array {
+    $result = $conn->query('SELECT DATABASE() as db_name');
+    $row = $result ? $result->fetch_assoc() : null;
+    $dbName = $row['db_name'] ?? '';
+    if ($dbName === '') {
+        return [];
+    }
+
+    $stmt = $conn->prepare('SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?');
+    if (!$stmt) {
+        return [];
+    }
+    $tableName = 'products';
+    $stmt->bind_param('ss', $dbName, $tableName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $columns = [];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $columns[$row['COLUMN_NAME']] = true;
+        }
+    }
+    $stmt->close();
+    return $columns;
+};
+
+$columns = $getProductColumns($conn);
+
+$normalizeBoolean = static function (string $value): ?int {
+    if ($value === '') {
+        return null;
+    }
+    $normalized = strtolower($value);
+    return in_array($normalized, ['1', 'true', 'yes', 'y'], true) ? 1 : 0;
+};
+
+$bindValues = static function (mysqli_stmt $stmt, string $types, array $values): void {
+    if ($types === '') {
+        return;
+    }
+    $stmt->bind_param($types, ...$values);
 };
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -82,6 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($action === 'preview') {
             if (!isset($_FILES['csv_file']) || $_FILES['csv_file']['error'] !== UPLOAD_ERR_OK) {
                 $errors[] = 'Upload failed. Please choose a valid CSV file.';
+            } elseif ($_FILES['csv_file']['size'] > $maxFileSize) {
+                $errors[] = 'File too large. Limit is 2MB.';
             } else {
                 $handle = fopen($_FILES['csv_file']['tmp_name'], 'r');
                 if ($handle === false) {
@@ -127,6 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     }
                                 }
 
+                                $row['category'] = $row['category'] !== '' ? $row['category'] : 'Automation';
+                                $row['slug'] = $row['slug'] !== '' ? $row['slug'] : $slugify($row['name'] ?? '');
                                 $rows[] = $row;
                                 $lineNumber++;
                             }
@@ -162,175 +197,125 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!is_array($rows) || empty($rows)) {
                     $errors[] = 'No rows available for import.';
                 } else {
-                    $existingBySlug = [];
-                    $existingByName = [];
-                    $existingIds = [];
+                    $allowedColumns = array_intersect(
+                        array_keys($columns),
+                        ['name', 'slug', 'category', 'tagline', 'pricing_model', 'api_available', 'platforms', 'website_url', 'affiliate_url', 'featured_rank', 'updated_at', 'last_updated']
+                    );
 
-                    foreach ($products as $index => $product) {
-                        if (!is_array($product)) {
-                            continue;
-                        }
-                        $existingId = (string) ($product['id'] ?? '');
-                        if ($existingId !== '') {
-                            $existingIds[$existingId] = true;
-                        }
-                        $productSlug = strtolower((string) ($product['slug'] ?? $product['id'] ?? ''));
-                        if ($productSlug !== '') {
-                            $existingBySlug[$productSlug] = $index;
-                        }
-                        $productName = strtolower((string) ($product['name'] ?? ''));
-                        if ($productName !== '') {
-                            $existingByName[$productName] = $index;
-                        }
-                    }
+                    if (empty($allowedColumns)) {
+                        $errors[] = 'Products table not ready. Run migration first.';
+                    } else {
+                        $created = 0;
+                        $updated = 0;
+                        $rowErrors = [];
+                        $timestamp = date('Y-m-d H:i:s');
 
-                    $created = 0;
-                    $updated = 0;
-                    $rowErrors = [];
+                        $selectBySlug = $conn->prepare('SELECT id FROM products WHERE slug = ? LIMIT 1');
+                        $selectByName = $conn->prepare('SELECT id FROM products WHERE name = ? LIMIT 1');
 
-                    $uniqueId = static function (string $base, array $existing) use ($slugify): string {
-                        $candidate = $slugify($base);
-                        if ($candidate === '') {
-                            $candidate = 'tool';
-                        }
-                        $suffix = 1;
-                        $final = $candidate;
-                        while (isset($existing[$final])) {
-                            $suffix++;
-                            $final = $candidate . '-' . $suffix;
-                        }
-                        return $final;
-                    };
+                        foreach ($rows as $index => $row) {
+                            $lineNumber = $index + 2;
+                            $data = [
+                                'name' => $row['name'] ?? '',
+                                'slug' => $row['slug'] ?? $slugify($row['name'] ?? ''),
+                                'category' => $row['category'] ?? 'Automation',
+                                'tagline' => $row['tagline'] ?? null,
+                                'pricing_model' => $row['pricing_model'] ?? null,
+                                'api_available' => $normalizeBoolean($row['api_available'] ?? ''),
+                                'platforms' => $row['platforms'] ?? null,
+                                'website_url' => $row['website_url'] ?? null,
+                                'affiliate_url' => $row['affiliate_url'] ?? null,
+                                'featured_rank' => ($row['featured_rank'] ?? '') !== '' ? (int) $row['featured_rank'] : null,
+                                'updated_at' => ($row['updated_at'] ?? '') !== '' ? $row['updated_at'] : $timestamp,
+                                'last_updated' => ($row['last_updated'] ?? '') !== '' ? $row['last_updated'] : $timestamp
+                            ];
 
-                    foreach ($rows as $row) {
-                        $name = trim((string) ($row['name'] ?? ''));
-                        $category = trim((string) ($row['category'] ?? 'Automation')) ?: 'Automation';
-                        $tagline = trim((string) ($row['tagline'] ?? ''));
-                        $websiteUrl = trim((string) ($row['website_url'] ?? ''));
-
-                        if ($name === '' || $tagline === '' || $websiteUrl === '') {
-                            $rowErrors[] = 'Skipping row with missing required fields: ' . ($name ?: 'Unnamed');
-                            continue;
-                        }
-
-                        $slug = trim((string) ($row['slug'] ?? ''));
-                        if ($slug === '') {
-                            $slug = $slugify($name);
-                        } else {
-                            $slug = $slugify($slug);
-                        }
-
-                        $slugKey = strtolower($slug);
-                        $nameKey = strtolower($name);
-                        $index = $slugKey !== '' && isset($existingBySlug[$slugKey])
-                            ? $existingBySlug[$slugKey]
-                            : ($existingByName[$nameKey] ?? null);
-
-                        $product = $index !== null ? $products[$index] : [];
-                        if (!is_array($product)) {
-                            $product = [];
-                        }
-
-                        $product['name'] = $name;
-                        $product['category'] = $category;
-                        $product['tagline'] = $tagline;
-                        $product['website'] = $websiteUrl;
-                        $product['website_url'] = $websiteUrl;
-                        if ($slug !== '') {
-                            $product['slug'] = $slug;
-                        }
-
-                        $affiliateUrl = trim((string) ($row['affiliate_url'] ?? ''));
-                        if ($affiliateUrl !== '') {
-                            $product['affiliate_url'] = $affiliateUrl;
-                        }
-
-                        $pricingModel = trim((string) ($row['pricing_model'] ?? ''));
-                        if ($pricingModel !== '') {
-                            $product['pricing'] = $product['pricing'] ?? [];
-                            if (!is_array($product['pricing'])) {
-                                $product['pricing'] = [];
-                            }
-                            $product['pricing']['model'] = strtolower($pricingModel);
-                        }
-
-                        $apiAvailable = strtolower(trim((string) ($row['api_available'] ?? '')));
-                        if ($apiAvailable !== '') {
-                            $product['api'] = in_array($apiAvailable, ['yes', 'true', '1'], true);
-                        }
-
-                        $platforms = trim((string) ($row['platforms'] ?? ''));
-                        if ($platforms !== '') {
-                            $product['platforms'] = array_values(array_filter(array_map('trim', explode(',', $platforms))));
-                        }
-
-                        $featuredRank = trim((string) ($row['featured_rank'] ?? ''));
-                        if ($featuredRank !== '') {
-                            $product['featured_rank'] = (int) $featuredRank;
-                        }
-
-                        $lastUpdated = trim((string) ($row['last_updated'] ?? ''));
-                        if ($lastUpdated !== '') {
-                            $product['last_updated'] = $lastUpdated;
-                        }
-
-                        if (empty($product['id'])) {
-                            $newId = $uniqueId($slug !== '' ? $slug : $name, $existingIds);
-                            $product['id'] = $newId;
-                            $existingIds[$newId] = true;
-                        }
-
-                        if ($index !== null) {
-                            $products[$index] = $product;
-                            $updated++;
-                        } else {
-                            $products[] = $product;
-                            $created++;
-                            if ($slug !== '') {
-                                $existingBySlug[$slugKey] = count($products) - 1;
-                            }
-                            $existingByName[$nameKey] = count($products) - 1;
-                        }
-                    }
-
-                    if (!empty($rowErrors)) {
-                        $errors = array_merge($errors, $rowErrors);
-                    }
-
-                    if (empty($errors)) {
-                        $encoded = json_encode($products, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-                        if ($encoded === false) {
-                            $errors[] = 'Failed to encode products.json.';
-                        } else {
-                            $backupsDir = dirname($productsFile) . '/backups';
-                            if (!is_dir($backupsDir)) {
-                                mkdir($backupsDir, 0750, true);
+                            if ($data['name'] === '' || $data['website_url'] === '') {
+                                $rowErrors[] = "Row {$lineNumber}: missing required fields.";
+                                continue;
                             }
 
-                            $fp = fopen($productsFile, 'c+');
-                            if ($fp === false) {
-                                $errors[] = 'Unable to open products.json for writing.';
-                            } elseif (!flock($fp, LOCK_EX)) {
-                                $errors[] = 'Unable to lock products.json.';
-                            } else {
-                                rewind($fp);
-                                $existing = stream_get_contents($fp);
-                                if ($existing === false) {
-                                    $existing = '';
+                            $matchId = null;
+                            if ($data['slug'] !== '' && $selectBySlug) {
+                                $selectBySlug->bind_param('s', $data['slug']);
+                                if ($selectBySlug->execute()) {
+                                    $result = $selectBySlug->get_result();
+                                    $match = $result ? $result->fetch_assoc() : null;
+                                    $matchId = $match['id'] ?? null;
                                 }
-                                $backupPath = $backupsDir . '/products-' . date('Ymd-His') . '.json';
-                                file_put_contents($backupPath, $existing);
-
-                                rewind($fp);
-                                ftruncate($fp, 0);
-                                fwrite($fp, $encoded);
-                                fflush($fp);
-                                flock($fp, LOCK_UN);
-                                fclose($fp);
-
-                                $status = "Import complete: {$created} created, {$updated} updated.";
-                                unset($_SESSION['bulk_import_rows'], $_SESSION['bulk_import_token']);
                             }
+
+                            if ($matchId === null && $selectByName) {
+                                $selectByName->bind_param('s', $data['name']);
+                                if ($selectByName->execute()) {
+                                    $result = $selectByName->get_result();
+                                    $match = $result ? $result->fetch_assoc() : null;
+                                    $matchId = $match['id'] ?? null;
+                                }
+                            }
+
+                            $insertColumns = [];
+                            $insertValues = [];
+                            $insertTypes = '';
+
+                            foreach ($allowedColumns as $column) {
+                                if (!array_key_exists($column, $data)) {
+                                    continue;
+                                }
+                                $insertColumns[] = $column;
+                                $insertValues[] = $data[$column];
+                                $insertTypes .= in_array($column, ['api_available', 'featured_rank'], true) ? 'i' : 's';
+                            }
+
+                            if ($matchId !== null) {
+                                $updateColumns = $insertColumns;
+                                $setParts = array_map(static fn($col) => "{$col} = ?", $updateColumns);
+                                $updateSql = 'UPDATE products SET ' . implode(', ', $setParts) . ' WHERE id = ?';
+                                $updateStmt = $conn->prepare($updateSql);
+                                if (!$updateStmt) {
+                                    $rowErrors[] = "Row {$lineNumber}: unable to prepare update.";
+                                    continue;
+                                }
+                                $updateValues = $insertValues;
+                                $updateValues[] = (int) $matchId;
+                                $updateTypes = $insertTypes . 'i';
+                                $bindValues($updateStmt, $updateTypes, $updateValues);
+                                if ($updateStmt->execute()) {
+                                    $updated++;
+                                } else {
+                                    $rowErrors[] = "Row {$lineNumber}: update failed.";
+                                }
+                                $updateStmt->close();
+                            } else {
+                                $placeholders = implode(', ', array_fill(0, count($insertColumns), '?'));
+                                $insertSql = 'INSERT INTO products (' . implode(', ', $insertColumns) . ') VALUES (' . $placeholders . ')';
+                                $insertStmt = $conn->prepare($insertSql);
+                                if (!$insertStmt) {
+                                    $rowErrors[] = "Row {$lineNumber}: unable to prepare insert.";
+                                    continue;
+                                }
+                                $bindValues($insertStmt, $insertTypes, $insertValues);
+                                if ($insertStmt->execute()) {
+                                    $created++;
+                                } else {
+                                    $rowErrors[] = "Row {$lineNumber}: insert failed.";
+                                }
+                                $insertStmt->close();
+                            }
+                        }
+
+                        if ($selectBySlug) {
+                            $selectBySlug->close();
+                        }
+                        if ($selectByName) {
+                            $selectByName->close();
+                        }
+
+                        if (!empty($rowErrors)) {
+                            $errors = array_merge($errors, $rowErrors);
+                        } else {
+                            $status = "Import complete. Created {$created}, updated {$updated}.";
+                            unset($_SESSION['bulk_import_rows'], $_SESSION['bulk_import_token']);
                         }
                     }
                 }
@@ -338,35 +323,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
-$isWritable = file_exists($productsFile) && is_writable($productsFile);
 ?>
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bulk Import</title>
+  <title>Bulk Import (CSV)</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 2rem; color: #111; }
-    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
-    th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
-    th { background: #f5f5f5; }
     .message { padding: 0.75rem 1rem; margin-bottom: 1rem; border-radius: 6px; }
     .error { background: #ffe0e0; border: 1px solid #e0a0a0; }
     .success { background: #e6ffed; border: 1px solid #9ad2a6; }
-    .warning { background: #fff7e0; border: 1px solid #e0c090; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
+    th { background: #f5f5f5; }
     label { display: block; margin-top: 0.75rem; font-weight: 600; }
-    input[type="file"] { margin-top: 0.5rem; }
+    input[type=file] { margin-top: 0.5rem; }
     .actions { margin-top: 1rem; }
   </style>
 </head>
 <body>
-  <h1>Bulk CSV Import</h1>
-
-  <?php if (!$isWritable): ?>
-    <div class="message warning">products.json is not writable. Fix permissions in cPanel.</div>
-  <?php endif; ?>
+  <h1>Bulk Import (CSV)</h1>
 
   <?php foreach ($errors as $error): ?>
     <div class="message error"><?php echo h($error); ?></div>
@@ -380,9 +358,9 @@ $isWritable = file_exists($productsFile) && is_writable($productsFile);
     <input type="hidden" name="csrf_token" value="<?php echo h($csrfToken); ?>">
     <input type="hidden" name="action" value="preview">
     <label for="csv_file">Upload CSV</label>
-    <input id="csv_file" name="csv_file" type="file" accept=".csv" required>
+    <input id="csv_file" name="csv_file" type="file" accept=".csv,text/csv" required>
     <div class="actions">
-      <button type="submit" <?php echo $isWritable ? '' : 'disabled'; ?>>Preview Import</button>
+      <button type="submit">Preview</button>
     </div>
   </form>
 
@@ -391,16 +369,16 @@ $isWritable = file_exists($productsFile) && is_writable($productsFile);
     <table>
       <thead>
         <tr>
-          <?php foreach (array_keys($previewRows[0]) as $header): ?>
-            <th><?php echo h($header); ?></th>
+          <?php foreach (array_merge($requiredColumns, $optionalColumns) as $column): ?>
+            <th><?php echo h($column); ?></th>
           <?php endforeach; ?>
         </tr>
       </thead>
       <tbody>
         <?php foreach ($previewRows as $row): ?>
           <tr>
-            <?php foreach ($row as $value): ?>
-              <td><?php echo h((string) $value); ?></td>
+            <?php foreach (array_merge($requiredColumns, $optionalColumns) as $column): ?>
+              <td><?php echo h((string) ($row[$column] ?? '')); ?></td>
             <?php endforeach; ?>
           </tr>
         <?php endforeach; ?>
@@ -410,9 +388,9 @@ $isWritable = file_exists($productsFile) && is_writable($productsFile);
     <form method="post">
       <input type="hidden" name="csrf_token" value="<?php echo h($csrfToken); ?>">
       <input type="hidden" name="action" value="import">
-      <input type="hidden" name="import_token" value="<?php echo h($summary['token'] ?? ''); ?>">
+      <input type="hidden" name="import_token" value="<?php echo h((string) ($summary['token'] ?? '')); ?>">
       <div class="actions">
-        <button type="submit" <?php echo $isWritable ? '' : 'disabled'; ?>>Import <?php echo h((string) ($summary['total'] ?? 0)); ?> rows</button>
+        <button type="submit">Import <?php echo h((string) ($summary['total'] ?? 0)); ?> rows</button>
       </div>
     </form>
   <?php endif; ?>

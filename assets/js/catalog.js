@@ -72,9 +72,9 @@ const slugify = (value = '') =>
 
 export const urlForCategory = (name) => `/category/${slugify(name)}`;
 export const urlForProduct = (id) => `/p/${encodeURIComponent(id || '')}`;
-export const urlForOutbound = (id, from = "") => {
-  if (!id) return "#";
-  const params = new URLSearchParams({ id });
+export const urlForOutbound = (identifier, from = "") => {
+  if (!identifier) return "#";
+  const params = new URLSearchParams({ slug: identifier });
   if (from) params.set("from", from);
   return `/out.php?${params.toString()}`;
 };

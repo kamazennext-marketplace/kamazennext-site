@@ -18,36 +18,18 @@ if (!isset($_SERVER['PHP_AUTH_PW']) || !hash_equals($adminPassword, (string) $_S
     exit;
 }
 
+require_once __DIR__ . '/db.php';
+
 function h(string $value): string
 {
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 
-$productsFile = __DIR__ . '/../data/products.json';
-if (!file_exists($productsFile)) {
-    $fallbackFile = __DIR__ . '/../../data/products.json';
-    if (file_exists($fallbackFile)) {
-        $productsFile = $fallbackFile;
-    }
-}
-
-$products = [];
-if (file_exists($productsFile)) {
-    $raw = file_get_contents($productsFile);
-    $decoded = $raw ? json_decode($raw, true) : null;
-    if (is_array($decoded)) {
-        $products = $decoded;
-    }
-}
-
 $productMap = [];
-foreach ($products as $product) {
-    if (!is_array($product)) {
-        continue;
-    }
-    $productId = (string) ($product['id'] ?? '');
-    if ($productId !== '') {
-        $productMap[$productId] = (string) ($product['name'] ?? $productId);
+$productResult = $conn->query('SELECT id, name FROM products ORDER BY name');
+if ($productResult) {
+    while ($row = $productResult->fetch_assoc()) {
+        $productMap[(string) $row['id']] = (string) ($row['name'] ?? $row['id']);
     }
 }
 
@@ -60,47 +42,67 @@ $clicks = [];
 $totals = [];
 $errors = [];
 
-$clickDb = __DIR__ . '/../data/clicks.sqlite';
-if (!file_exists($clickDb)) {
-    $errors[] = 'Click database not found yet. Outbound clicks will create it automatically.';
-} else {
-    try {
-        $pdo = new PDO('sqlite:' . $clickDb, null, null, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ]);
+$filters = [];
+$params = [];
+$types = '';
 
-        $filters = [];
-        $params = [];
-        if ($startDate !== '') {
-            $filters[] = 'date(ts) >= date(:start)';
-            $params[':start'] = $startDate;
-        }
-        if ($endDate !== '') {
-            $filters[] = 'date(ts) <= date(:end)';
-            $params[':end'] = $endDate;
-        }
-        if ($productId !== '') {
-            $filters[] = 'product_id = :product_id';
-            $params[':product_id'] = $productId;
-        }
-        if ($fromPage !== '') {
-            $filters[] = 'from_page = :from_page';
-            $params[':from_page'] = $fromPage;
-        }
+if ($startDate !== '') {
+    $filters[] = 'DATE(ts) >= ?';
+    $params[] = $startDate;
+    $types .= 's';
+}
+if ($endDate !== '') {
+    $filters[] = 'DATE(ts) <= ?';
+    $params[] = $endDate;
+    $types .= 's';
+}
+if ($productId !== '') {
+    $filters[] = 'product_id = ?';
+    $params[] = (int) $productId;
+    $types .= 'i';
+}
+if ($fromPage !== '') {
+    $filters[] = 'from_page = ?';
+    $params[] = $fromPage;
+    $types .= 's';
+}
 
-        $where = $filters ? 'WHERE ' . implode(' AND ', $filters) : '';
+$where = $filters ? 'WHERE ' . implode(' AND ', $filters) : '';
 
-        $totalStmt = $pdo->prepare("SELECT product_id, COUNT(*) as total FROM clicks {$where} GROUP BY product_id ORDER BY total DESC");
-        $totalStmt->execute($params);
-        $totals = $totalStmt->fetchAll();
-
-        $clickStmt = $pdo->prepare("SELECT * FROM clicks {$where} ORDER BY ts DESC LIMIT 200");
-        $clickStmt->execute($params);
-        $clicks = $clickStmt->fetchAll();
-    } catch (Throwable $e) {
-        $errors[] = 'Unable to read click database.';
+$bindParams = static function (mysqli_stmt $stmt, string $types, array $params): void {
+    if ($types === '' || $params === []) {
+        return;
     }
+    $bindParams = [$types];
+    foreach ($params as $key => $param) {
+        $bindParams[] = $params[$key];
+    }
+    $stmt->bind_param(...$bindParams);
+};
+
+$totalSql = "SELECT product_id, COUNT(*) as total FROM clicks {$where} GROUP BY product_id ORDER BY total DESC";
+$clickSql = "SELECT * FROM clicks {$where} ORDER BY ts DESC LIMIT 200";
+
+$totalStmt = $conn->prepare($totalSql);
+$clickStmt = $conn->prepare($clickSql);
+
+if (!$totalStmt || !$clickStmt) {
+    $errors[] = 'Click table not available yet. Run migration to create it.';
+} else {
+    $bindParams($totalStmt, $types, $params);
+    if ($totalStmt->execute()) {
+        $result = $totalStmt->get_result();
+        $totals = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+    $bindParams($clickStmt, $types, $params);
+    if ($clickStmt->execute()) {
+        $result = $clickStmt->get_result();
+        $clicks = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+    $totalStmt->close();
+    $clickStmt->close();
 }
 ?>
 <!doctype html>
@@ -174,7 +176,7 @@ if (!file_exists($clickDb)) {
       <?php else: ?>
         <?php foreach ($totals as $row): ?>
           <tr>
-            <td><?php echo h($productMap[$row['product_id']] ?? $row['product_id']); ?></td>
+            <td><?php echo h($productMap[(string) $row['product_id']] ?? (string) $row['product_id']); ?></td>
             <td><?php echo h((string) $row['total']); ?></td>
           </tr>
         <?php endforeach; ?>
@@ -200,7 +202,7 @@ if (!file_exists($clickDb)) {
         <?php foreach ($clicks as $row): ?>
           <tr>
             <td><?php echo h((string) $row['ts']); ?></td>
-            <td><?php echo h($productMap[$row['product_id']] ?? $row['product_id']); ?></td>
+            <td><?php echo h($productMap[(string) ($row['product_id'] ?? '')] ?? (string) ($row['product_id'] ?? '')); ?></td>
             <td><?php echo h((string) ($row['from_page'] ?? '')); ?></td>
             <td><?php echo h((string) ($row['referrer'] ?? '')); ?></td>
             <td><?php echo h((string) ($row['dest_url'] ?? '')); ?></td>
