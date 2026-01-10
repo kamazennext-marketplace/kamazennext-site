@@ -163,8 +163,9 @@ if (grid) {
       : product.featured
         ? '<span class="pc-flag featured"><i class="fa-solid fa-thumbtack"></i> Featured</span>'
         : "";
-    const visitUrl = product.slug
-      ? `/go/${encodeURIComponent(product.slug)}`
+    const identifier = product.slug || product.id;
+    const visitUrl = identifier
+      ? `/out.php?slug=${encodeURIComponent(identifier)}&from=best`
       : product.website || "#";
     card.className = "product-card card";
     card.innerHTML = `
@@ -184,7 +185,7 @@ if (grid) {
       </div>
       <div class="pc-actions">
         <a class="btn" href="/p/${encodeURIComponent(product.slug || product.id)}">View</a>
-        <a class="btn btn-primary" href="${visitUrl}" target="_blank" rel="noopener">Visit</a>
+        <a class="btn btn-primary" href="${visitUrl}" target="_blank" rel="nofollow sponsored noopener">Visit</a>
       </div>
     `;
     return card;

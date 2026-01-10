@@ -532,7 +532,7 @@
                     <div class="meta">Updated ${formatDate(product.last_updated)}</div>
                     <div class="actions">
                         <a class="cta-button" href="${urlForProduct(product.id)}">View</a>
-                        <a class="secondary-link" href="${urlForOutbound(product.id)}" target="_blank" rel="noopener">Visit site</a>
+                        <a class="secondary-link" href="${urlForOutbound(product.id, 'home')}" target="_blank" rel="nofollow sponsored noopener">Visit site</a>
                     </div>
                 `;
                 featuredGrid.appendChild(card);
