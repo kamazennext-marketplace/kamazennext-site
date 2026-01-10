@@ -183,44 +183,6 @@
         </div>
     </section>
 
-    <!-- AI ASSISTANT SECTION - ACTUAL AI INTEGRATION -->
-    <section class="ai-assistant-section" id="ai-assistant">
-        <div class="container">
-            <h2 class="section-title">🤖 AI Assistant – Ask Anything</h2>
-            <p class="section-subtitle">Your AI guide to software suggestions, comparisons & marketplace help.</p>
-
-            <div class="ai-input-box">
-                <textarea id="ai-question" placeholder="Ask: 'Recommend CRM for startups', 'Compare ZenNext vs HubSpot', 'Find free accounting software'..."></textarea>
-                <button id="ask-ai-btn" class="btn btn-primary" style="width: 100%;">Ask AI</button>
-                <div id="ai-response"></div>
-                <small style="display:block;margin-top:8px;color:var(--muted);font-size:12px;">AI responses are generated automatically and may be inaccurate.</small>
-
-                <div id="ai-comparison-table" class="table-shell" style="display:none; margin-top:20px;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Criteria</th>
-                                <th id="comp-col-a">Product A</th>
-                                <th id="comp-col-b">Product B</th>
-                            </tr>
-                        </thead>
-                        <tbody id="comp-body"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div style="margin-top: 2rem; text-align: center;">
-                <h4 style="color: var(--text); margin-bottom: 1rem;">Try asking:</h4>
-                <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
-                    <button onclick="quickQuestion('Find free CRM software')" class="btn" style="padding: 10px 14px; height:auto;">Find free CRM software</button>
-                    <button onclick="quickQuestion('Best accounting tools for small business')" class="btn" style="padding: 10px 14px; height:auto;">Best accounting tools</button>
-                    <button onclick="quickQuestion('Cybersecurity software for startups')" class="btn" style="padding: 10px 14px; height:auto;">Cybersecurity for startups</button>
-                    <button onclick="quickQuestion('Compare financial software')" class="btn" style="padding: 10px 14px; height:auto;">Compare financial software</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- FEATURED TOOLS
       - Rendered by /assets/js/home-products.js
       - IMPORTANT: Only ONE #homeProducts on the page
@@ -1194,7 +1156,7 @@
                 }
 
                 const card = document.createElement('article');
-                card.className = 'product-card card';
+                card.className = 'product-card card marketplace-card';
                 card.setAttribute('data-category', software.category);
 
                 const typeLabel = software.type === 'trial'
@@ -1202,25 +1164,25 @@
                     : software.type === 'paid'
                         ? 'Paid'
                         : 'Free';
+                const categoryLabel = software.category
+                    ? software.category.charAt(0).toUpperCase() + software.category.slice(1)
+                    : 'Software';
 
                 card.innerHTML = `
-                    <div class="pc-top">
-                        <span class="badge">${software.category.toUpperCase()}</span>
+                    <div class="marketplace-header">
+                        <div class="marketplace-logo"><i class="${software.icon}"></i></div>
+                        <div>
+                            <h3>${software.name}</h3>
+                            <p class="muted">${software.description}</p>
+                        </div>
+                    </div>
+                    <div class="marketplace-chips">
+                        <span class="badge">${categoryLabel}</span>
                         <span class="badge badge-soft">${typeLabel}</span>
-                        <span class="badge badge-soft">Marketplace pick</span>
                     </div>
-                    <h3>${software.name}</h3>
-                    <p class="muted">${software.description}</p>
-                    <div class="feature-tags">
-                        ${software.features.slice(0, 3).map(feature => `
-                            <span class="feature-tag">${feature}</span>
-                        `).join('')}
-                    </div>
-                    <div class="pc-actions">
-                        <a class="btn btn-primary" href="${software.link}" target="_blank" rel="noopener">
-                            <i class="fas fa-external-link-alt"></i> Visit
-                        </a>
-                        <a class="btn btn-ghost" href="/software.html?cat=${encodeURIComponent(software.category)}">Explore category</a>
+                    <div class="marketplace-actions">
+                        <a class="btn btn-primary" href="${software.link}" target="_blank" rel="noopener">View</a>
+                        <a class="btn btn-secondary" href="/compare.html">Compare</a>
                     </div>
                 `;
 

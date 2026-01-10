@@ -7,50 +7,31 @@
    Design tokens (Semi-Vibrant Light, 2026)
    ========================== */
 :root{
-  /* Semi-vibrant light base */
-  --bg:#eef2ff;
+  --bg:#f6f7fb;
   --surface:#ffffff;
-  --surface2:#f1f7ff;
-  --surface3:#ecfdf5;
+  --surface2:#f2f4f8;
+  --surface3:#eef2f7;
 
-  --text:#0f172a;
-  --muted:#586a86;
+  --text:#0b1220;
+  --muted:#5b6475;
 
-  --border:rgba(15,23,42,0.12);
-  --shadow:0 12px 34px rgba(2,6,23,0.10);
-  --shadow2:0 6px 18px rgba(2,6,23,0.08);
+  --border:rgba(15,23,42,0.10);
+  --shadow:0 12px 30px rgba(15,23,42,0.08);
+  --shadow2:0 6px 16px rgba(15,23,42,0.06);
 
   --primary:#6d28d9;
-  --primary2:#10b981;
-
-  --primarySoft:rgba(109,40,217,0.14);
-  --greenSoft:rgba(16,185,129,0.14);
+  --primary2:#14b8a6;
+  --primarySoft:rgba(109,40,217,0.10);
+  --greenSoft:rgba(20,184,166,0.12);
+  --accent-gradient: linear-gradient(90deg, #7c3aed, #14b8a6);
   --ring:0 0 0 4px rgba(109,40,217,0.20);
 
   --radius:16px;
-  --radius2:22px;
+  --radius2:16px;
   --maxw:1200px;
 }
 
 html, body{
-  background:
-    radial-gradient(1000px 520px at 12% -10%, rgba(109,40,217,0.18), transparent 60%),
-    radial-gradient(1000px 520px at 92% 0%, rgba(16,185,129,0.14), transparent 58%),
-    linear-gradient(180deg, #f6f8ff 0%, #eef2ff 45%, #f8fafc 100%);
+  background: var(--bg);
   color: var(--text);
-}
-
-.card{
-  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(241,247,255,0.70));
-  border:1px solid var(--border);
-  border-radius: var(--radius2);
-  box-shadow: var(--shadow);
-}
-
-/* REVIEW: keep CTA colorful but not neon */
-.btn-primary{
-  border:none;
-  color:#fff;
-  background: linear-gradient(90deg, var(--primary), var(--primary2));
-  box-shadow: 0 14px 30px rgba(109,40,217,0.16);
 }
