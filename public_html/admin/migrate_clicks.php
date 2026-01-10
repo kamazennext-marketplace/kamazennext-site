@@ -38,18 +38,16 @@ if ($dbName === '') {
     $createClicks = <<<SQL
 CREATE TABLE IF NOT EXISTS clicks (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  product_id INT NOT NULL,
-  ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  referrer TEXT NULL,
-  user_agent TEXT NULL,
-  ip_hash CHAR(64) NULL,
-  from_page VARCHAR(64) NULL,
-  dest_url TEXT NULL,
-  utm_campaign VARCHAR(64) NULL,
-  utm_content VARCHAR(128) NULL,
-  INDEX idx_product_id (product_id),
-  INDEX idx_ts (ts)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  slug VARCHAR(150) NOT NULL,
+  from_page VARCHAR(50) NULL,
+  referrer VARCHAR(255) NULL,
+  target_url TEXT NULL,
+  ip VARBINARY(16) NULL,
+  user_agent VARCHAR(255) NULL,
+  INDEX (slug),
+  INDEX (created_at)
+);
 SQL;
 
     if (!$conn->query($createClicks)) {
