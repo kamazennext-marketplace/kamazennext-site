@@ -97,7 +97,10 @@ const renderFaqs = (faqs) => {
 
 const renderCards = (productA, productB) => {
   const cardMarkup = (product) => {
-    const visitUrl = product.slug ? `/go/${encodeURIComponent(product.slug)}` : product.website || '#';
+    const identifier = product.slug || product.id;
+    const visitUrl = identifier
+      ? `/out.php?slug=${encodeURIComponent(identifier)}&from=compare`
+      : product.website || '#';
     const bestFor = product.bestFor.length
       ? product.bestFor.map((item) => `<span class="badge badge-soft">${item}</span>`).join('')
       : '<span class="muted">Not specified</span>';
@@ -113,7 +116,7 @@ const renderCards = (productA, productB) => {
         <div class="compare-meta">${bestFor}</div>
         <div class="compare-actions">
           <a class="btn" href="/p/${encodeURIComponent(product.slug || product.id)}">View</a>
-          <a class="btn btn-primary" href="${visitUrl}" target="_blank" rel="noopener">Visit</a>
+          <a class="btn btn-primary" href="${visitUrl}" target="_blank" rel="nofollow sponsored noopener">Visit</a>
         </div>
       </article>
     `;
