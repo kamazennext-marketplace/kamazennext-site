@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/admin/db.php';
+
 $slug = trim((string) ($_GET['slug'] ?? ''));
 $id = trim((string) ($_GET['id'] ?? ''));
 $from = trim((string) ($_GET['from'] ?? ''));
@@ -12,40 +14,32 @@ if ($slug === '' && $id === '') {
     exit;
 }
 
-$productsFile = __DIR__ . '/data/products.json';
-if (!file_exists($productsFile)) {
-    $fallbackFile = __DIR__ . '/../data/products.json';
-    if (file_exists($fallbackFile)) {
-        $productsFile = $fallbackFile;
+$fromPage = preg_replace('/[^a-z0-9_-]+/i', '', $from);
+$fromPage = substr($fromPage, 0, 64);
+
+$stmt = null;
+if ($slug !== '') {
+    $stmt = $conn->prepare('SELECT id, slug, name, category, website_url, affiliate_url FROM products WHERE slug = ? LIMIT 1');
+    if ($stmt) {
+        $stmt->bind_param('s', $slug);
+    }
+} else {
+    $idValue = (int) $id;
+    $stmt = $conn->prepare('SELECT id, slug, name, category, website_url, affiliate_url FROM products WHERE id = ? LIMIT 1');
+    if ($stmt) {
+        $stmt->bind_param('i', $idValue);
     }
 }
 
-if (!file_exists($productsFile)) {
+if (!$stmt || !$stmt->execute()) {
     http_response_code(500);
     echo 'Catalog unavailable.';
     exit;
 }
 
-$products = json_decode((string) file_get_contents($productsFile), true);
-if (!is_array($products)) {
-    http_response_code(500);
-    echo 'Catalog unreadable.';
-    exit;
-}
-
-$match = $slug !== '' ? $slug : $id;
-$product = null;
-foreach ($products as $candidate) {
-    if (!is_array($candidate)) {
-        continue;
-    }
-    $candidateId = (string) ($candidate['id'] ?? '');
-    $candidateSlug = (string) ($candidate['slug'] ?? '');
-    if ($match === $candidateId || $match === $candidateSlug) {
-        $product = $candidate;
-        break;
-    }
-}
+$result = $stmt->get_result();
+$product = $result ? $result->fetch_assoc() : null;
+$stmt->close();
 
 if (!$product) {
     http_response_code(404);
@@ -53,7 +47,11 @@ if (!$product) {
     exit;
 }
 
-$destination = (string) ($product['affiliate_url'] ?? $product['website_url'] ?? $product['website'] ?? '');
+$destination = (string) ($product['affiliate_url'] ?? '');
+if ($destination === '') {
+    $destination = (string) ($product['website_url'] ?? '');
+}
+
 if ($destination === '') {
     http_response_code(404);
     echo 'Destination unavailable.';
@@ -67,10 +65,16 @@ $slugify = static function (string $value): string {
 };
 
 $categorySlug = $slugify((string) ($product['category'] ?? 'automation')) ?: 'automation';
-$productSlug = $slugify((string) ($product['slug'] ?? $product['id'] ?? $product['name'] ?? 'tool')) ?: 'tool';
+$productSlug = $slugify((string) ($product['slug'] ?? $product['name'] ?? (string) ($product['id'] ?? 'tool'))) ?: 'tool';
 
 $parts = parse_url($destination);
 if ($parts === false || empty($parts['scheme']) || empty($parts['host'])) {
+    http_response_code(400);
+    echo 'Invalid destination.';
+    exit;
+}
+
+if (!in_array(strtolower($parts['scheme']), ['http', 'https'], true)) {
     http_response_code(400);
     echo 'Invalid destination.';
     exit;
@@ -81,12 +85,12 @@ if (!empty($parts['query'])) {
     parse_str($parts['query'], $query);
 }
 
-$query += [
-    'utm_source' => 'kamazennext',
-    'utm_medium' => 'affiliate',
-    'utm_campaign' => $categorySlug,
-    'utm_content' => $productSlug
-];
+$utmCampaign = $fromPage !== '' ? $fromPage : $categorySlug;
+
+$query['utm_source'] = 'kamazennext';
+$query['utm_medium'] = 'affiliate';
+$query['utm_campaign'] = $utmCampaign;
+$query['utm_content'] = $productSlug;
 
 $rebuiltQuery = http_build_query($query);
 $finalUrl = $parts['scheme'] . '://' . $parts['host']
@@ -95,50 +99,35 @@ $finalUrl = $parts['scheme'] . '://' . $parts['host']
     . ($rebuiltQuery ? '?' . $rebuiltQuery : '')
     . (!empty($parts['fragment']) ? '#' . $parts['fragment'] : '');
 
-$clickDb = __DIR__ . '/data/clicks.sqlite';
-$clickDir = dirname($clickDb);
-if (!is_dir($clickDir)) {
-    mkdir($clickDir, 0750, true);
-}
-
 try {
-    $pdo = new PDO('sqlite:' . $clickDb, null, null, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-    ]);
-    $pdo->exec('CREATE TABLE IF NOT EXISTS clicks (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        product_id TEXT NOT NULL,
-        ts TEXT NOT NULL,
-        referrer TEXT,
-        user_agent TEXT,
-        ip_hash TEXT,
-        from_page TEXT,
-        dest_url TEXT,
-        utm_campaign TEXT,
-        utm_content TEXT
-    )');
-
     $salt = (string) (getenv('CLICK_SALT') ?: 'kz_click_salt_v1');
     $ip = (string) ($_SERVER['REMOTE_ADDR'] ?? '');
     $ipHash = hash('sha256', $salt . $ip);
 
-    $stmt = $pdo->prepare('INSERT INTO clicks
-        (product_id, ts, referrer, user_agent, ip_hash, from_page, dest_url, utm_campaign, utm_content)
-        VALUES (:product_id, :ts, :referrer, :user_agent, :ip_hash, :from_page, :dest_url, :utm_campaign, :utm_content)');
-    $stmt->execute([
-        ':product_id' => (string) ($product['id'] ?? $productSlug),
-        ':ts' => gmdate('c'),
-        ':referrer' => (string) ($_SERVER['HTTP_REFERER'] ?? ''),
-        ':user_agent' => (string) ($_SERVER['HTTP_USER_AGENT'] ?? ''),
-        ':ip_hash' => $ipHash,
-        ':from_page' => $from,
-        ':dest_url' => $finalUrl,
-        ':utm_campaign' => $categorySlug,
-        ':utm_content' => $productSlug
-    ]);
+    $insert = $conn->prepare('INSERT INTO clicks
+        (product_id, referrer, user_agent, ip_hash, from_page, dest_url, utm_campaign, utm_content)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+
+    if ($insert) {
+        $productId = (int) ($product['id'] ?? 0);
+        $referrer = (string) ($_SERVER['HTTP_REFERER'] ?? '');
+        $userAgent = (string) ($_SERVER['HTTP_USER_AGENT'] ?? '');
+        $insert->bind_param(
+            'isssssss',
+            $productId,
+            $referrer,
+            $userAgent,
+            $ipHash,
+            $fromPage,
+            $finalUrl,
+            $utmCampaign,
+            $productSlug
+        );
+        $insert->execute();
+        $insert->close();
+    }
 } catch (Throwable $e) {
-    // Logging failure should not block redirects.
+    // Ignore logging errors to avoid interrupting redirects.
 }
 
 header('Location: ' . $finalUrl, true, 302);

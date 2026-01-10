@@ -1,25 +1,26 @@
-name,category,tagline,website_url,slug,pricing_model,api_available,platforms,affiliate_url,featured_rank,last_updated
-FlowPilot,Automation,Drag-and-drop workflows with 1,000+ app integrations.,https://example.com/flowpilot,flowpilot,subscription,yes,Web,https://affiliate.example.com/flowpilot,1,2026-01-04
-RelayHub,Automation,Centralize triggers across SaaS apps with real-time alerts.,https://example.com/relayhub,relayhub,freemium,yes,Web,https://affiliate.example.com/relayhub,2,2026-01-03
-SyncStream,Automation,Unified automation for marketing, ops, and finance.,https://example.com/syncstream,syncstream,subscription,yes,Web,https://affiliate.example.com/syncstream,3,2026-01-02
-AutomateIQ,Automation,AI-guided workflow suggestions and error recovery.,https://example.com/automateiq,automateiq,subscription,yes,Web,https://affiliate.example.com/automateiq,4,2026-01-01
-OpsRunner,Automation,Orchestrate multi-step approvals across teams.,https://example.com/opsrunner,opsrunner,subscription,yes,Web,,5,2025-12-28
-PipeCraft,Automation,Visual automation canvas for complex data pipelines.,https://example.com/pipecraft,pipecraft,usage-based,yes,Web,https://affiliate.example.com/pipecraft,6,2025-12-27
-TriggerDeck,Automation,Launch workflows instantly with team-ready templates.,https://example.com/triggerdeck,triggerdeck,freemium,yes,Web,,7,2025-12-26
-StackPulse,Automation,Monitor and automate cross-platform system events.,https://example.com/stackpulse,stackpulse,subscription,yes,Web,https://affiliate.example.com/stackpulse,8,2025-12-24
-FlowFoundry,Automation,Composable automation blocks for growth teams.,https://example.com/flowfoundry,flowfoundry,subscription,yes,Web,https://affiliate.example.com/flowfoundry,9,2025-12-22
-RouteSync,Automation,Sync data and automate handoffs between departments.,https://example.com/routesync,routesync,subscription,yes,Web,,10,2025-12-21
-TaskWave,Automation,Automate task routing and escalation policies.,https://example.com/taskwave,taskwave,subscription,yes,Web,,11,2025-12-20
-FlowAtlas,Automation,End-to-end workflow analytics with automation scoring.,https://example.com/flowatlas,flowatlas,subscription,yes,Web,,12,2025-12-19
-NoCodeRelay,Automation,No-code automation with built-in compliance checks.,https://example.com/nocoderelay,nocoderelay,freemium,yes,Web,,13,2025-12-18
-EventFuse,Automation,Streamline event-based automation with retry logic.,https://example.com/eventfuse,eventfuse,subscription,yes,Web,,14,2025-12-17
-AutoLedger,Automation,Automate invoicing and reconciliation workflows.,https://example.com/autoledger,autoledger,subscription,yes,Web,,15,2025-12-16
-SignalBridge,Automation,Connect webhooks to multi-step automation flows.,https://example.com/signalbridge,signalbridge,usage-based,yes,Web,,16,2025-12-15
-TeamCircuit,Automation,Collaborative automation boards for ops teams.,https://example.com/teamcircuit,teamcircuit,subscription,yes,Web,,17,2025-12-14
-FlowGrid,Automation,Scale automation with environment-aware routing.,https://example.com/flowgrid,flowgrid,subscription,yes,Web,,18,2025-12-13
-WorkstreamIQ,Automation,Automation insights for workflow performance.,https://example.com/workstreamiq,workstreamiq,subscription,yes,Web,,19,2025-12-12
-OpsNavigator,Automation,Guided automation playbooks with audit trails.,https://example.com/opsnavigator,opsnavigator,subscription,yes,Web,,20,2025-12-11
-LinkForge,Automation,Automate approvals and document routing.,https://example.com/linkforge,linkforge,subscription,yes,Web,,21,2025-12-10
-PulseFlow,Automation,Lightweight automation for small teams.,https://example.com/pulseflow,pulseflow,freemium,yes,Web,,22,2025-12-09
-AutomationDock,Automation,Launch automation from Slack and email triggers.,https://example.com/automationdock,automationdock,subscription,yes,Web,,23,2025-12-08
-SystemWeave,Automation,Enterprise automation with governance controls.,https://example.com/systemweave,systemweave,subscription,yes,Web,,24,2025-12-07
+name,slug,category,tagline,pricing_model,api_available,platforms,website_url,affiliate_url,featured_rank,last_updated
+Zapier,zapier,Automation,Connect apps and automate workflows,Freemium,yes,Web,https://zapier.com,,1,2025-12-01
+Make,make,Automation,Visual automation for teams,Freemium,yes,Web,https://www.make.com,,2,2025-12-01
+n8n,n8n,Automation,Workflow automation for technical teams,Freemium,yes,Web,https://n8n.io,,3,2025-11-20
+Pipedream,pipedream,Automation,Developer-first workflows and integrations,Freemium,yes,Web,https://pipedream.com,,4,2025-11-18
+Workato,workato,Automation,Enterprise automation and integration,Paid,yes,Web,https://www.workato.com,,5,2025-11-15
+Tray.io,tray-io,Automation,Composable automation for enterprises,Paid,yes,Web,https://tray.io,,6,2025-11-12
+IFTTT,ifttt,Automation,Simple applet automation for everyone,Free,no,Web,https://ifttt.com,,7,2025-11-10
+Parabola,parabola,Automation,Automate data workflows without code,Freemium,yes,Web,https://parabola.io,,8,2025-11-08
+Bardeen,bardeen,Automation,AI-powered browser automation,Freemium,yes,Web,https://www.bardeen.ai,,9,2025-11-05
+UiPath,uipath,Automation,RPA platform for large-scale automation,Paid,yes,Web,https://www.uipath.com,,10,2025-11-01
+Automation Anywhere,automation-anywhere,Automation,Intelligent automation and RPA,Paid,yes,Web,https://www.automationanywhere.com,,11,2025-10-30
+Microsoft Power Automate,power-automate,Automation,Workflow automation across Microsoft 365,Freemium,yes,Web,https://powerautomate.microsoft.com,,12,2025-10-28
+Celigo,celigo,Automation,iPaaS for SaaS and ecommerce,Paid,yes,Web,https://www.celigo.com,,13,2025-10-24
+Tines,tines,Automation,Security automation and orchestration,Paid,yes,Web,https://www.tines.com,,14,2025-10-20
+Hexomatic,hexomatic,Automation,No-code data scraping and automation,Freemium,no,Web,https://hexomatic.com,,15,2025-10-18
+Robocorp,robocorp,Automation,Open-source RPA for developers,Freemium,yes,Web,https://robocorp.com,,16,2025-10-15
+Zoho Flow,zoho-flow,Automation,Workflow automation for Zoho apps,Freemium,yes,Web,https://www.zoho.com/flow,,17,2025-10-12
+Appy Pie Connect,appy-pie-connect,Automation,Easy integrations for SMBs,Freemium,no,Web,https://www.appypie.com/connect,,18,2025-10-10
+Integrately,integrately,Automation,One-click workflows for popular apps,Freemium,no,Web,https://integrately.com,,19,2025-10-08
+Quickbase,quickbase,Automation,Low-code automation for operations,Paid,yes,Web,https://www.quickbase.com,,20,2025-10-05
+Tonkean,tonkean,Automation,No-code workflow orchestration,Paid,yes,Web,https://www.tonkean.com,,21,2025-10-02
+Pipefy,pipefy,Automation,Process automation for teams,Paid,yes,Web,https://www.pipefy.com,,22,2025-09-30
+Relay,relay,Automation,Modern workflow automation,Freemium,yes,Web,https://relay.app,,23,2025-09-28
+Xano,xano,Automation,Backend automation with APIs,Freemium,yes,Web,https://www.xano.com,,24,2025-09-25
+Nintex,nintex,Automation,Process management and automation,Paid,yes,Web,https://www.nintex.com,,25,2025-09-22

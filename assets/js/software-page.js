@@ -109,6 +109,16 @@
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
+  const buildOutboundUrl = (product) => {
+    const identifier = product.slug || product.id;
+    if (!identifier) return "#";
+    const params = new URLSearchParams({
+      slug: identifier,
+      from: "software",
+    });
+    return `/out.php?${params.toString()}`;
+  };
+
   const updateBestCategoryLink = () => {
     if (!bestCategoryLink) return;
     if (state.cat !== "Automation") {
@@ -340,6 +350,7 @@
         </div>
         <div class="pc-actions">
           <a class="btn" href="/p/${encodeURIComponent(product.slug || product.id)}">View</a>
+          <a class="btn btn-secondary" href="${buildOutboundUrl(product)}" target="_blank" rel="nofollow sponsored noopener">Visit</a>
           <button class="btn compare-btn ${compareActive ? "btn-secondary" : "btn-primary"}" data-id="${product.id}">
             ${compareActive ? "Remove Compare" : "Add Compare"}
           </button>
@@ -479,9 +490,16 @@
       categorySelect.appendChild(option);
     });
     if (state.cat !== "all" && !categories.includes(state.cat)) {
-      state.cat = "all";
-      categorySelect.value = "all";
-      updateQuery();
+      const match = categories.find((cat) => cat.toLowerCase() === state.cat.toLowerCase());
+      if (match) {
+        state.cat = match;
+        categorySelect.value = match;
+        updateQuery();
+      } else {
+        state.cat = "all";
+        categorySelect.value = "all";
+        updateQuery();
+      }
     }
   };
 
