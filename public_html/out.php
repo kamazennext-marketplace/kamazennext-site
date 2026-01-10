@@ -1,134 +1,144 @@
 <?php
-
 declare(strict_types=1);
 
-require_once __DIR__ . '/admin/db.php';
+/**
+ * Affiliate redirect + click tracking
+ * URL format: /out.php?slug=tool-slug&from=product
+ */
 
-$slug = trim((string) ($_GET['slug'] ?? ''));
-$id = trim((string) ($_GET['id'] ?? ''));
-$from = trim((string) ($_GET['from'] ?? ''));
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
 
-if ($slug === '' && $id === '') {
-    http_response_code(404);
-    echo 'Missing product identifier.';
-    exit;
+function respond(int $code, string $msg): void {
+  http_response_code($code);
+  header('Content-Type: text/plain; charset=utf-8');
+  echo $msg;
+  exit;
 }
 
-$fromPage = preg_replace('/[^a-z0-9_-]+/i', '', $from);
-$fromPage = substr($fromPage, 0, 64);
-
-$stmt = null;
-if ($slug !== '') {
-    $stmt = $conn->prepare('SELECT id, slug, name, category, website_url, affiliate_url FROM products WHERE slug = ? LIMIT 1');
-    if ($stmt) {
-        $stmt->bind_param('s', $slug);
-    }
-} else {
-    $idValue = (int) $id;
-    $stmt = $conn->prepare('SELECT id, slug, name, category, website_url, affiliate_url FROM products WHERE id = ? LIMIT 1');
-    if ($stmt) {
-        $stmt->bind_param('i', $idValue);
-    }
+function tableExists(mysqli $conn, string $table): bool {
+  $stmt = $conn->prepare("SELECT 1 FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ? LIMIT 1");
+  $stmt->bind_param("s", $table);
+  $stmt->execute();
+  $res = $stmt->get_result();
+  return (bool)$res->fetch_row();
 }
 
-if (!$stmt || !$stmt->execute()) {
-    http_response_code(500);
-    echo 'Catalog unavailable.';
-    exit;
+function columnExists(mysqli $conn, string $table, string $column): bool {
+  $stmt = $conn->prepare("SELECT 1 FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = ? AND column_name = ? LIMIT 1");
+  $stmt->bind_param("ss", $table, $column);
+  $stmt->execute();
+  $res = $stmt->get_result();
+  return (bool)$res->fetch_row();
 }
 
-$result = $stmt->get_result();
-$product = $result ? $result->fetch_assoc() : null;
-$stmt->close();
-
-if (!$product) {
-    http_response_code(404);
-    echo 'Product not found.';
-    exit;
+function firstExistingColumn(mysqli $conn, string $table, array $candidates): ?string {
+  foreach ($candidates as $col) {
+    if (columnExists($conn, $table, $col)) return $col;
+  }
+  return null;
 }
 
-$destination = (string) ($product['affiliate_url'] ?? '');
-if ($destination === '') {
-    $destination = (string) ($product['website_url'] ?? '');
+function appendQuery(string $url, array $params): string {
+  $parts = parse_url($url);
+  $q = [];
+  if (!empty($parts['query'])) parse_str($parts['query'], $q);
+
+  foreach ($params as $k => $v) {
+    if ($v === null || $v === '') continue;
+    if (!isset($q[$k]) || $q[$k] === '') $q[$k] = $v; // do not overwrite existing
+  }
+
+  $scheme = $parts['scheme'] ?? 'https';
+  $host   = $parts['host'] ?? '';
+  $port   = isset($parts['port']) ? ':' . $parts['port'] : '';
+  $path   = $parts['path'] ?? '/';
+  $frag   = isset($parts['fragment']) ? '#' . $parts['fragment'] : '';
+
+  $newQuery = http_build_query($q);
+  return $scheme . '://' . $host . $port . $path . ($newQuery ? '?' . $newQuery : '') . $frag;
 }
 
-if ($destination === '') {
-    http_response_code(404);
-    echo 'Destination unavailable.';
-    exit;
+// --- Input ---
+$slug = $_GET['slug'] ?? '';
+$slug = strtolower(trim($slug));
+$slug = preg_replace('/[^a-z0-9\-]/', '', $slug);
+
+if ($slug === '') respond(400, "Missing slug");
+
+// --- DB include (IMPORTANT) ---
+$dbPath = __DIR__ . '/admin/db.php';
+if (!file_exists($dbPath)) {
+  error_log("out.php: db.php not found at: " . $dbPath);
+  respond(500, "Server misconfigured");
 }
 
-$slugify = static function (string $value): string {
-    $slugged = strtolower(trim($value));
-    $slugged = preg_replace('/[^a-z0-9]+/', '-', $slugged) ?? '';
-    return trim($slugged, '-');
-};
+require_once $dbPath; // expects $conn
 
-$categorySlug = $slugify((string) ($product['category'] ?? 'automation')) ?: 'automation';
-$productSlug = $slugify((string) ($product['slug'] ?? $product['name'] ?? (string) ($product['id'] ?? 'tool'))) ?: 'tool';
-
-$parts = parse_url($destination);
-if ($parts === false || empty($parts['scheme']) || empty($parts['host'])) {
-    http_response_code(400);
-    echo 'Invalid destination.';
-    exit;
+if (!isset($conn) || !($conn instanceof mysqli)) {
+  error_log('out.php: mysqli $conn not set by db.php');
+  respond(500, "Server misconfigured");
 }
 
-if (!in_array(strtolower($parts['scheme']), ['http', 'https'], true)) {
-    http_response_code(400);
-    echo 'Invalid destination.';
-    exit;
+// --- Products table lookup ---
+if (!tableExists($conn, 'products')) {
+  error_log("out.php: products table missing");
+  respond(500, "Server misconfigured");
 }
 
-$query = [];
-if (!empty($parts['query'])) {
-    parse_str($parts['query'], $query);
+$slugCol = firstExistingColumn($conn, 'products', ['slug', 'product_slug', 'handle']);
+$urlCol  = firstExistingColumn($conn, 'products', ['affiliate_url', 'website_url', 'url', 'website', 'homepage_url']);
+
+if (!$slugCol || !$urlCol) {
+  error_log("out.php: products missing required columns. slugCol={$slugCol} urlCol={$urlCol}");
+  respond(500, "Server misconfigured");
 }
 
-$utmCampaign = $fromPage !== '' ? $fromPage : $categorySlug;
+$sql = "SELECT `$urlCol` AS target_url FROM `products` WHERE `$slugCol` = ? LIMIT 1";
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+  error_log("out.php prepare failed: " . $conn->error);
+  respond(500, "Server error");
+}
+$stmt->bind_param("s", $slug);
+$stmt->execute();
+$res = $stmt->get_result();
+$row = $res ? $res->fetch_assoc() : null;
 
-$query['utm_source'] = 'kamazennext';
-$query['utm_medium'] = 'affiliate';
-$query['utm_campaign'] = $utmCampaign;
-$query['utm_content'] = $productSlug;
+$target = $row['target_url'] ?? '';
+$target = trim((string)$target);
 
-$rebuiltQuery = http_build_query($query);
-$finalUrl = $parts['scheme'] . '://' . $parts['host']
-    . (!empty($parts['port']) ? ':' . $parts['port'] : '')
-    . ($parts['path'] ?? '')
-    . ($rebuiltQuery ? '?' . $rebuiltQuery : '')
-    . (!empty($parts['fragment']) ? '#' . $parts['fragment'] : '');
+if ($target === '') respond(404, "Tool not found");
 
-try {
-    $salt = (string) (getenv('CLICK_SALT') ?: 'kz_click_salt_v1');
-    $ip = (string) ($_SERVER['REMOTE_ADDR'] ?? '');
-    $ipHash = hash('sha256', $salt . $ip);
+// Add UTMs (basic affiliate tracking)
+$from = $_GET['from'] ?? 'site';
+$targetFinal = appendQuery($target, [
+  'utm_source'   => $_GET['utm_source'] ?? 'kamazennext',
+  'utm_medium'   => $_GET['utm_medium'] ?? 'referral',
+  'utm_campaign' => $_GET['utm_campaign'] ?? 'catalog',
+  'utm_content'  => $slug,
+  'utm_term'     => $_GET['utm_term'] ?? null,
+  'from'         => $from,
+]);
 
-    $insert = $conn->prepare('INSERT INTO clicks
-        (product_id, referrer, user_agent, ip_hash, from_page, dest_url, utm_campaign, utm_content)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+// Log click (only if clicks table exists)
+if (tableExists($conn, 'clicks')) {
+  $ref = substr((string)($_SERVER['HTTP_REFERER'] ?? ''), 0, 255);
+  $ua  = substr((string)($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 255);
+  $ip  = (string)($_SERVER['REMOTE_ADDR'] ?? '');
+  $ipbin = @inet_pton($ip); // VARBINARY(16)
 
-    if ($insert) {
-        $productId = (int) ($product['id'] ?? 0);
-        $referrer = (string) ($_SERVER['HTTP_REFERER'] ?? '');
-        $userAgent = (string) ($_SERVER['HTTP_USER_AGENT'] ?? '');
-        $insert->bind_param(
-            'isssssss',
-            $productId,
-            $referrer,
-            $userAgent,
-            $ipHash,
-            $fromPage,
-            $finalUrl,
-            $utmCampaign,
-            $productSlug
-        );
-        $insert->execute();
-        $insert->close();
-    }
-} catch (Throwable $e) {
-    // Ignore logging errors to avoid interrupting redirects.
+  $ins = $conn->prepare("INSERT INTO clicks (slug, from_page, referrer, target_url, ip, user_agent) VALUES (?,?,?,?,?,?)");
+  if ($ins) {
+    $ins->bind_param("ssssss", $slug, $from, $ref, $targetFinal, $ipbin, $ua);
+    $ins->execute();
+  } else {
+    error_log("out.php clicks insert prepare failed: " . $conn->error);
+  }
 }
 
-header('Location: ' . $finalUrl, true, 302);
+// Redirect
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Location: " . $targetFinal, true, 302);
 exit;
