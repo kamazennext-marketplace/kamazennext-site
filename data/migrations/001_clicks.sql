@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS clicks (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  slug VARCHAR(150) NOT NULL,
+  from_page VARCHAR(50) NULL,
+  referrer VARCHAR(255) NULL,
+  target_url TEXT NULL,
+  ip VARBINARY(16) NULL,
+  user_agent VARCHAR(255) NULL,
+  INDEX (slug),
+  INDEX (created_at)
+);
