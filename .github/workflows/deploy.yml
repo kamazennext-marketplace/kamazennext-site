@@ -18,13 +18,20 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_REMOTE_DIR }}
+          local-dir: public_html/
+          server-dir: /home2/kamazennext/public_html/
           exclude: |
             **/.git*
             **/.github/**
             **/node_modules/**
             **/.cpanel.yml
-            public_html/**
             public_html_clean/**
             openai_config.example.php
 
+      - name: Verify deployed marker
+        run: |
+          if curl -fsS https://kamazennext.com/kzn-health.txt | grep -q "KZN ROOT OK"; then
+            echo "kzn-health.txt OK"
+          else
+            echo "kzn-health.txt MISSING"
+          fi

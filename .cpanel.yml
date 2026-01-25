@@ -2,3 +2,5 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home2/kamazennext/public_html/
     - /usr/bin/rsync -av --delete --exclude='.git/' --exclude='.cpanel.yml' public_html/ $DEPLOYPATH
+    - /bin/ls -la $DEPLOYPATH
+    - if [ -f "$DEPLOYPATH/kzn-health.txt" ]; then echo "kzn-health.txt OK"; else echo "kzn-health.txt MISSING"; fi
