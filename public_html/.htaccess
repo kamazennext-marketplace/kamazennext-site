@@ -1,3 +1,22 @@
+# === KZN: bypass loader rewrite for marketplace (must be first) ===
+Options -MultiViews
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Never rewrite marketplace paths (so real files like test.txt can load)
+RewriteCond %{REQUEST_URI} ^/marketplace(/|$) [NC]
+RewriteRule ^ - [L]
+
+RewriteCond %{REQUEST_URI} ^/software/software/marketplace(/|$) [NC]
+RewriteRule ^ - [L]
+
+# Never rewrite existing files or directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+</IfModule>
+# === /KZN bypass ===
+
 # === KZN: Route /marketplace/* to /software/software/marketplace (must be first) ===
 <IfModule mod_rewrite.c>
 RewriteEngine On
