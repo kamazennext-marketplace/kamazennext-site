@@ -1,3 +1,17 @@
+# === KZN: Route /marketplace/* to /software/software/marketplace (must be first) ===
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# If nested marketplace exists, serve it for /marketplace/*
+RewriteCond %{DOCUMENT_ROOT}/software/software/marketplace/index.php -f
+RewriteRule ^marketplace/?$ /software/software/marketplace/index.php [L,QSA]
+
+RewriteCond %{DOCUMENT_ROOT}/software/software/marketplace/index.php -f
+RewriteRule ^marketplace/(.*)$ /software/software/marketplace/$1 [L,QSA]
+
+</IfModule>
+# === /KZN marketplace route ===
+
 # === KZN: allow real files & bypass loader rewrites (must be first) ===
 Options -MultiViews
 <IfModule mod_rewrite.c>
