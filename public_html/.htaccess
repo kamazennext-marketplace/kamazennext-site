@@ -1,3 +1,19 @@
+# === KZN: allow real files & bypass loader rewrites (must be first) ===
+Options -MultiViews
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Do NOT rewrite marketplace routes
+RewriteCond %{REQUEST_URI} ^/marketplace(/|$) [NC]
+RewriteRule ^ - [L]
+
+# Do NOT rewrite real existing files/folders
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+</IfModule>
+# === /KZN bypass ===
+
 # === KZN: bypass SPA/loader for marketplace (must be first) ===
 <IfModule mod_rewrite.c>
 RewriteEngine On
