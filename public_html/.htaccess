@@ -1,3 +1,14 @@
+# === KZN: always serve real files/folders (must be first) ===
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Always serve real files/folders directly (prevents spinner on txt/php assets)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+</IfModule>
+# === /KZN always serve real files ===
+
 # === KZN: bypass loader rewrite for marketplace (must be first) ===
 Options -MultiViews
 <IfModule mod_rewrite.c>
