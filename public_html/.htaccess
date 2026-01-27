@@ -1,3 +1,14 @@
+# === KZN: diagnostic/marketplace bypass (must be first) ===
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^probe\.php$ - [L]
+RewriteRule ^kzn-health\.txt$ - [L]
+RewriteRule ^marketplace/test\.txt$ - [L]
+RewriteRule ^marketplace/health\.php$ - [L]
+RewriteRule ^marketplace/.* - [L]
+</IfModule>
+# === /KZN diagnostic/marketplace bypass ===
+
 # === KZN: always serve real files/folders (must be first) ===
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -95,9 +106,5 @@ SetEnv ADMIN_PASSWORD "CHANGE_ME_STRONG_PASSWORD"
 </IfModule>
 
 <Files "contact-test.html">
-  Require all denied
-</Files>
-
-<Files "probe.php">
   Require all denied
 </Files>

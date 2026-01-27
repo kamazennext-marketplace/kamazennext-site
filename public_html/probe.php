@@ -1,20 +1,16 @@
 <?php
-header('Content-Type: application/json; charset=utf-8');
-// REVIEW: Remove or protect this diagnostic endpoint in production deployments.
-echo json_encode([
-  "ok" => true,
-  "time" => date('c'),
-  "script" => __FILE__,
-  "cwd" => getcwd(),
-  "server" => [
-    "host" => $_SERVER['HTTP_HOST'] ?? null,
-    "uri" => $_SERVER['REQUEST_URI'] ?? null
-  ],
-  "ini" => [
-    "auto_prepend_file" => ini_get('auto_prepend_file'),
-    "auto_append_file" => ini_get('auto_append_file'),
-    "user_ini_filename" => ini_get('user_ini.filename'),
-    "loaded_ini_file" => php_ini_loaded_file(),
-    "scanned_ini_files" => php_ini_scanned_files()
-  ]
-], JSON_UNESCAPED_SLASHES);
+header('Content-Type: application/json');
+
+$response = [
+    'time' => gmdate('c'),
+    'php_version' => PHP_VERSION,
+    '__FILE__' => __FILE__,
+    '__DIR__' => __DIR__,
+    'DOCUMENT_ROOT' => $_SERVER['DOCUMENT_ROOT'] ?? null,
+    'SCRIPT_FILENAME' => $_SERVER['SCRIPT_FILENAME'] ?? null,
+    'REQUEST_URI' => $_SERVER['REQUEST_URI'] ?? null,
+    'HTTP_HOST' => $_SERVER['HTTP_HOST'] ?? null,
+    'loaded_ini_file' => loaded_ini_file(),
+];
+
+echo json_encode($response, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);

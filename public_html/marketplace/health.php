@@ -1,6 +1,8 @@
 <?php
-header('Content-Type: text/plain; charset=utf-8');
-echo "MARKETPLACE PHP OK\n";
-echo "uri=" . ($_SERVER['REQUEST_URI'] ?? '') . "\n";
-echo "time=" . date('c') . "\n";
-?>
+header('Content-Type: application/json');
+
+echo json_encode([
+    'ok' => true,
+    'time' => gmdate('c'),
+    'path' => __FILE__,
+], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
