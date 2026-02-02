@@ -1,36 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Vendor Registration | KAMA ZENNEXT</title>
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vendor Registration | Kama ZenNext</title>
+  <link rel="stylesheet" href="/assets/css/styles.css?v=20260106">
   <link rel="stylesheet" href="/assets/css/theme-light.css?v=20260106">
   <link rel="stylesheet" href="/assets/theme.css?v=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="/assets/js/header.js" defer></script>
+  <script src="/assets/js/mobile-nav.js" defer></script>
 </head>
-<body>
 
+<body>
   <div id="site-header"></div>
 
-  <h2>Vendor Registration</h2>
+  <main class="section">
+    <div class="container" style="max-width: 520px;">
+      <div class="card fade-in-up">
+        <div style="text-align:center; margin-bottom:24px;">
+          <h1 class="section-title" style="font-size: 1.75rem;">Create Vendor Account</h1>
+          <p class="section-subtitle">Join our marketplace and reach thousands of users.</p>
+        </div>
 
-  <form action="/api/vendor-register.php" method="POST">
+        <form id="registerForm" class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Full Name</label>
+            <input type="text" name="name" required placeholder="John Doe">
+          </div>
 
-    <label>Your Name</label><br>
-    <input type="text" name="name" required><br><br>
+          <div class="form-group full">
+            <label class="form-label">Company Name</label>
+            <input type="text" name="company" required placeholder="Acme Inc.">
+          </div>
 
-    <label>Company Name</label><br>
-    <input type="text" name="company"><br><br>
+          <div class="form-group full">
+            <label class="form-label">Email Address</label>
+            <input type="email" name="email" required placeholder="you@company.com">
+          </div>
 
-    <label>Email</label><br>
-    <input type="email" name="email" required><br><br>
+          <div class="form-group full">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" required placeholder="••••••••" minlength="8">
+          </div>
 
-    <label>Password</label><br>
-    <input type="password" name="password" required><br><br>
+          <div class="form-actions full">
+            <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%;">Register</button>
+          </div>
 
-    <button type="submit">Register</button>
+          <div id="formAlert" role="status" aria-live="polite" class="full"></div>
 
-  </form>
+          <div class="full" style="text-align:center; margin-top:16px; font-size:0.9rem;">
+            <a href="/forms/forms/vendor-login.html" class="secondary-link">Already have an account? Log in</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
 
+  <script>
+    const form = document.getElementById('registerForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const alertBox = document.getElementById('formAlert');
+
+    const setAlert = (message, type = 'success') => {
+      alertBox.className = `alert ${type} full`;
+      alertBox.textContent = message;
+      alertBox.style.display = 'block';
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alertBox.style.display = 'none';
+      alertBox.className = 'full';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Registering...';
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('/api/vendor-register.php', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json().catch(() => ({ status: 'error', message: 'Unexpected response.' }));
+
+        if (response.ok && result.status === 'success') {
+          setAlert('Registration successful! Please log in.', 'success');
+          setTimeout(() => {
+            window.location.href = '/forms/forms/vendor-login.html';
+          }, 1500);
+        } else {
+          setAlert(result.message || 'Registration failed.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        setAlert('Network error. Please try again.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Register';
+      }
+    });
+  </script>
 </body>
+
 </html>

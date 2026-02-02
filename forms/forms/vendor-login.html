@@ -1,30 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Vendor Login | KAMA ZENNEXT</title>
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vendor Login | Kama ZenNext</title>
+  <link rel="stylesheet" href="/assets/css/styles.css?v=20260106">
   <link rel="stylesheet" href="/assets/css/theme-light.css?v=20260106">
   <link rel="stylesheet" href="/assets/theme.css?v=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="/assets/js/header.js" defer></script>
+  <script src="/assets/js/mobile-nav.js" defer></script>
 </head>
-<body>
 
+<body>
   <div id="site-header"></div>
 
-  <h2>Vendor Login</h2>
+  <main class="section">
+    <div class="container" style="max-width: 480px;">
+      <div class="card fade-in-up">
+        <div style="text-align:center; margin-bottom:24px;">
+          <h1 class="section-title" style="font-size: 1.75rem;">Vendor Login</h1>
+          <p class="section-subtitle">Manage your listings and view analytics.</p>
+        </div>
 
-  <form action="/api/vendor-login.php" method="POST">
+        <form id="loginForm" class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Email Address</label>
+            <input type="email" name="email" required placeholder="you@company.com">
+          </div>
 
-    <label>Email</label><br>
-    <input type="email" name="email" required><br><br>
+          <div class="form-group full">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" required placeholder="••••••••">
+          </div>
 
-    <label>Password</label><br>
-    <input type="password" name="password" required><br><br>
+          <div class="form-actions full">
+            <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%;">Log In</button>
+          </div>
 
-    <button type="submit">Login</button>
+          <div id="formAlert" role="status" aria-live="polite" class="full"></div>
 
-  </form>
+          <div class="full" style="text-align:center; margin-top:16px; font-size:0.9rem;">
+            <a href="/forms/forms/vendor-register.html" class="secondary-link">Don't have an account? Register here</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
 
+  <script>
+    const form = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const alertBox = document.getElementById('formAlert');
+
+    const setAlert = (message, type = 'success') => {
+      alertBox.className = `alert ${type} full`;
+      alertBox.textContent = message;
+      alertBox.style.display = 'block';
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alertBox.style.display = 'none';
+      alertBox.className = 'full';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Logging in...';
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('/api/vendor-login.php', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json().catch(() => ({ status: 'error', message: 'Unexpected response.' }));
+
+        if (response.ok && result.status === 'success') {
+          setAlert('Login successful! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = '/vendor/dashboard.html'; // Assuming a dashboard exists
+          }, 1000);
+        } else {
+          setAlert(result.message || 'Login failed.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        setAlert('Network error. Please try again.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Log In';
+      }
+    });
+  </script>
 </body>
+
 </html>
