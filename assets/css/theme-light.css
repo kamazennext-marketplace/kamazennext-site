@@ -4,31 +4,43 @@
 }
 
 /* ==========================
-   Design tokens (Semi-Vibrant Light, 2026)
+   Design tokens (Premium SaaS 2026)
    ========================== */
 :root{
-  --bg:#f6f7fb;
+  /* Backgrounds - Cool & Clean */
+  --bg:#f8fafc;        /* Slate 50 */
   --surface:#ffffff;
-  --surface2:#f2f4f8;
-  --surface3:#eef2f7;
+  --surface2:#f1f5f9;  /* Slate 100 */
+  --surface3:#e2e8f0;  /* Slate 200 */
 
-  --text:#0b1220;
-  --muted:#5b6475;
+  /* Text - High Contrast & Readable */
+  --text:#0f172a;      /* Slate 900 */
+  --muted:#64748b;     /* Slate 500 */
 
-  --border:rgba(15,23,42,0.10);
-  --shadow:0 12px 30px rgba(15,23,42,0.08);
-  --shadow2:0 6px 16px rgba(15,23,42,0.06);
+  /* Borders & Shadows */
+  --border:rgba(148, 163, 184, 0.2); /* Slate 400 at 20% */
+  /* Premium colored shadows */
+  --shadow: 0 20px 40px -4px rgba(79, 70, 229, 0.1), 0 8px 16px -4px rgba(79, 70, 229, 0.04);
+  --shadow2: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
+  --shadow-hover: 0 25px 50px -12px rgba(79, 70, 229, 0.15);
 
-  --primary:#6d28d9;
-  --primary2:#14b8a6;
-  --primarySoft:rgba(109,40,217,0.10);
-  --greenSoft:rgba(20,184,166,0.12);
-  --accent-gradient: linear-gradient(90deg, #7c3aed, #14b8a6);
-  --ring:0 0 0 4px rgba(109,40,217,0.20);
+  /* Brand Colors - Deep Blue/Purple Gradient */
+  --primary:#4f46e5;   /* Indigo 600 */
+  --primary2:#9333ea;  /* Purple 600 */
+  
+  --primarySoft:rgba(79, 70, 229, 0.08);
+  --greenSoft:rgba(16, 185, 129, 0.12);
+  
+  /* Modern Gradient */
+  --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  
+  /* Focus Ring */
+  --ring: 0 0 0 4px rgba(99, 102, 241, 0.2);
 
-  --radius:16px;
-  --radius2:16px;
-  --maxw:1200px;
+  /* Modern Radius */
+  --radius: 20px;
+  --radius2: 24px;
+  --maxw: 1240px;
 }
 
 html, body{

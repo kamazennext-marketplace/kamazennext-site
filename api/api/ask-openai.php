@@ -17,7 +17,7 @@ function kz_ask_openai(string $message, array $history = []): string
     $keyFile = '/home2/kamazennext/.secrets/openai_key.txt';
 
     if (is_readable($keyFile)) {
-        $fileContents = trim((string)file_get_contents($keyFile));
+        $fileContents = trim((string) file_get_contents($keyFile));
         if ($fileContents !== '') {
             $apiKey = $fileContents;
         }
@@ -31,11 +31,12 @@ function kz_ask_openai(string $message, array $history = []): string
     }
 
     if (!$apiKey) {
+        // Fallback or error - for now verify we error correctly
         http_response_code(503);
         throw new Exception('OpenAI API key not configured');
     }
 
-    $model = getenv('OPENAI_MODEL') ?: 'gpt-4.1-mini';
+    $model = getenv('OPENAI_MODEL') ?: 'gpt-4o-mini';
 
     $inputMessages = [];
     foreach ($history as $item) {
@@ -54,6 +55,7 @@ function kz_ask_openai(string $message, array $history = []): string
         }
     }
 
+    // Add the user message at the end
     $inputMessages[] = [
         'role' => 'user',
         'content' => $trimmedMessage,
@@ -61,12 +63,12 @@ function kz_ask_openai(string $message, array $history = []): string
 
     $payload = [
         'model' => $model,
-        'input' => $inputMessages,
-        'max_output_tokens' => 500,
+        'messages' => $inputMessages,
+        'max_tokens' => 500,
         'temperature' => 0.7,
     ];
 
-    $ch = curl_init('https://api.openai.com/v1/responses');
+    $ch = curl_init('https://api.openai.com/v1/chat/completions');
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST => true,
@@ -99,11 +101,8 @@ function kz_ask_openai(string $message, array $history = []): string
     }
 
     $reply = null;
-
-    if (isset($data['output_text'])) {
-        $reply = $data['output_text'];
-    } elseif (isset($data['output'][0]['content'][0]['text'])) {
-        $reply = $data['output'][0]['content'][0]['text'];
+    if (isset($data['choices'][0]['message']['content'])) {
+        $reply = $data['choices'][0]['message']['content'];
     }
 
     if (!is_string($reply) || trim($reply) === '') {

@@ -15,7 +15,7 @@ function addMessage(content, sender) {
 function sendMessage(text) {
     const payloadHistory = [...chatHistory];
 
-    fetch("/api/api/ask-openai.php", {
+    fetch("/api/ask-open.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
