@@ -3,7 +3,7 @@
     const head = document.head;
     if (!head) return;
 
-    const stylesHref = '/assets/css/styles.css?v=20260206';
+    const stylesHref = '/assets/css/main-dark.css';
 
     const ensureLink = (href) => {
       if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
