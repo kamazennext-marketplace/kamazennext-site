@@ -1,11 +1,9 @@
-(function(){
+(function () {
   const ensureStyles = () => {
     const head = document.head;
     if (!head) return;
 
-    const stylesHref = '/assets/css/styles.css?v=20260106';
-    const themeHref = '/assets/css/theme-light.css?v=20260106';
-    const newThemeHref = '/assets/theme.css?v=1';
+    const stylesHref = '/assets/css/styles.css?v=20260206';
 
     const ensureLink = (href) => {
       if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
@@ -17,8 +15,6 @@
     };
 
     ensureLink(stylesHref);
-    ensureLink(themeHref);
-    ensureLink(newThemeHref);
   };
 
   const injectHeader = () => {
@@ -30,7 +26,7 @@
       .then((html) => {
         container.innerHTML = html;
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   ensureStyles();

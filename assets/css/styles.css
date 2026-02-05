@@ -605,16 +605,102 @@ img {
   }
 }
 
-/* ==========================
-   MODALS
-   ========================== */
-.modal {
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+/* Mobile Drawer */
+.mobile-drawer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
-.modal-content {
-  background: #1e293b;
-  border: 1px solid var(--glass-border);
+.mobile-drawer.open {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--glass-border);
+  padding: 24px;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-drawer.open .mobile-drawer-panel {
+  transform: translateX(0);
+}
+
+.mobile-drawer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  font-weight: 700;
+  font-size: 1.2rem;
   color: var(--text-main);
+}
+
+.menu-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobile-nav a {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobile-nav a:hover {
+  color: var(--primary);
+  padding-left: 8px;
+}
+
+.mobile-cta {
+  margin-top: 16px;
+  text-align: center;
+  background: var(--primary);
+  color: #fff !important;
+  border-radius: var(--radius-sm);
+  padding: 12px !important;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .menu-btn {
+    display: block;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 901px) {
+  .menu-btn {
+    display: none;
+  }
 }
