@@ -6,108 +6,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Assistant - Kama ZenNext</title>
   <link rel="stylesheet" href="/assets/css/main-dark.css">
-  
-  
+
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <script src="/assets/js/header.js" defer></script>
-  <script src="/assets/js/mobile-nav.js" defer></script>
-  <style>
-    :root {
-      --primary: #6366f1;
-      --dark: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --bg: #f8fafc;
-    }
+  <script src="/assets/js/header.js?v=3" defer></script>
+  <script src="/assets/js/mobile-nav.js?v=3" defer></script>
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--dark);
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    main {
-      max-width: 900px;
-      margin: 40px auto 80px;
-      padding: 0 20px;
-    }
-
-    .panel {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 140px;
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      font-size: 1rem;
-      font-family: 'Inter', sans-serif;
-    }
-
-    button {
-      margin-top: 12px;
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: none;
-      background: linear-gradient(135deg, var(--primary), #a855f7);
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .response {
-      margin-top: 16px;
-      padding: 14px;
-      border-radius: 12px;
-      background: #f1f5f9;
-      color: #0f172a;
-      min-height: 60px;
-    }
-
-    @media (max-width: 640px) {
-      nav {
-        width: 100%;
-        order: 3;
-      }
-    }
-  </style>
-  <script src="/assets/js/security.js"></script>
+  <script src="/assets/js/security.js?v=3"></script>
 </head>
 
 <body>
   <div id="site-header"></div>
 
-  <main>
-    <h1>AI Assistant</h1>
-    <p style="color: var(--muted);">Ask questions about AI products, comparisons, or how to get the most from Kama
-      ZenNext.</p>
-    <div class="panel">
-      <textarea id="question"
-        placeholder="Ask me to suggest tools, compare options, or summarize a product..."></textarea>
-      <button id="askBtn">Ask AI</button>
-      <div class="response" id="response">Waiting for your question.</div>
-      <small style="color: var(--muted); display:block; margin-top:8px;">Responses may include AI-generated
-        content.</small>
+  <main class="section">
+    <div class="container" style="max-width: 900px;">
+      <h1 class="text-gradient">AI Assistant</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 32px;">Ask questions about AI products,
+        comparisons, or how to get the most from Kama ZenNext.</p>
+
+      <div class="card" style="min-height: 400px; display: flex; flex-direction: column;">
+        <div class="response" id="response"
+          style="flex: 1; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; margin-bottom: 20px; color: var(--text-main); line-height: 1.6;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <i class="fas fa-robot" style="color: var(--primary); font-size: 1.5rem; margin-top: 4px;"></i>
+            <div>
+              <strong>Kama AI</strong>
+              <p style="margin: 4px 0 0; color: var(--text-muted);">Hello! I can help you find the best software tools,
+                compare features, or answer questions about our marketplace. What's on your mind?</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="position: relative;">
+          <textarea id="question" placeholder="Ask me to suggest tools, compare options, or summarize a product..."
+            style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 16px; color: var(--text-main); font-family: inherit; font-size: 1rem; min-height: 100px; resize: vertical;"></textarea>
+          <button id="askBtn" class="btn btn-primary" style="margin-top: 16px; width: 100%;">
+            <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Ask AI
+          </button>
+        </div>
+        <small
+          style="color: var(--text-muted); display:block; margin-top:12px; text-align: center; font-size: 0.8rem;">Responses
+          may include AI-generated content.</small>
+      </div>
     </div>
   </main>
 
@@ -116,10 +59,46 @@
     const responseBox = document.getElementById('response');
     const askBtn = document.getElementById('askBtn');
 
+    const appendUserMessage = (msg) => {
+      const div = document.createElement('div');
+      div.style.cssText = "display: flex; gap: 12px; align-items: flex-start; margin-top: 24px; justify-content: flex-end;";
+      div.innerHTML = `
+        <div style="text-align: right;">
+          <strong style="color: var(--text-main);">You</strong>
+          <p style="margin: 4px 0 0; color: var(--text-muted); background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px 0 12px 12px;">${msg.replace(/</g, '&lt;')}</p>
+        </div>
+        <i class="fas fa-user-circle" style="color: var(--text-muted); font-size: 1.5rem; margin-top: 4px;"></i>
+      `;
+      responseBox.appendChild(div);
+      responseBox.scrollTop = responseBox.scrollHeight;
+      // Clear previous bot waiting message if any
+      const existingWait = document.getElementById('bot-waiting');
+      if (existingWait) existingWait.remove();
+    };
+
+    const appendBotMessage = (msg, isWaiting = false) => {
+      const div = document.createElement('div');
+      if (isWaiting) div.id = 'bot-waiting';
+      div.style.cssText = "display: flex; gap: 12px; align-items: flex-start; margin-top: 24px;";
+      div.innerHTML = `
+        <i class="fas fa-robot" style="color: var(--primary); font-size: 1.5rem; margin-top: 4px;"></i>
+        <div>
+          <strong style="color: var(--text-main);">Kama AI</strong>
+          <p style="margin: 4px 0 0; color: var(--text-muted);">${msg}</p>
+        </div>
+      `;
+      responseBox.appendChild(div);
+      responseBox.scrollTop = responseBox.scrollHeight;
+    };
+
     const ask = async () => {
       const question = questionInput.value.trim();
       if (!question) return;
-      responseBox.textContent = 'Thinking...';
+
+      appendUserMessage(question);
+      questionInput.value = '';
+      appendBotMessage('Thinking...', true);
+
       try {
         const res = await fetch('/api/ask-open.php', {
           method: 'POST',
@@ -127,17 +106,32 @@
           body: JSON.stringify({ message: question })
         });
         const data = await res.json();
+
+        // Remove waiting message
+        const waiting = document.getElementById('bot-waiting');
+        if (waiting) waiting.remove();
+
         if (data.reply) {
-          responseBox.innerHTML = data.reply.replace(/\n/g, '<br>');
+          appendBotMessage(data.reply.replace(/\n/g, '<br>'));
         } else {
-          responseBox.textContent = 'Sorry, we could not get a response right now.';
+          appendBotMessage('Sorry, I encountered an issue getting a response.');
         }
       } catch (err) {
-        responseBox.textContent = 'Connection issue. Please try again later.';
+        const waiting = document.getElementById('bot-waiting');
+        if (waiting) waiting.remove();
+        appendBotMessage('Connection issue. Please check your internet and try again.');
       }
     };
 
     askBtn.addEventListener('click', ask);
+
+    // Allow Enter key to submit
+    questionInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        ask();
+      }
+    });
   </script>
   <script type="module">
     import { injectBaseSchema } from '/assets/js/seo-schema.js';
