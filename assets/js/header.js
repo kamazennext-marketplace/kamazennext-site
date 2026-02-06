@@ -3,7 +3,7 @@
     const head = document.head;
     if (!head) return;
 
-    const stylesHref = '/assets/css/main-dark.css';
+    const stylesHref = '/assets/css/main-dark.css?v=3';
 
     const ensureLink = (href) => {
       if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
@@ -21,7 +21,7 @@
     const container = document.getElementById('site-header');
     if (!container) return;
 
-    fetch('/partials/header.html')
+    fetch('/partials/header.html?v=3')
       .then((response) => response.text())
       .then((html) => {
         container.innerHTML = html;

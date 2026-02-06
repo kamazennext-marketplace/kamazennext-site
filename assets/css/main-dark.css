@@ -159,6 +159,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
 
 .header-logo {
@@ -391,7 +392,8 @@ img {
   transform: translateY(-2px);
 }
 
-.cta-button {
+.cta-button,
+.header-cta {
   /* Legacy class support */
   display: inline-flex;
   align-items: center;
@@ -404,7 +406,8 @@ img {
   box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
 }
 
-.cta-button:hover {
+.cta-button:hover,
+.header-cta:hover {
   filter: brightness(1.1);
   transform: translateY(-1px);
 }
@@ -607,7 +610,7 @@ img {
 
 /* Mobile Drawer */
 .mobile-drawer {
-  display: none;
+  display: none !important;
   position: fixed;
   inset: 0;
   z-index: 2000;
