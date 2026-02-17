@@ -211,10 +211,11 @@ const renderError = (message) => {
 if (!slugA || !slugB) {
   renderError('Missing comparison slugs.');
 } else {
-  fetch('/data/products.json', { cache: 'no-store' })
+  fetch('/api/v1/catalog/tools', { cache: 'no-store' })
     .then((res) => res.json())
     .then((data) => {
-      const items = (data || []).map(normalizeProduct).filter((item) => item.id);
+      const list = data.tools || [];
+      const items = (list || []).map(normalizeProduct).filter((item) => item.id);
       const productA = items.find((item) => item.slug === slugA || item.id === slugA);
       const productB = items.find((item) => item.slug === slugB || item.id === slugB);
 

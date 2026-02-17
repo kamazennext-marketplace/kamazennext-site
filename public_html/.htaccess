@@ -1,110 +1,58 @@
-# === KZN: diagnostic/marketplace bypass (must be first) ===
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteRule ^probe\.php$ - [L]
-RewriteRule ^kzn-health\.txt$ - [L]
-RewriteRule ^marketplace/test\.txt$ - [L]
-RewriteRule ^marketplace/health\.php$ - [L]
-RewriteRule ^marketplace/.* - [L]
+SetEnv OPENAI_API_KEY
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php81” package as the default “PHP” programming language.
+Redirect 302 /favicon.ico /assets/favicon.svg
+ErrorDocument 403 /403.html
+ErrorDocument 404 /404.html
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php81___lsphp .php .php8 .phtml
 </IfModule>
-# === /KZN diagnostic/marketplace bypass ===
-
-# === KZN: always serve real files/folders (must be first) ===
-<IfModule mod_rewrite.c>
-RewriteEngine On
-
-# Always serve real files/folders directly (prevents spinner on txt/php assets)
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-</IfModule>
-# === /KZN always serve real files ===
-
-# === KZN: bypass loader rewrite for marketplace (must be first) ===
-Options -MultiViews
-<IfModule mod_rewrite.c>
-RewriteEngine On
-
-# Never rewrite marketplace paths (so real files like test.txt can load)
-RewriteCond %{REQUEST_URI} ^/marketplace(/|$) [NC]
-RewriteRule ^ - [L]
-
-RewriteCond %{REQUEST_URI} ^/software/software/marketplace(/|$) [NC]
-RewriteRule ^ - [L]
-
-# Never rewrite existing files or directories
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-</IfModule>
-# === /KZN bypass ===
-
-# === KZN: Route /marketplace/* to /software/software/marketplace (must be first) ===
-<IfModule mod_rewrite.c>
-RewriteEngine On
-
-# If nested marketplace exists, serve it for /marketplace/*
-RewriteCond %{DOCUMENT_ROOT}/software/software/marketplace/index.php -f
-RewriteRule ^marketplace/?$ /software/software/marketplace/index.php [L,QSA]
-
-RewriteCond %{DOCUMENT_ROOT}/software/software/marketplace/index.php -f
-RewriteRule ^marketplace/(.*)$ /software/software/marketplace/$1 [L,QSA]
-
-</IfModule>
-# === /KZN marketplace route ===
-
-# === KZN: allow real files & bypass loader rewrites (must be first) ===
-Options -MultiViews
-<IfModule mod_rewrite.c>
-RewriteEngine On
-
-# Do NOT rewrite marketplace routes
-RewriteCond %{REQUEST_URI} ^/marketplace(/|$) [NC]
-RewriteRule ^ - [L]
-
-# Do NOT rewrite real existing files/folders
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-</IfModule>
-# === /KZN bypass ===
-
-# === KZN: bypass SPA/loader for marketplace (must be first) ===
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteCond %{REQUEST_URI} ^/marketplace(/|$) [NC]
-RewriteRule .* - [L]
-</IfModule>
-# === /KZN marketplace bypass ===
-
-Options -Indexes
-
-SetEnv ADMIN_PASSWORD "CHANGE_ME_STRONG_PASSWORD"
+# php -- END cPanel-generated handler, do not edit
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-
-  # Force HTTPS
-  RewriteCond %{HTTPS} !=on
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-  # Force non-www
-  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
-
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
-  RewriteRule ^category/?$ /category.html [L]
-  RewriteRule ^category/([^/]+)/?$ /software.html?cat=$1 [L,QSA]
-
-  # REVIEW: Best pages route
-  RewriteRule ^best/([a-z0-9-]+)/?$ /best/page.html?s=$1 [L,QSA,NC]
-
-  # REVIEW: Compare SEO pages route
-  RewriteRule ^compare/([a-z0-9-]+)-vs-([a-z0-9-]+)/?$ /compare/page.html?a=$1&b=$2 [L,QSA,NC]
+  RewriteCond %{HTTP_HOST} ^www\.kamazennext\.com$ [NC]
+  RewriteRule ^(.*)$ https://kamazennext.com/$1 [L,R=301]
+  RewriteRule ^go/([^/]+)/?$ /go/index.php?slug=$1 [L,QSA]
+  RewriteRule ^best/([a-z0-9-]+)-tools/?$ /best/category.html?c=$1 [L,QSA]
 </IfModule>
 
-<Files "contact-test.html">
-  Require all denied
-</Files>
+# Enable gzip/deflate compression for text assets
+<IfModule mod_deflate.c>
+  <IfModule mod_filter.c>
+    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+  </IfModule>
+  <IfModule mod_headers.c>
+    Header append Vary Accept-Encoding
+  </IfModule>
+</IfModule>
+
+# Cache static assets aggressively while keeping HTML short-lived
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/html "access plus 5 minutes"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|svg|png|jpe?g|webp|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html?)$">
+    Header set Cache-Control "max-age=300, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>

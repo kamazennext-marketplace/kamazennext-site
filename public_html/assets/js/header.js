@@ -1,10 +1,9 @@
-(function(){
+(function () {
   const ensureStyles = () => {
     const head = document.head;
     if (!head) return;
 
-    const stylesHref = '/assets/css/styles.css?v=20260106';
-    const themeHref = '/assets/css/theme-light.css?v=20260106';
+    const stylesHref = '/assets/css/main-dark.css?v=3';
 
     const ensureLink = (href) => {
       if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
@@ -16,19 +15,18 @@
     };
 
     ensureLink(stylesHref);
-    ensureLink(themeHref);
   };
 
   const injectHeader = () => {
     const container = document.getElementById('site-header');
     if (!container) return;
 
-    fetch('/partials/header.html')
+    fetch('/partials/header.html?v=3')
       .then((response) => response.text())
       .then((html) => {
         container.innerHTML = html;
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   ensureStyles();

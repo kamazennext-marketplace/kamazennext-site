@@ -1,37 +1,1558 @@
+<!-- deploy-check -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kama ZenNext</title>
-  <link rel="stylesheet" href="/assets/css/main-dark.css">
-  
-  
-  <script src="/assets/js/header.js" defer></script>
-  <script src="/assets/js/mobile-nav.js" defer></script>
-  <style id="critical-header">
-  :root{--header-search-w:360px;--header-search-w-mobile:220px}
-  header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);box-shadow:0 10px 30px rgba(0,0,0,.08)}
-  header .container{width:min(1200px,92%);margin:0 auto}
-  header .header-container{display:flex;align-items:center;gap:18px;justify-content:space-between;min-height:72px}
-  header .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-  header nav ul{display:flex;align-items:center;gap:18px;list-style:none;margin:0;padding:0}
-  header .cta-button{white-space:nowrap}
-  header .search{flex:0 0 auto}
-  header .header-search-wrap.header-search-box{width:var(--header-search-w);min-width:var(--header-search-w);max-width:var(--header-search-w);flex:0 0 var(--header-search-w)}
-  header #siteSearch{width:100%;height:44px;padding:0 14px;box-sizing:border-box;border-radius:12px;border:1px solid rgba(0,0,0,.08);outline:none}
-  @media(max-width:992px){
-    header .header-search-wrap.header-search-box{width:var(--header-search-w-mobile);min-width:var(--header-search-w-mobile);max-width:var(--header-search-w-mobile);flex:0 0 var(--header-search-w-mobile)}
-  }
-  </style>
-  <script src="/assets/js/security.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kama ZenNext | AI Software Marketplace & Automation Solutions</title>
+    <link rel="canonical" href="https://kamazennext.com/">
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" type="image/svg+xml" sizes="180x180" href="/assets/apple-touch-icon.svg">
+    <meta name="description"
+        content="Discover Kama ZenNext's AI software marketplace with enterprise-ready automation tools, custom development, and expert AI support for your business." />
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Kama ZenNext | AI Software Marketplace & Automation Solutions">
+    <meta property="og:description"
+        content="Discover Kama ZenNext's AI software marketplace with enterprise-ready automation tools, custom development, and expert AI support for your business.">
+    <meta property="og:image" content="https://yourdomain.com/assets/og-image.svg">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kama ZenNext | AI Software Marketplace & Automation Solutions">
+    <meta name="twitter:description"
+        content="Discover Kama ZenNext's AI software marketplace with enterprise-ready automation tools, custom development, and expert AI support for your business.">
+    <meta name="twitter:image" content="https://yourdomain.com/assets/og-image.svg">
+    <meta name="twitter:url" content="https://yourdomain.com/">
+    <link rel="stylesheet" href="/assets/css/main-dark.css?v=3" />
+    <!-- Theme bundled in styles.css -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        onload="this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
+        onload="this.rel='stylesheet'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
+            rel="stylesheet">
+    </noscript>
+    <!-- JS order:
+      - nav.js first (header interactions)
+      - render scripts after DOM ready (use defer)
+    -->
+    <script src="/assets/js/nav.js?v=3" defer></script>
+    <script src="/assets/js/header.js?v=3" defer></script>
+    <script src="/assets/js/mobile-nav.js?v=3" defer></script>
+    <script src="/assets/js/security.js?v=3"></script>
 </head>
+
 <body>
-<script>
-  // Ensure header displays only after styles are applied to prevent flashes
-  window.addEventListener('load', function () {
-    document.body.classList.add('css-ready');
-  });
-</script>
+    <!-- HEADER
+      - Sticky header shared across pages
+      - Mobile menu handled by /assets/js/nav.js
+    -->
+    <div id="site-header"></div>
+
+    <!-- HERO
+      - Keep copy short for above-the-fold performance
+    -->
+    <section class="hero" id="home">
+        <div class="container hero-grid">
+            <div>
+                <span class="hero-eyebrow">Trusted marketplace for teams</span>
+                <h1>Discover, compare, and launch software faster.</h1>
+                <p>Curated AI and SaaS tools with transparent comparisons, premium visuals, and a smooth buying journey
+                    built for 2026.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="/software.html">Browse tools</a>
+                    <a class="btn btn-secondary" href="/compare.html">Compare</a>
+                </div>
+                <div class="hero-metrics">
+                    <div class="metric"><span>Listings</span><strong>300+</strong></div>
+                    <div class="metric"><span>Curated drops</span><strong>Weekly</strong></div>
+                    <div class="metric"><span>Coverage</span><strong>AI · SaaS · Security</strong></div>
+                </div>
+            </div>
+            <div class="card hero-card">
+                <h3 style="margin:0;">What’s new</h3>
+                <p style="margin:0; color: var(--muted);">Featured releases, verified by the ZenNext team.</p>
+                <div class="hero-metrics">
+                    <div class="metric"><span>Automation</span><strong>FlowDesk</strong></div>
+                    <div class="metric"><span>AI Studio</span><strong>VisionaryOS</strong></div>
+                    <div class="metric"><span>Compliance</span><strong>ShieldPro</strong></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories section">
+        <div class="container catalog-block">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Top Categories</h2>
+                    <p class="section-subtitle">Browse the most popular segments across our marketplace.</p>
+                </div>
+                <a class="secondary-link" href="/software.html">View all products</a>
+            </div>
+            <div class="homeGrid" id="categoryGrid"></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Browse by category</h2>
+                    <p class="section-subtitle">Explore best-of landing pages built for every workflow.</p>
+                </div>
+                <a class="secondary-link" href="/best/">See all best tool categories</a>
+            </div>
+            <div class="card"
+                style="padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+                <div>
+                    <h3 style="margin: 0 0 6px;">Best tools by category</h3>
+                    <p style="margin: 0; color: var(--muted);">Jump into curated lists for automation, analytics,
+                        security, and more.</p>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a class="btn btn-primary" href="/best/">Browse best tools</a>
+                    <a class="btn btn-secondary" href="/best/automation-tools">Best automation tools</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories section">
+        <div class="container catalog-block">
+            <div class="section-header">
+                <h2 class="section-title">Best in Automation / Chatbots / Image Generation</h2>
+                <p class="section-subtitle">Hand-picked winners from our catalog.</p>
+            </div>
+            <div id="bestByCategory"></div>
+        </div>
+    </section>
+
+    <section class="section" id="software">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Marketplace highlights</h2>
+                    <p class="section-subtitle">Explore top tools across finance, security, CRM, and AI.</p>
+                </div>
+                <a class="secondary-link" href="/software.html">View all products</a>
+            </div>
+            <div class="category-filters">
+                <button class="cat-filter active" data-filter="all">All tools</button>
+                <button class="cat-filter" data-filter="finance">Finance</button>
+                <button class="cat-filter" data-filter="cybersecurity">Cybersecurity</button>
+                <button class="cat-filter" data-filter="crm">CRM</button>
+                <button class="cat-filter" data-filter="ai">AI</button>
+            </div>
+            <div class="products-grid marketplace-grid" id="softwareGrid"></div>
+            <div class="section-cta">
+                <a class="btn btn-secondary" href="/software.html">Explore the full marketplace</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AD SECTION (MONETIZATION) -->
+    <section class="ad-section" id="monetization">
+        <div class="container">
+            <h2 class="section-title">💰 Monetization Ready</h2>
+            <p class="section-subtitle">Integrated advertising system with multiple revenue streams</p>
+
+            <div class="homeGrid"
+                style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 24px;">
+                <div class="card" style="padding:24px;">
+                    <h3 style="margin-top:0; color: var(--primary);"><i class="fas fa-ad"></i> Ad Placements</h3>
+                    <p style="color: var(--muted);">Strategic ad placements integrated throughout the platform. Fully
+                        responsive and optimized for maximum revenue.</p>
+                    <div class="ad-placeholder">
+                        <span class="ad-label">Sponsored Software</span>
+                        <div style="font-weight: bold; color: var(--text);">Premium Accounting Suite</div>
+                        <small style="color: var(--muted);">Special offer for KAMA users</small>
+                    </div>
+                </div>
+
+                <div class="card" style="padding:24px;">
+                    <h3 style="margin-top:0; color: var(--primary2);"><i class="fas fa-handshake"></i> Affiliate
+                        Marketing</h3>
+                    <p style="color: var(--muted);">Commission-based referrals to software vendors. Track conversions
+                        and optimize earnings.</p>
+                    <div class="ad-placeholder">
+                        <span class="ad-label">Featured Partner</span>
+                        <div style="font-weight: bold; color: var(--text);">Security Pro 2024</div>
+                        <small style="color: var(--muted);">20% commission on referrals</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ad-blocker-warning" id="adBlockerWarning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Ad blocker detected. Please consider disabling it to support our platform.</span>
+            </div>
+
+            <div class="card" style="margin-top: 24px; border-left:4px solid var(--primary);">
+                <h4 style="margin:0 0 8px; color: var(--text);"><i class="fas fa-shield-alt"></i> Privacy Compliant</h4>
+                <p style="font-size: 0.95rem; color: var(--muted); margin:0 0 12px;">Our advertising system is compliant
+                    with GDPR, CCPA, and other privacy regulations. Users have full control over their data.</p>
+                <button onclick="openPrivacyModal()" class="btn" style="width:auto;">Privacy Settings</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- VENDOR SECTION -->
+    <section class="categories" id="vendors">
+        <div class="container">
+            <h2 class="section-title">💰 Sell Your Software</h2>
+            <p class="section-subtitle">Reach millions of users. Get featured listings, subscription management, and
+                lead generation.</p>
+
+            <div class="ad-placeholder" style="margin: 2rem 0;">
+                <span class="ad-label">Vendor Spotlight</span>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div
+                        style="width: 80px; height: 80px; background: linear-gradient(135deg, #EC4899, #F472B6); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--text); margin-bottom: 0.5rem;">Top Performing Vendor</h4>
+                        <p style="color: var(--muted); font-size: 0.9rem;">"Increased sales by 300% using KAMA's vendor
+                            tools" - CRM Pro Solutions</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;">
+                <div style="text-align: center; max-width: 200px;">
+                    <div
+                        style="background: rgba(108, 99, 255, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--primary); font-size: 1.5rem;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>Featured Listings</h4>
+                    <p style="color: var(--muted); font-size: 0.9rem;">Get premium placement on our marketplace</p>
+                </div>
+                <div style="text-align: center; max-width: 200px;">
+                    <div
+                        style="background: rgba(16, 185, 129, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--ai-color); font-size: 1.5rem;">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h4>Subscriptions</h4>
+                    <p style="color: var(--muted); font-size: 0.9rem;">Manage recurring billing and subscriptions</p>
+                </div>
+                <div style="text-align: center; max-width: 200px;">
+                    <div
+                        style="background: rgba(59, 130, 246, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--security-color); font-size: 1.5rem;">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h4>Lead Generation</h4>
+                    <p style="color: var(--muted); font-size: 0.9rem;">Get qualified leads and customer insights</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <button onclick="openSellModal()" class="cta-button"
+                    style="padding: 1rem 2rem; font-size: 1.1rem;">Start Selling Today</button>
+                <p style="color: var(--muted); margin-top: 1rem; font-size: 0.9rem;">Commission rates start at 15%. No
+                    setup fees.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" id="softwareCount">500+</div>
+                    <div class="stat-label">Software Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="aiConversations">15K+</div>
+                    <div class="stat-label">AI Conversations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="userCount">2M+</div>
+                    <div class="stat-label">Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$1.2M+</div>
+                    <div class="stat-label">Vendor Revenue</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <!-- FOOTER
+      - Links to legal pages + sitemap
+    -->
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <i class="fas fa-robot" style="color: var(--primary); font-size: 1.6rem;"></i>
+                    <span>Kama ZenNext</span>
+                </div>
+                <p>Curated AI + SaaS tools with transparent comparisons and premium buying guidance.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Marketplace</h4>
+                <ul>
+                    <li><a href="/software.html">Browse tools</a></li>
+                    <li><a href="/compare.html">Compare</a></li>
+                    <li><a href="/category.html">Categories</a></li>
+                    <li><a href="/submit-tool.html">Submit a tool</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/about-us.html">About</a></li>
+                    <li><a href="/open-source.html">Open Source</a></li>
+                    <li><a href="/contact-us.html">Contact</a></li>
+                    <li><a href="/ai-assistant.html">AI Assistant</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/privacy-policy.html">Privacy policy</a></li>
+                    <li><a href="/terms.html">Terms of service</a></li>
+                    <li><a href="/sitemap.xml">Sitemap</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <span>&copy; 2026 KAMA ZENNEXT. All rights reserved.</span>
+            <span>Trusted marketplace for modern teams.</span>
+        </div>
+        <div class="container footer-consent">
+            <i class="fas fa-cookie-bite"></i>
+            This site uses cookies for essential functionality and analytics.
+            <button onclick="openPrivacyModal()" type="button">Learn more</button>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+    <div class="modal" id="sellModal">
+        <div class="modal-content">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Sell Your Software</h2>
+            <form id="vendorForm">
+                <div class="form-group">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Software Name</label>
+                    <input type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-select" required>
+                        <option value="">Select Category</option>
+                        <option value="finance">Financial Software</option>
+                        <option value="cybersecurity">Cybersecurity</option>
+                        <option value="crm">CRM</option>
+                        <option value="ai">AI Tools</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Pricing Model</label>
+                    <select class="form-select" required>
+                        <option value="">Select Model</option>
+                        <option value="free">Free</option>
+                        <option value="freemium">Freemium</option>
+                        <option value="subscription">Subscription</option>
+                        <option value="one-time">One-time Purchase</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Website URL</label>
+                    <input type="url" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="cta-button" style="flex: 1;">Submit Application</button>
+                    <button type="button" onclick="closeModal('sellModal')"
+                        style="background: transparent; border: 1px solid var(--muted); color: var(--muted); padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="privacyModal">
+        <div class="modal-content">
+            <h2 style="color: var(--info); margin-bottom: 1.5rem;">Privacy Settings</h2>
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 1rem; color: var(--text); margin-bottom: 1rem;">
+                    <input type="checkbox" id="essentialCookies" checked disabled>
+                    <span>Essential Cookies (Required)</span>
+                </label>
+                <small style="color: var(--muted); display: block; margin-bottom: 1.5rem;">These cookies are necessary
+                    for the website to function.</small>
+            </div>
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 1rem; color: var(--text); margin-bottom: 1rem;">
+                    <input type="checkbox" id="analyticsCookies" checked>
+                    <span>Analytics Cookies</span>
+                </label>
+                <small style="color: var(--muted); display: block; margin-bottom: 1.5rem;">Help us understand how
+                    visitors interact with our website.</small>
+            </div>
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 1rem; color: var(--text); margin-bottom: 1rem;">
+                    <input type="checkbox" id="advertisingCookies" checked>
+                    <span>Advertising Cookies</span>
+                </label>
+                <small style="color: var(--muted); display: block; margin-bottom: 1.5rem;">Used to personalize ads and
+                    measure ad performance.</small>
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button onclick="savePrivacySettings()" class="cta-button" style="flex: 1;">Save Settings</button>
+                <button onclick="closeModal('privacyModal')"
+                    style="background: transparent; border: 1px solid var(--muted); color: var(--muted); padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="notification" id="successNotification">
+        <i class="fas fa-check-circle"></i>
+        <span>Saved successfully.</span>
+    </div>
+
+    <div class="notification error" id="errorNotification">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Something went wrong. Please try again.</span>
+    </div>
+
+    <!-- AI CHATBOX -->
+    <div id="ai-chatbox">
+        <div id="ai-header">
+            <span>AI Assistant</span>
+            <button id="ai-close-btn">✕</button>
+        </div>
+        <div id="ai-messages">
+            <div class="ai-msg-bot">Hi! I'm your AI assistant. How can I help you with software recommendations today?
+            </div>
+        </div>
+        <div id="ai-input-area">
+            <input type="text" id="ai-input" placeholder="Ask anything about software...">
+            <button id="ai-send">Send</button>
+        </div>
+    </div>
+
+    <!-- FLOATING AI BUTTON -->
+    <button id="ai-chat-btn" aria-label="AI Support">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <!-- SCROLL TO TOP -->
+    <div class="scroll-top" id="scrollTop" title="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script type="module">
+        import {
+            loadProducts,
+            getCategories,
+            getTrending,
+            getFeatured,
+            pickBestInCategory,
+            urlForCategory,
+            urlForProduct,
+            urlForOutbound
+        } from '/assets/js/catalog.js';
+
+        const categoryGrid = document.getElementById('categoryGrid');
+        const featuredGrid = document.getElementById('featuredGrid');
+        const featuredSection = document.getElementById('featuredSection');
+        const trendingGrid = document.getElementById('trendingGrid');
+        const bestByCategory = document.getElementById('bestByCategory');
+
+        const formatDate = (dateStr) => {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        };
+
+        const buildPricingLabel = (pricing) => {
+            if (!pricing || !pricing.model) return null;
+            const label = pricing.model.replace(/-/g, ' ');
+            return label.charAt(0).toUpperCase() + label.slice(1);
+        };
+
+        const promoLabel = (product) => {
+            if (product?.sponsored_rank !== undefined) return '<span class="badge sponsored-label">Sponsored</span>';
+            if (product?.featured) return '<span class="badge featured-label">Featured</span>';
+            return '';
+        };
+
+        const bySponsoredThenUpdated = (a, b) => {
+            const rankA = a?.sponsored_rank ?? Number.POSITIVE_INFINITY;
+            const rankB = b?.sponsored_rank ?? Number.POSITIVE_INFINITY;
+            if (rankA !== rankB) return rankA - rankB;
+            return new Date(b.last_updated || 0) - new Date(a.last_updated || 0);
+        };
+
+        const renderCategories = (products) => {
+            const categories = getCategories(products).slice(0, 8);
+            categoryGrid.innerHTML = '';
+            categories.forEach(({ name, count }) => {
+                const tile = document.createElement('a');
+                tile.className = 'catTile';
+                tile.href = urlForCategory(name);
+                tile.innerHTML = `
+                    <div>
+                        <strong>${name}</strong>
+                        <div style="color:#64748b; font-size:0.9rem;">${count} tools</div>
+                    </div>
+                    <span style="color:#cbd5e1; font-size:1.1rem;">➜</span>
+                `;
+                categoryGrid.appendChild(tile);
+            });
+        };
+
+        const renderFeatured = (products) => {
+            const featured = getFeatured(products);
+            if (!featuredSection) return;
+            if (!featured.length) { featuredSection.style.display = 'none'; return; }
+            const sponsored = [...products]
+                .filter((product) => product?.sponsored_rank !== undefined)
+                .sort(bySponsoredThenUpdated)
+                .slice(0, 2);
+            const sponsoredIds = new Set(sponsored.map((product) => product.id));
+            const ordered = [...sponsored, ...featured.filter((product) => !sponsoredIds.has(product.id))];
+            featuredGrid.innerHTML = '';
+            ordered.forEach((product) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const pricingLabel = buildPricingLabel(product.pricing);
+                card.innerHTML = `
+                    <div style="display:flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+                        <div>
+                            <h3>${product.name}</h3>
+                            <p class="meta">${product.tagline || ''}</p>
+                        </div>
+                        <div style="display:flex; flex-direction: column; gap: 6px; align-items: flex-end;">
+                            ${promoLabel(product)}
+                            <div style="display:flex; gap:6px; flex-wrap: wrap; justify-content: flex-end;">
+                                <span class="badge category">${product.category || 'Software'}</span>
+                                ${pricingLabel ? `<span class="badge pricing">${pricingLabel}</span>` : ''}
+                                ${product.api ? '<span class="badge api">API</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meta">Updated ${formatDate(product.last_updated)}</div>
+                    <div class="actions">
+                        <a class="cta-button" href="${urlForProduct(product.id)}">View</a>
+                        <a class="secondary-link" href="${urlForOutbound(product.slug || product.id, 'home')}" target="_blank" rel="nofollow sponsored noopener">Visit site</a>
+                    </div>
+                `;
+                featuredGrid.appendChild(card);
+            });
+        };
+
+        const renderTrending = (products) => {
+            if (!trendingGrid) return;
+            const trending = getTrending(products);
+            trendingGrid.innerHTML = '';
+            trending.forEach((product) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const pricingLabel = buildPricingLabel(product.pricing);
+                card.innerHTML = `
+                    <div style="display:flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+                        <div>
+                            <h3>${product.name}</h3>
+                            <p class="meta">${product.tagline || ''}</p>
+                        </div>
+                        <div style="display:flex; gap:6px; flex-wrap: wrap; justify-content: flex-end;">
+                            <span class="badge category">${product.category || 'Software'}</span>
+                            ${pricingLabel ? `<span class="badge pricing">${pricingLabel}</span>` : ''}
+                            ${product.api ? '<span class="badge api">API</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="meta">Updated ${formatDate(product.last_updated)}</div>
+                    <div class="actions">
+                        <a class="cta-button" href="${urlForProduct(product.id)}">View</a>
+                        <a class="secondary-link" href="/software.html">Browse more</a>
+                    </div>
+                `;
+                trendingGrid.appendChild(card);
+            });
+        };
+
+        const renderBestByCategory = (products) => {
+            const focusCategories = ['Automation', 'Chatbots', 'Image Generation'];
+            bestByCategory.innerHTML = '';
+            const section = bestByCategory.closest('section');
+            let hasContent = false;
+
+            focusCategories.forEach((cat) => {
+                const picks = pickBestInCategory(products, cat, 3);
+                if (!picks.length) return;
+                hasContent = true;
+
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = `
+                    <div class="category-header">
+                        <h3 style="margin:0; color:#0f172a;">${cat}</h3>
+                        <a class="secondary-link" href="${urlForCategory(cat)}">See all</a>
+                    </div>
+                `;
+
+                const grid = document.createElement('div');
+                grid.className = 'homeGrid';
+
+                picks.forEach((product) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    const pricingLabel = buildPricingLabel(product.pricing);
+                    card.innerHTML = `
+                        <h3>${product.name}</h3>
+                        <p>${product.tagline || ''}</p>
+                        <div style="display:flex; gap:6px; flex-wrap: wrap;">
+                            <span class="badge category">${product.category || 'Software'}</span>
+                            ${pricingLabel ? `<span class="badge pricing">${pricingLabel}</span>` : ''}
+                            ${product.api ? '<span class="badge api">API</span>' : ''}
+                        </div>
+                        <div class="meta">Updated ${formatDate(product.last_updated)}</div>
+                        <div class="actions" style="margin-top:auto;">
+                            <a class="cta-button" href="${urlForProduct(product.id)}">View</a>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                wrapper.appendChild(grid);
+                bestByCategory.appendChild(wrapper);
+            });
+
+            if (section) {
+                section.style.display = hasContent ? '' : 'none';
+            }
+        };
+
+        loadProducts()
+            .then((products) => {
+                renderCategories(products);
+                renderFeatured(products);
+                renderTrending(products);
+                renderBestByCategory(products);
+            })
+            .catch((error) => {
+                console.error('Failed to load catalog content', error);
+            });
+    </script>
+
+    <!-- ALL JAVASCRIPT IN ONE PLACE -->
+    <script>
+        // ===============================
+        // THIRD-PARTY SCRIPT LAZY LOADING
+        // ===============================
+        const thirdPartyLoader = {
+            adsLoaded: false,
+            recaptchaRequested: false,
+            hasStarted: false,
+            loadScript(src, attributes = {}) {
+                return new Promise((resolve, reject) => {
+                    const existing = document.querySelector(`script[src="${src}"]`);
+                    if (existing) {
+                        resolve(existing);
+                        return;
+                    }
+
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.async = true;
+                    script.defer = true;
+
+                    Object.entries(attributes).forEach(([key, value]) => {
+                        if (value !== undefined && value !== null) {
+                            script.setAttribute(key, value);
+                        }
+                    });
+
+                    script.onload = () => resolve(script);
+                    script.onerror = reject;
+
+                    document.body.appendChild(script);
+                });
+            },
+            loadAdsense() {
+                if (this.adsLoaded) return;
+                this.adsLoaded = true;
+                this.loadScript('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6249603944790814', {
+                    crossorigin: 'anonymous'
+                }).catch(() => {
+                    // Silent failure to avoid blocking the page if ads are blocked.
+                });
+            },
+            loadRecaptcha() {
+                if (this.recaptchaRequested) return;
+                this.recaptchaRequested = true;
+
+                const load = () => this.loadScript('https://www.google.com/recaptcha/api.js');
+
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(load);
+                } else {
+                    setTimeout(load, 300);
+                }
+            },
+            startOnInteraction() {
+                if (this.hasStarted) return;
+                this.hasStarted = true;
+
+                const trigger = () => {
+                    if ('requestIdleCallback' in window) {
+                        requestIdleCallback(() => this.loadAdsense());
+                    } else {
+                        setTimeout(() => this.loadAdsense(), 1500);
+                    }
+                };
+
+                trigger();
+            },
+            setupListeners() {
+                const userEvents = ['scroll', 'pointerdown', 'touchstart', 'keydown', 'click'];
+                userEvents.forEach(event => {
+                    window.addEventListener(event, () => this.startOnInteraction(), { once: true, passive: true });
+                });
+
+                window.addEventListener('load', () => {
+                    setTimeout(() => this.startOnInteraction(), 2500);
+                });
+            }
+        };
+
+        // ===============================
+        // SOFTWARE DATABASE
+        // ===============================
+        const softwareDatabase = [
+            // FINANCIAL SOFTWARE (15 entries)
+            { id: 1, name: "Wave Accounting", category: "finance", type: "free", description: "100% free accounting, invoicing, and receipt scanning for small businesses & freelancers.", features: ["Free Accounting & Invoicing", "Unlimited Income/Expense Tracking", "Receipt Scanning", "Multi-Currency"], icon: "fas fa-calculator", link: "https://www.waveapps.com/accounting" },
+            { id: 2, name: "QuickBooks Online", category: "finance", type: "trial", description: "Industry-leading accounting software with powerful features for businesses of all sizes.", features: ["Auto Categorization", "Tax Calculations", "Multi-User Access", "Advanced Reporting"], icon: "fas fa-book", link: "https://quickbooks.intuit.com" },
+            { id: 3, name: "FreshBooks", category: "finance", type: "trial", description: "Cloud-based accounting software designed for freelancers and service-based businesses.", features: ["Time Tracking", "Project Management", "Client Portal", "Recurring Invoices"], icon: "fas fa-file-invoice", link: "https://freshbooks.com" },
+            { id: 4, name: "Zoho Books", category: "finance", type: "free", description: "Free accounting for businesses with less than $50K in revenue per year.", features: ["Bank Reconciliation", "Inventory Tracking", "Automated Workflows", "GST Compliance"], icon: "fas fa-cloud", link: "https://www.zoho.com/books/free-accounting-software/" },
+            { id: 5, name: "Mint (by Intuit)", category: "finance", type: "free", description: "Free personal finance and budgeting tool to track spending, bills, and credit score.", features: ["Budget Creation & Tracking", "Bill Payment Reminders", "Credit Score Monitoring", "Investment Tracking"], icon: "fas fa-chart-pie", link: "https://mint.intuit.com" },
+            { id: 6, name: "Xero", category: "finance", type: "trial", description: "Beautiful accounting software for small businesses with 700+ app integrations.", features: ["Bank Connections", "Purchase Orders", "Project Tracking", "Multi-Currency"], icon: "fas fa-receipt", link: "https://www.xero.com" },
+            { id: 7, name: "GnuCash", category: "finance", type: "free", description: "Open-source personal and small-business financial accounting software.", features: ["Double-Entry Accounting", "Stock/Bond Accounts", "Scheduled Transactions", "Financial Reports"], icon: "fab fa-github", link: "https://gnucash.org" },
+            { id: 8, name: "KashFlow", category: "finance", type: "trial", description: "UK-based accounting software designed for small businesses and startups.", features: ["Payroll Integration", "VAT Management", "Invoice Templates", "Cash Flow Forecasting"], icon: "fas fa-pound-sign", link: "https://www.kashflow.com" },
+            { id: 9, name: "Sage Business Cloud", category: "finance", type: "trial", description: "Comprehensive accounting, payroll, and payment solutions for businesses.", features: ["Real-time Reporting", "Cash Flow Management", "Inventory Control", "Payroll Processing"], icon: "fas fa-chart-line", link: "https://www.sage.com" },
+            { id: 10, name: "ZipBooks", category: "finance", type: "free", description: "Free accounting software with intelligent insights and profit tracking.", features: ["Smart Insights", "Time Tracking", "Online Payments", "Profit & Loss Statements"], icon: "fas fa-zip", link: "https://zipbooks.com" },
+            { id: 11, name: "Manager.io", category: "finance", type: "free", description: "Free desktop accounting software for small businesses with cloud sync option.", features: ["Offline Access", "Inventory Management", "Invoicing", "Financial Reports"], icon: "fas fa-desktop", link: "https://manager.io" },
+            { id: 12, name: "Billy", category: "finance", type: "free", description: "Simple accounting and invoicing software with a forever-free basic plan.", features: ["Unlimited Invoices", "Expense Tracking", "Basic Reports", "Mobile App"], icon: "fas fa-file-alt", link: "https://www.billyapp.com" },
+            { id: 13, name: "Invoice Ninja", category: "finance", type: "free", description: "Open-source invoicing and billing platform with self-hosting option.", features: ["Time Tracking", "Task Management", "Client Portal", "Online Payments"], icon: "fas fa-user-ninja", link: "https://www.invoiceninja.com" },
+            { id: 14, name: "Turbotax", category: "finance", type: "paid", description: "Popular tax preparation software with guided filing and maximum refund guarantee.", features: ["Step-by-Step Guidance", "Audit Support", "Import W-2", "Maximum Refund Guarantee"], icon: "fas fa-file-contract", link: "https://turbotax.intuit.com" },
+            { id: 15, name: "FreeAgent", category: "finance", type: "trial", description: "Accounting software designed for freelancers, contractors, and small businesses.", features: ["Automatic Bank Import", "Self-Assessment Tax", "Project Tracking", "Time Tracking"], icon: "fas fa-user-tie", link: "https://www.freeagent.com" },
+
+            // CYBERSECURITY SOFTWARE (15 entries)
+            { id: 16, name: "Bitdefender Antivirus Free", category: "cybersecurity", type: "free", description: "Award-winning free antivirus for Windows with real-time protection and anti-phishing.", features: ["Real-Time Malware Protection", "Anti-Phishing & Anti-Fraud", "Lightweight & Fast", "Automatic Updates"], icon: "fas fa-shield-virus", link: "https://www.bitdefender.com/solutions/free.html" },
+            { id: 17, name: "Malwarebytes Free", category: "cybersecurity", type: "free", description: "On-demand scanner that finds and removes malware, PUPs, and ransomware.", features: ["Detects & Removes Malware", "Ransomware Protection", "Rootkit Scanner", "Fast Scans"], icon: "fas fa-bug", link: "https://www.malwarebytes.com/free" },
+            { id: 18, name: "Avira Free Security Suite", category: "cybersecurity", type: "free", description: "Comprehensive free security including antivirus, VPN (500MB/mo), and password manager.", features: ["Real-Time Protection", "Free VPN (500 MB/Month)", "Password Manager", "Software Updater"], icon: "fas fa-user-shield", link: "https://www.avira.com/en/free-security-suite" },
+            { id: 19, name: "Kaspersky Security Cloud Free", category: "cybersecurity", type: "free", description: "Free antivirus with real-time protection, VPN, and account check for data leaks.", features: ["Real-Time Antivirus", "Free VPN (200 MB/Day)", "Account Data Leak Check", "Wi-Fi Security Alert"], icon: "fas fa-cloud-shield-alt", link: "https://www.kaspersky.com/free-antivirus" },
+            { id: 20, name: "AVG AntiVirus Free", category: "cybersecurity", type: "free", description: "Trusted free antivirus with essential protection against viruses and malware.", features: ["Malware Protection", "Web & Email Protection", "Performance Scans", "Easy to Use"], icon: "fas fa-shield-alt", link: "https://www.avg.com/en-us/free-antivirus-download" },
+            { id: 21, name: "Avast Free Antivirus", category: "cybersecurity", type: "free", description: "Free antivirus with Wi-Fi security scanner and behavior shield.", features: ["Wi-Fi Inspector", "Behavior Shield", "Game Mode", "Smart Scan"], icon: "fas fa-wifi", link: "https://www.avast.com/free-antivirus-download" },
+            { id: 22, name: "Sophos Home Free", category: "cybersecurity", type: "free", description: "Free cybersecurity for up to 3 devices with remote management.", features: ["Real-Time Antivirus", "Web Filtering", "Remote Management", "Ransomware Protection"], icon: "fas fa-home", link: "https://home.sophos.com" },
+            { id: 23, name: "ZoneAlarm Free Firewall", category: "cybersecurity", type: "free", description: "Free firewall protection with intrusion detection and program control.", features: ["Two-Way Firewall", "Intrusion Detection", "Program Control", "Identity Protection"], icon: "fas fa-fire", link: "https://www.zonealarm.com/software/free-firewall" },
+            { id: 24, name: "Comodo Free Firewall", category: "cybersecurity", type: "free", description: "Advanced firewall with auto-sandbox technology for unknown files.", features: ["Default-Deny Protection", "Auto-Sandbox Technology", "VirusScope", "Host Intrusion Prevention"], icon: "fas fa-dragon", link: "https://www.comodo.com/home/internet-security/firewall.php" },
+            { id: 25, name: "GlassWire Firewall", category: "cybersecurity", type: "free", description: "Network monitoring firewall with beautiful visualizations and alerts.", features: ["Network Monitoring", "Bandwidth Usage Graphs", "Security Alerts", "App Blocking"], icon: "fas fa-chart-network", link: "https://www.glasswire.com" },
+            { id: 26, name: "Norton Antivirus Plus", category: "cybersecurity", type: "paid", description: "Comprehensive security suite with smart firewall and password manager.", features: ["Smart Firewall", "Password Manager", "2GB Cloud Backup", "SafeCam"], icon: "fas fa-user-lock", link: "https://us.norton.com/antivirus" },
+            { id: 27, name: "McAfee Total Protection", category: "cybersecurity", type: "paid", description: "Multi-device security with identity theft protection and VPN.", features: ["Multi-Device Protection", "Identity Theft Protection", "Secure VPN", "Performance Optimization"], icon: "fas fa-globe", link: "https://www.mcafee.com/total-protection" },
+            { id: 28, name: "Trend Micro Antivirus+", category: "cybersecurity", type: "paid", description: "Antivirus with ransomware protection and pay-per-use ransomware money-back guarantee.", features: ["Ransomware Protection", "Social Media Protection", "Folder Shield", "Web Threat Protection"], icon: "fas fa-microchip", link: "https://www.trendmicro.com/en_us/forHome/products/antivirus-plus.html" },
+            { id: 29, name: "ESET NOD32 Antivirus", category: "cybersecurity", type: "paid", description: "Lightweight antivirus with advanced detection and gaming mode.", features: ["Advanced Detection", "Gaming Mode", "UEFI Scanner", "Exploit Blocker"], icon: "fas fa-gamepad", link: "https://www.eset.com/us/home/antivirus" },
+            { id: 30, name: "Webroot SecureAnywhere", category: "cybersecurity", type: "paid", description: "Cloud-based antivirus with fast scans and identity theft protection.", features: ["Cloud-Based Scanning", "Identity Theft Protection", "Fast Scans", "Multi-Device Sync"], icon: "fas fa-cloud-sun", link: "https://www.webroot.com/us/en" },
+
+            // CRM SOFTWARE (10 entries)
+            { id: 31, name: "HubSpot CRM", category: "crm", type: "free", description: "Completely free CRM with sales pipeline, email tracking, and unlimited users.", features: ["Unlimited Users & Contacts", "Email Tracking & Templates", "Deal & Task Management", "Meeting Scheduling"], icon: "fas fa-address-book", link: "https://www.hubspot.com/products/crm" },
+            { id: 32, name: "Zoho CRM", category: "crm", type: "free", description: "Free CRM for up to 3 users with essential sales automation features.", features: ["Up to 3 Users Free", "Lead & Contact Management", "Sales Pipeline", "Email Integration"], icon: "fas fa-users", link: "https://www.zoho.com/crm/free/" },
+            { id: 33, name: "Freshsales (Freshworks)", category: "crm", type: "free", description: "AI-powered CRM with built-in phone, email, and contact scoring in free plan.", features: ["Up to 3 Users", "Contact & Deal Management", "Email Tracking", "AI-based Lead Scoring"], icon: "fas fa-sun", link: "https://www.freshworks.com/crm/freshsales/free-crm/" },
+            { id: 34, name: "Bitrix24", category: "crm", type: "free", description: "Free CRM for up to 12 users with tasks, documents, and communication tools.", features: ["Up to 12 Users", "Unlimited Contacts", "Task Management", "Document Storage"], icon: "fas fa-b", link: "https://www.bitrix24.com/" },
+            { id: 35, name: "Agile CRM", category: "crm", type: "free", description: "All-in-one CRM with marketing automation, telephony, and help desk.", features: ["Up to 10 Users", "Contact Management", "Email Tracking", "Landing Pages"], icon: "fas fa-bolt", link: "https://www.agilecrm.com/" },
+            { id: 36, name: "Really Simple Systems", category: "crm", type: "free", description: "Easy-to-use CRM designed for small businesses with essential features.", features: ["Up to 2 Users", "100MB Storage", "Contact Management", "Sales Pipeline"], icon: "fas fa-check-circle", link: "https://www.reallysimplesystems.com/free-crm/" },
+            { id: 37, name: "SuiteCRM", category: "crm", type: "free", description: "Open source CRM based on SugarCRM with complete customization options.", features: ["100% Open Source", "Self-Hosted", "Full Customization", "Sales Automation"], icon: "fab fa-osi", link: "https://suitecrm.com/" },
+            { id: 38, name: "Vtiger CRM Open Source", category: "crm", type: "free", description: "Open source CRM with sales, marketing, and support capabilities.", features: ["Self-Hosted Free Version", "Sales Automation", "Email Marketing", "Customer Support"], icon: "fas fa-tiger", link: "https://www.vtiger.com/vtiger-crm-open-source/" },
+            { id: 39, name: "Odoo CRM", category: "crm", type: "free", description: "Open source business suite with integrated CRM, sales, and inventory.", features: ["Open Source Community Edition", "Sales Pipeline", "Lead Scoring", "Email Integration"], icon: "fas fa-cube", link: "https://www.odoo.com/page/crm" },
+            { id: 40, name: "Salesforce Essentials", category: "crm", type: "trial", description: "Simplified version of Salesforce for small businesses with limited free trial.", features: ["Limited Free Trial", "Contact Management", "Opportunity Tracking", "Email Integration"], icon: "fas fa-cloud", link: "https://www.salesforce.com/essentials/" },
+
+            // AI TOOLS (10 entries)
+            { id: 41, name: "ChatGPT", category: "ai", type: "free", description: "Advanced AI chatbot for conversation, content creation, and task assistance.", features: ["Natural Language Conversations", "Code Generation & Explanation", "Creative Writing", "Translation"], icon: "fas fa-comment-dots", link: "https://chat.openai.com" },
+            { id: 42, name: "Canva AI", category: "ai", type: "free", description: "AI-powered graphic design tool with templates and image generation.", features: ["AI Image Generation", "Template Suggestions", "Brand Kit", "Collaboration Tools"], icon: "fas fa-palette", link: "https://www.canva.com/ai-tools/" },
+            { id: 43, name: "Grammarly", category: "ai", type: "free", description: "AI-powered writing assistant for grammar checking and style improvements.", features: ["Grammar & Spell Check", "Tone Detection", "Plagiarism Checker", "Writing Suggestions"], icon: "fas fa-spell-check", link: "https://www.grammarly.com" },
+            { id: 44, name: "Jasper AI", category: "ai", type: "trial", description: "AI content creation tool for marketing copy, blogs, and social media posts.", features: ["Content Templates", "Brand Voice", "SEO Optimization", "Multi-Language"], icon: "fas fa-pen-nib", link: "https://www.jasper.ai" },
+            { id: 45, name: "Midjourney", category: "ai", type: "paid", description: "AI image generation tool creating artwork from text descriptions.", features: ["Text-to-Image Generation", "Multiple Art Styles", "High Resolution", "Community Gallery"], icon: "fas fa-image", link: "https://www.midjourney.com" },
+            { id: 46, name: "Notion AI", category: "ai", type: "trial", description: "AI-powered workspace for notes, docs, wikis, and project management.", features: ["AI Writing Assistance", "Task Management", "Database Creation", "Team Collaboration"], icon: "fas fa-sticky-note", link: "https://www.notion.com/product/ai" },
+            { id: 47, name: "GitHub Copilot", category: "ai", type: "free", description: "AI pair programmer that suggests code and entire functions in your editor.", features: ["Code Suggestions", "Multiple Languages", "VS Code Integration", "Function Generation"], icon: "fas fa-code", link: "https://github.com/features/copilot" },
+            { id: 48, name: "DALL-E 2", category: "ai", type: "paid", description: "OpenAI's AI system creating realistic images from natural language descriptions.", features: ["Photorealistic Images", "Artistic Styles", "Image Editing", "Multiple Variations"], icon: "fas fa-robot", link: "https://openai.com/dall-e-2" },
+            { id: 49, name: "Zapier", category: "ai", type: "free", description: "Automates workflows by connecting different web apps with AI enhancements.", features: ["100 Tasks/Month Free", "5 Zaps (Automations)", "15-min Updates", "App Integrations"], icon: "fas fa-bolt", link: "https://zapier.com" },
+            { id: 50, name: "Beautiful.AI", category: "ai", type: "free", description: "AI-powered presentation maker that designs slides automatically.", features: ["Smart Templates", "Auto Design", "Team Collaboration", "Brand Controls"], icon: "fas fa-presentation", link: "https://www.beautiful.ai" }
+        ];
+
+        // ===============================
+        // REAL AI INTEGRATION - FIXED VERSION
+        // ===============================
+        function formatAIResponse(text) {
+            // Create a temporary div to parse the text
+            const tempDiv = document.createElement('div');
+            tempDiv.className = 'ai-card';
+
+            // Convert markdown-like formatting to HTML
+            let html = text
+                .replace(/### (.*?)(\n|$)/g, '<h3>$1</h3>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\* (.*?)(\n|$)/g, '<li>$1</li>')
+                .replace(/• (.*?)(\n|$)/g, '<li>$1</li>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+
+            // Wrap in paragraphs if needed
+            if (!html.includes('<p>') && !html.includes('<h3>') && !html.includes('<li>')) {
+                html = '<p>' + html + '</p>';
+            }
+
+            // Add list wrapper if there are list items
+            if (html.includes('<li>') && !html.includes('<ul>')) {
+                html = html.replace(/(<li>.*?<\/li>)+/g, '<ul>$&</ul>');
+            }
+
+            tempDiv.innerHTML = html;
+
+            // Add CTA buttons
+            const ctaDiv = document.createElement('div');
+            ctaDiv.className = 'ai-cta';
+            ctaDiv.innerHTML = `
+                <button onclick="quickQuestion('Compare alternatives')">🔍 Compare</button>
+                <button onclick="quickQuestion('Pricing details')">💰 Pricing</button>
+                <button onclick="quickQuestion('Best option for my business')">🎯 Best Fit</button>
+            `;
+
+            tempDiv.appendChild(ctaDiv);
+            return tempDiv.outerHTML;
+        }
+
+        // ===============================
+        // AI INTEGRATION OBJECT
+        // ===============================
+        const aiIntegration = {
+            // AI Chat Functionality
+            chatBtn: document.getElementById('ai-chat-btn'),
+            chatbox: document.getElementById('ai-chatbox'),
+            aiSendBtn: document.getElementById('ai-send'),
+            aiInput: document.getElementById('ai-input'),
+            aiMessages: document.getElementById('ai-messages'),
+
+            // AI Assistant Function
+            aiQuestion: document.getElementById('ai-question'),
+            aiResponse: document.getElementById('ai-response'),
+            askAIBtn: document.getElementById('ask-ai-btn'),
+
+            // AI Configuration
+            aiConfig: {
+                useBackend: true,
+                backendEndpoint: '/api/ai-chat.php',
+                simulatedResponses: {
+                    'free crm software': "For free CRM software, I recommend:\n\n**HubSpot CRM** - Unlimited users, sales pipeline, email tracking\n**Zoho CRM** - Up to 3 users free, lead management\n**Bitrix24** - Up to 12 users, includes tasks & documents\n**Freshsales** - AI-powered, up to 3 users free\n\nHubSpot is best for sales teams, while Bitrix24 is great for collaboration.",
+                    'accounting software': "Top financial software:\n\n**Free:**\n• Wave Accounting - Complete accounting & invoicing\n• Mint - Personal finance tracking\n• Zoho Books - Free for businesses under $50K revenue\n\n**Paid:**\n• QuickBooks Online - Industry standard\n• Xero - Beautiful interface, great integrations\n• FreshBooks - Best for freelancers",
+                    'cybersecurity tools': "Best cybersecurity solutions:\n\n**Free:**\n• Bitdefender Free - Real-time malware protection\n• Malwarebytes - On-demand malware removal\n• Avira Security Suite - Includes VPN & password manager\n\n**Enterprise:**\n• CrowdStrike - Endpoint protection\n• Palo Alto - Network security\n• Splunk - SIEM solutions"
+                }
+            },
+
+            initialize: function () {
+                // Initialize AI Chatbox
+                if (this.chatBtn) {
+                    this.chatBtn.addEventListener('click', () => {
+                        this.chatbox.style.display = this.chatbox.style.display === 'flex' ? 'none' : 'flex';
+                        if (this.chatbox.style.display === 'flex') {
+                            this.aiInput.focus();
+                        }
+                    });
+                }
+
+                if (this.aiSendBtn) {
+                    this.aiSendBtn.addEventListener('click', () => this.sendAIMessage());
+                }
+
+                if (this.aiInput) {
+                    this.aiInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') this.sendAIMessage();
+                    });
+                }
+
+                if (this.askAIBtn) {
+                    this.askAIBtn.addEventListener('click', () => this.askAI());
+                }
+
+                const closeBtn = document.getElementById('ai-close-btn');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        this.chatbox.style.display = 'none';
+                    });
+                }
+
+                console.log("AI Integration initialized");
+            },
+
+            addMessage: function (text, isUser = false) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = isUser ? 'ai-msg-user' : 'ai-msg-bot';
+                msgDiv.textContent = text;
+
+                if (this.aiMessages) {
+                    this.aiMessages.appendChild(msgDiv);
+                    this.aiMessages.scrollTop = this.aiMessages.scrollHeight;
+                }
+            },
+
+            sendAIMessage: async function () {
+                const message = this.aiInput.value.trim();
+                if (!message) return;
+
+                this.addMessage(message, true);
+                this.aiInput.value = '';
+
+                // Show "Thinking..." message
+                const thinkingMsg = document.createElement('div');
+                thinkingMsg.className = 'ai-msg-bot';
+                thinkingMsg.textContent = "Thinking...";
+                this.aiMessages.appendChild(thinkingMsg);
+
+                try {
+                    if (this.aiConfig.useBackend) {
+                        // Try backend API
+                        const response = await fetch(this.aiConfig.backendEndpoint, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ message: message })
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            // Remove "Thinking..." message
+                            thinkingMsg.remove();
+                            if (data.success && data.data && data.data.reply) {
+                                this.addMessage(data.data.reply, false);
+                            } else {
+                                this.addMessage("I'm having trouble processing that. Could you rephrase?", false);
+                            }
+                            return;
+                        } else {
+                            // Always log status/body so production failures can be debugged quickly.
+                            console.error("API failed", { status: response.status, body: await response.text() });
+                        }
+                    }
+
+                    // Fallback to simulated response
+                    thinkingMsg.remove();
+                    const simulatedResponse = this.getSimulatedResponse(message);
+                    this.addMessage(simulatedResponse, false);
+
+                } catch (error) {
+                    console.error("AI Error:", error);
+                    thinkingMsg.remove();
+                    const simulatedResponse = this.getSimulatedResponse(message);
+                    this.addMessage(simulatedResponse, false);
+                }
+            },
+
+            askAI: async function () {
+                const question = this.aiQuestion ? this.aiQuestion.value.trim() : '';
+                const responseDiv = this.aiResponse;
+
+                if (!question) {
+                    alert("Please enter a question.");
+                    return;
+                }
+
+                responseDiv.innerHTML = "<div class='ai-card'><p>Thinking...</p></div>";
+
+                try {
+                    if (this.aiConfig.useBackend) {
+                        const response = await fetch(this.aiConfig.backendEndpoint, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ message: question })
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.reply) {
+                                responseDiv.innerHTML = formatAIResponse(data.reply);
+                                return;
+                            }
+                        } else {
+                            // Always log status/body so production failures can be debugged quickly.
+                            console.error("API failed", { status: response.status, body: await response.text() });
+                        }
+                    }
+
+                    // Fallback to simulated response
+                    const simulatedResponse = this.getSimulatedResponse(question);
+                    responseDiv.innerHTML = formatAIResponse(simulatedResponse);
+
+                } catch (error) {
+                    console.error("AI Error:", error);
+                    const simulatedResponse = this.getSimulatedResponse(question);
+                    responseDiv.innerHTML = formatAIResponse("⚠️ " + simulatedResponse);
+                }
+            },
+
+            getSimulatedResponse: function (userMessage) {
+                const lowerMsg = userMessage.toLowerCase();
+
+                // Check for specific keywords
+                for (const [key, response] of Object.entries(this.aiConfig.simulatedResponses)) {
+                    if (lowerMsg.includes(key)) {
+                        return response;
+                    }
+                }
+
+                // Check for free software queries
+                if (lowerMsg.includes('free')) {
+                    if (lowerMsg.includes('crm')) {
+                        return this.aiConfig.simulatedResponses['free crm software'];
+                    } else if (lowerMsg.includes('account') || lowerMsg.includes('finance')) {
+                        return "For free financial software, I recommend:\n\n**Wave Accounting** - Complete accounting & invoicing for small businesses\n**Mint** - Personal finance tracking & budgeting\n**Zoho Books** - Free for businesses under $50K revenue\n**GnuCash** - Open source desktop accounting\n\nFor GST compliance in India, check Tally or Zoho Books.";
+                    } else if (lowerMsg.includes('security') || lowerMsg.includes('antivirus')) {
+                        return "Best free cybersecurity tools:\n\n**Bitdefender Free** - Real-time malware protection\n**Malwarebytes** - On-demand malware removal\n**Avira Security Suite** - Includes VPN & password manager\n**Sophos Home** - Protects up to 3 devices\n\nBitdefender offers the best real-time protection with minimal system impact.";
+                    }
+                }
+
+                // General software recommendations
+                if (lowerMsg.includes('crm')) {
+                    return "CRM Software Recommendations:\n\n**Free:** HubSpot CRM, Zoho CRM, Bitrix24\n**Paid:** Salesforce, Microsoft Dynamics, Pipedrive\n**For startups:** HubSpot (free tier) or Freshsales\n**For enterprises:** Salesforce or Microsoft Dynamics";
+                }
+
+                if (lowerMsg.includes('account') || lowerMsg.includes('finance')) {
+                    return this.aiConfig.simulatedResponses['accounting software'];
+                }
+
+                if (lowerMsg.includes('security') || lowerMsg.includes('cyber')) {
+                    return this.aiConfig.simulatedResponses['cybersecurity tools'];
+                }
+
+                // Default response
+                return "I can help you find software! Try asking:\n• 'Find free CRM software for startups'\n• 'Compare accounting software for small business'\n• 'Best cybersecurity tools for Windows'\n• 'AI tools for content creation'\n\nWhat specific requirements do you have?";
+            },
+
+            quickQuestion: function (question) {
+                if (this.aiQuestion) {
+                    this.aiQuestion.value = question;
+                    this.askAI();
+                }
+            }
+        };
+
+        // ===============================
+        // MONETIZATION & AD SYSTEM
+        // ===============================
+        const adSystem = {
+            placements: [
+                { id: 'hero_banner', location: 'hero', type: 'banner', revenue: 25 },
+                { id: 'in_content', location: 'software_grid', type: 'native', revenue: 15 },
+                { id: 'sidebar', location: 'sidebar', type: 'display', revenue: 20 },
+                { id: 'vendor_spotlight', location: 'vendors', type: 'sponsored', revenue: 30 }
+            ],
+
+            simulateAdLoad: function () {
+                let totalRevenue = 0;
+                this.placements.forEach(placement => {
+                    const impressions = Math.floor(Math.random() * 1000) + 500;
+                    const revenue = (impressions * placement.revenue) / 1000;
+                    totalRevenue += revenue;
+                });
+                return totalRevenue.toFixed(2);
+            },
+
+            checkAdBlocker: function () {
+                const testAd = document.createElement('div');
+                testAd.className = 'adsbygoogle';
+                testAd.style.height = '1px';
+                document.body.appendChild(testAd);
+
+                setTimeout(() => {
+                    const isBlocked = testAd.offsetHeight === 0;
+                    const warning = document.getElementById('adBlockerWarning');
+                    if (warning) {
+                        warning.style.display = isBlocked ? 'block' : 'none';
+                    }
+                    document.body.removeChild(testAd);
+                }, 100);
+            },
+
+            trackAdClick: function (adId) {
+                console.log(`Ad clicked: ${adId}`);
+                this.showNotification('Ad interaction tracked successfully!', 'success');
+
+                const revenueElement = document.querySelector('.stat-number:nth-child(4)');
+                if (revenueElement) {
+                    const current = parseFloat(revenueElement.textContent.replace(/[^0-9.]/g, '')) || 1.2;
+                    revenueElement.textContent = `$${(current + 0.01).toFixed(2)}M+`;
+                }
+            },
+
+            showNotification: function (message, type = 'info') {
+                const notification = document.getElementById(`${type}Notification`);
+                if (notification) {
+                    notification.querySelector('span').textContent = message;
+                    notification.className = `notification ${type} show`;
+
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 3000);
+                }
+            }
+        };
+
+        // ===============================
+        // SOFTWARE RENDERING FUNCTIONS
+        // ===============================
+        function renderSoftware(filter = 'all') {
+            const grid = document.getElementById('softwareGrid');
+            if (!grid) return;
+
+            grid.innerHTML = '';
+
+            let softwareToShow = [];
+
+            if (filter === 'all') {
+                softwareToShow = softwareDatabase;
+            } else {
+                softwareToShow = softwareDatabase.filter(software => software.category === filter);
+            }
+
+            const MAX_MARKETPLACE_ITEMS = 12;
+            const visibleTools = softwareToShow.slice(0, MAX_MARKETPLACE_ITEMS);
+
+            if (softwareToShow.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--muted);">
+                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <h3>No software found</h3>
+                        <p>Try asking our AI assistant for recommendations!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            visibleTools.forEach((software, index) => {
+                if (index > 0 && index % 5 === 0) {
+                    const adCard = document.createElement('article');
+                    const adTitles = [
+                        'Enterprise Security Suite',
+                        'Premium Accounting Pro',
+                        'AI Development Platform',
+                        'Cloud Infrastructure Bundle'
+                    ];
+                    const adTitle = adTitles[Math.floor(Math.random() * adTitles.length)];
+                    adCard.className = 'product-card card';
+                    adCard.innerHTML = `
+                        <div class="pc-top">
+                            <span class="badge sponsored-label">Sponsored</span>
+                            <span class="badge badge-soft">Featured partner</span>
+                        </div>
+                        <h3>${adTitle}</h3>
+                        <p class="muted">Premium solution featured by our partners. Special offer available for KAMA teams.</p>
+                        <div class="feature-tags">
+                            <span class="feature-tag">Enterprise-grade</span>
+                            <span class="feature-tag">Priority support</span>
+                            <span class="feature-tag">Secure by default</span>
+                        </div>
+                        <div class="pc-actions">
+                            <button onclick="trackAdClick('${adTitle.replace(/\s+/g, '_').toLowerCase()}')" class="btn btn-secondary">
+                                <i class="fas fa-external-link-alt"></i> Learn More
+                            </button>
+                            <a class="btn btn-ghost" href="/software.html">Browse catalog</a>
+                        </div>
+                    `;
+                    grid.appendChild(adCard);
+                }
+
+                const card = document.createElement('article');
+                card.className = 'product-card card marketplace-card';
+                card.setAttribute('data-category', software.category);
+
+                const typeLabel = software.type === 'trial'
+                    ? 'Free trial'
+                    : software.type === 'paid'
+                        ? 'Paid'
+                        : 'Free';
+                const categoryLabel = software.category
+                    ? software.category.charAt(0).toUpperCase() + software.category.slice(1)
+                    : 'Software';
+
+                card.innerHTML = `
+                    <div class="marketplace-header">
+                        <div class="marketplace-logo"><i class="${software.icon}"></i></div>
+                        <div>
+                            <h3>${software.name}</h3>
+                            <p class="muted">${software.description}</p>
+                        </div>
+                    </div>
+                    <div class="marketplace-chips">
+                        <span class="badge">${categoryLabel}</span>
+                        <span class="badge badge-soft">${typeLabel}</span>
+                    </div>
+                    <div class="marketplace-actions">
+                        <a class="btn btn-primary" href="${software.link}" target="_blank" rel="noopener">View</a>
+                        <a class="btn btn-secondary" href="/compare.html">Compare</a>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // ===============================
+        // MODAL FUNCTIONS
+        // ===============================
+        function loadRecaptcha() {
+            thirdPartyLoader.loadRecaptcha();
+        }
+
+        function openSellModal() {
+            const modal = document.getElementById('sellModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                loadRecaptcha();
+            }
+        }
+
+        function openPrivacyModal() {
+            const modal = document.getElementById('privacyModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function savePrivacySettings() {
+            const analytics = document.getElementById('analyticsCookies');
+            const advertising = document.getElementById('advertisingCookies');
+
+            if (analytics && advertising) {
+                localStorage.setItem('privacy_settings', JSON.stringify({
+                    analytics: analytics.checked,
+                    advertising: advertising.checked,
+                    timestamp: new Date().toISOString()
+                }));
+
+                adSystem.showNotification('Privacy settings saved successfully!', 'success');
+                closeModal('privacyModal');
+            }
+        }
+
+        // ===============================
+        // AD TRACKING FUNCTIONS
+        // ===============================
+        function trackAdClick(adId) {
+            adSystem.trackAdClick(adId);
+        }
+
+        // ===============================
+        // STATS ANIMATION
+        // ===============================
+        function animateStats() {
+            const counters = {
+                softwareCount: 500,
+                aiConversations: 15000,
+                userCount: 2000000
+            };
+
+            const elements = {
+                softwareCount: document.getElementById('softwareCount'),
+                aiConversations: document.getElementById('aiConversations'),
+                userCount: document.getElementById('userCount')
+            };
+
+            Object.keys(elements).forEach(key => {
+                if (elements[key]) {
+                    let current = 0;
+                    const target = counters[key];
+                    const increment = target / 100;
+                    const element = elements[key];
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+
+                        if (key === 'userCount') {
+                            element.textContent = `${Math.floor(current).toLocaleString()}+`;
+                        } else {
+                            element.textContent = `${Math.floor(current)}+`;
+                        }
+                    }, 20);
+                }
+            });
+        }
+
+        // ===============================
+        // HELPER FUNCTIONS
+        // ===============================
+        function copyDockerCommand() {
+            const command = `docker run -d --name kama-ai-bot -p 3000:3000 -v botpress_data:/botpress/data botpress/server:latest`;
+            navigator.clipboard.writeText(command).then(() => {
+                adSystem.showNotification("Docker command copied to clipboard!", "success");
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = command;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                adSystem.showNotification("Command copied to clipboard!", "success");
+            });
+        }
+
+        function testDeployment() {
+            adSystem.showNotification("Testing Botpress deployment...", "info");
+
+            setTimeout(() => {
+                const isSuccess = Math.random() > 0.3;
+                if (isSuccess) {
+                    adSystem.showNotification("✅ Deployment test successful! Botpress should be running on port 3000.", "success");
+                } else {
+                    adSystem.showNotification("⚠️ Deployment test failed. Make sure Docker is installed and running.", "error");
+                }
+            }, 2000);
+        }
+
+        function quickQuestion(question) {
+            if (aiIntegration.quickQuestion) {
+                aiIntegration.quickQuestion(question);
+            }
+        }
+
+        // ===============================
+        // INITIALIZATION
+        // ===============================
+        document.addEventListener('DOMContentLoaded', function () {
+            thirdPartyLoader.setupListeners();
+
+            // Initialize software grid with all software
+            renderSoftware();
+
+            // Initialize AI Integration
+            aiIntegration.initialize();
+
+            // Lazy load reCAPTCHA after first paint
+            const scheduleRecaptcha = () => {
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(loadRecaptcha, { timeout: 3000 });
+                } else {
+                    setTimeout(loadRecaptcha, 2000);
+                }
+            };
+            scheduleRecaptcha();
+
+            // Category filter buttons
+            document.querySelectorAll('.cat-filter').forEach(button => {
+                button.addEventListener('click', function () {
+                    // Update active button
+                    document.querySelectorAll('.cat-filter').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Filter software
+                    const filter = this.getAttribute('data-filter');
+                    renderSoftware(filter);
+
+                    // Smooth scroll to software section
+                    const softwareSection = document.getElementById('software');
+                    if (softwareSection) {
+                        softwareSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // Scroll to top button
+            const scrollTopBtn = document.getElementById('scrollTop');
+            window.addEventListener('scroll', function () {
+                if (scrollTopBtn) {
+                    if (window.pageYOffset > 300) {
+                        scrollTopBtn.classList.add('show');
+                    } else {
+                        scrollTopBtn.classList.remove('show');
+                    }
+                }
+            });
+
+            if (scrollTopBtn) {
+                scrollTopBtn.addEventListener('click', function () {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mainNav = document.getElementById('mainNav');
+
+            if (mobileMenuBtn && mainNav) {
+                mobileMenuBtn.addEventListener('click', function () {
+                    mainNav.classList.toggle('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (mainNav.classList.contains('active')) {
+                        icon.className = 'fas fa-times';
+                    } else {
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+            }
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function (event) {
+                if (mainNav && mainNav.classList.contains('active') &&
+                    !mainNav.contains(event.target) &&
+                    mobileMenuBtn && !mobileMenuBtn.contains(event.target)) {
+                    mainNav.classList.remove('active');
+                    if (mobileMenuBtn.querySelector('i')) {
+                        mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+                    }
+                }
+            });
+
+            // Form submission
+            const vendorForm = document.getElementById('vendorForm');
+            if (vendorForm) {
+                vendorForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    // Simulate form submission
+                    const submitBtn = vendorForm.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                    submitBtn.disabled = true;
+
+                    setTimeout(() => {
+                        adSystem.showNotification('Application submitted successfully! We\'ll contact you within 48 hours.', 'success');
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        closeModal('sellModal');
+                        vendorForm.reset();
+                    }, 2000);
+                });
+            }
+
+            // Check for ad blocker
+            adSystem.checkAdBlocker();
+
+            // Animate stats
+            setTimeout(animateStats, 1000);
+
+            // Load privacy settings
+            const savedSettings = localStorage.getItem('privacy_settings');
+            if (savedSettings) {
+                try {
+                    const settings = JSON.parse(savedSettings);
+                    const analyticsCheckbox = document.getElementById('analyticsCookies');
+                    const advertisingCheckbox = document.getElementById('advertisingCookies');
+
+                    if (analyticsCheckbox) analyticsCheckbox.checked = settings.analytics;
+                    if (advertisingCheckbox) advertisingCheckbox.checked = settings.advertising;
+                } catch (e) {
+                    console.log('Error loading privacy settings:', e);
+                }
+            }
+
+            // Simulate live revenue updates
+            setInterval(() => {
+                const revenueElements = document.querySelectorAll('.stat-number');
+                if (revenueElements.length >= 4) {
+                    const revenueElement = revenueElements[3];
+                    const current = parseFloat(revenueElement.textContent.replace(/[^0-9.]/g, '')) || 1.2;
+                    const increment = Math.random() * 0.01;
+                    revenueElement.textContent = `$${(current + increment).toFixed(2)}M+`;
+                }
+            }, 30000);
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function (e) {
+                // Ctrl/Cmd + K to focus AI chat
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    if (aiIntegration.aiInput) {
+                        aiIntegration.aiInput.focus();
+                        aiIntegration.chatbox.style.display = 'flex';
+                    }
+                }
+
+                // Escape to close modals
+                if (e.key === 'Escape') {
+                    const activeModal = document.querySelector('.modal.active');
+                    if (activeModal) {
+                        closeModal(activeModal.id);
+                    }
+
+                    // Also close AI chatbox
+                    if (aiIntegration.chatbox && aiIntegration.chatbox.style.display === 'flex') {
+                        aiIntegration.chatbox.style.display = 'none';
+                    }
+                }
+            });
+
+            // Auto-test AI connection on page load
+            console.log("KAMA ZENNEXT Marketplace loaded successfully!");
+            console.log("AI Integration: Ready");
+            console.log("Software Database: " + softwareDatabase.length + " items loaded");
+        });
+
+        // Make functions globally available
+        window.trackAdClick = trackAdClick;
+        window.openSellModal = openSellModal;
+        window.openPrivacyModal = openPrivacyModal;
+        window.closeModal = closeModal;
+        window.savePrivacySettings = savePrivacySettings;
+        window.copyDockerCommand = copyDockerCommand;
+        window.testDeployment = testDeployment;
+        window.quickQuestion = quickQuestion;
+        window.aiIntegration = aiIntegration;
+    </script>
+    <script type="module">
+        import { injectBaseSchema } from '/assets/js/seo-schema.js';
+        const siteUrl = window.location.origin;
+        injectBaseSchema({
+            siteName: 'Kama ZenNext',
+            siteUrl,
+            logoUrl: `${siteUrl}/assets/favicon.svg`
+        });
+    </script>
 </body>
+
 </html>

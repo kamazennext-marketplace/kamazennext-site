@@ -102,9 +102,10 @@ import { injectBaseSchema, injectBreadcrumbs, setMeta } from '/assets/js/seo-sch
     return;
   }
 
-  fetch('/data/products.json')
+  fetch('/api/v1/catalog/tools')
     .then((res) => res.json())
-    .then((list) => {
+    .then((data) => {
+      const list = data.tools || [];
       const products = Array.isArray(list) ? list : [];
       const filtered = products.filter((p) => slugify(p.category) === slug);
 
@@ -159,16 +160,14 @@ import { injectBaseSchema, injectBreadcrumbs, setMeta } from '/assets/js/seo-sch
             <h3><a href="/p/${encodeURIComponent(p.id)}">${p.name}</a></h3>
             <p class="muted">${p.tagline || ''}</p>
             <div class="meta-row">
-              <span class="meta"><i class="fa-solid fa-laptop"></i> ${
-                p.platforms ? p.platforms.join(', ') : 'N/A'
-              }</span>
+              <span class="meta"><i class="fa-solid fa-laptop"></i> ${p.platforms ? p.platforms.join(', ') : 'N/A'
+            }</span>
               <span class="meta"><i class="fa-regular fa-calendar"></i> Updated ${p.last_updated}</span>
             </div>
             <div class="pc-actions">
               <a class="btn" href="/p/${encodeURIComponent(p.id)}">View</a>
-              <button class="btn compare-btn ${
-                compareActive ? 'btn-secondary remove' : 'btn-primary'
-              }" data-id="${p.id}">
+              <button class="btn compare-btn ${compareActive ? 'btn-secondary remove' : 'btn-primary'
+            }" data-id="${p.id}">
                 ${compareActive ? 'Remove Compare' : 'Add Compare'}
               </button>
             </div>

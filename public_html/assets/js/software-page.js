@@ -505,7 +505,7 @@
 
   let products = [];
 
-  fetch("/data/products.json", { cache: "no-store" })
+  fetch("/api/v1/catalog/tools", { cache: "no-store" })
     .then(async (res) => {
       if (!res.ok) {
         console.error("Products API failed", {
@@ -516,7 +516,8 @@
       }
       return res.json();
     })
-    .then((data) => {
+    .then((json) => {
+      const data = json.tools || [];
       products = (data || []).map(normalizeProduct).filter((p) => p.id);
       populateCategories(products);
       buildChips(products);

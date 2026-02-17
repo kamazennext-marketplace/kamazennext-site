@@ -459,12 +459,13 @@ const init = async () => {
   const page = document.body.dataset.bestPage;
   if (!page) return;
 
-  const res = await fetch("/data/products.json", { cache: "no-store" });
+  const res = await fetch("/api/v1/catalog/tools", { cache: "no-store" });
   if (!res.ok) {
     console.error("Products API failed", res.status);
     return;
   }
-  const raw = await res.json();
+  const data = await res.json();
+  const raw = data.tools || [];
   const products = raw.map(normalizeProduct);
 
   if (page === "index") {

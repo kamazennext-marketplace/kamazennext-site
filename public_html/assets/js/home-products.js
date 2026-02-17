@@ -59,8 +59,8 @@
           <div class="pc-actions">
             <a class="btn" href="${href}">View</a>
             <a class="btn btn-ghost" href="/software.html?cat=${encodeURIComponent(
-              p.category || "",
-            )}">More like this</a>
+          p.category || "",
+        )}">More like this</a>
           </div>
         </article>
       `;
@@ -79,7 +79,7 @@
 
   // Fallback order: try common JSON locations used by the site.
   // Keep this list short; homepage must remain fast.
-  const urls = ["/data/products.json", "/assets/data/products.json", "/products.json"];
+  const urls = ["/api/v1/catalog/tools", "/data/products.json"];
   (async () => {
     for (const u of urls) {
       try {
@@ -89,11 +89,7 @@
           continue;
         }
         const data = await r.json();
-        const items = Array.isArray(data)
-          ? data
-          : Array.isArray(data.products)
-            ? data.products
-            : [];
+        const items = Array.isArray(data.tools) ? data.tools : (Array.isArray(data) ? data : []);
         if (items.length) {
           render(items);
           return;

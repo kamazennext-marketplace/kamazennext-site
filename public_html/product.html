@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <base href="/">
   <meta charset="UTF-8">
@@ -9,66 +10,347 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/css/main-dark.css" />
-  
-  
+
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="/assets/js/header.js" defer></script>
   <script src="/assets/js/mobile-nav.js" defer></script>
   <style>
-    :root { --primary: #6366f1; --dark: #0f172a; --muted: #64748b; --border: #e2e8f0; --bg: #f8fafc; }
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--dark); }
-    a { color: inherit; text-decoration: none; }
-    main { max-width: 1100px; margin: 30px auto 120px; padding: 0 20px; }
-    .hero { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06); }
-    .title-row { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-    .title-row h1 { margin: 0; font-size: 2rem; }
-    .action-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
-    .badge.cat { background: #eef2ff; color: #312e81; }
-    .badge.api { background: #ecfeff; color: #155e75; }
-    .badge.price { background: #fef3c7; color: #92400e; }
-    .tagline { color: var(--muted); margin: 8px 0 12px; }
-    .meta { color: var(--muted); display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: 14px; }
-    .pill { background: #e2e8f0; color: #0f172a; padding: 8px 12px; border-radius: 999px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
-    .section { margin-top: 28px; }
-    .section h3 { margin-bottom: 12px; }
-    ul { padding-left: 18px; margin: 0; color: var(--muted); line-height: 1.6; }
-    .compare-btn { border: 1px solid var(--primary); color: var(--primary); background: #eef2ff; padding: 10px 14px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-    .ghost-btn { border: 1px solid var(--border); background: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; cursor: pointer; color: var(--dark); }
-    .pros-cons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
-    .pros-cons-grid h4 { margin: 0 0 8px; }
-    .check-list { list-style: none; padding-left: 0; }
-    .check-list li { margin-bottom: 8px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
-    .check-list li::before { content: '\2713'; color: #16a34a; font-weight: 800; }
-    .check-list.cons li::before { content: '\26A0'; color: #ea580c; }
-    .pill-row { display: flex; gap: 10px; flex-wrap: wrap; }
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-    .product-card { border: 1px solid var(--border); background: #fff; border-radius: 12px; padding: 14px; display: flex; gap: 12px; align-items: flex-start; transition: box-shadow 0.2s ease, transform 0.2s ease; }
-    .product-card:hover { box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08); transform: translateY(-2px); }
-    .product-card img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; }
-    .product-card h4 { margin: 0 0 6px; font-size: 1rem; }
-    .product-card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
-    .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
-    .screenshot-grid img { width: 100%; border-radius: 12px; border: 1px solid var(--border); }
-    .sticky-compare { position: fixed; right: 20px; bottom: 20px; padding: 12px 16px; background: linear-gradient(135deg, var(--primary), #a855f7); color: #fff; border-radius: 999px; font-weight: 800; box-shadow: 0 16px 40px rgba(99, 102, 241, 0.2); z-index: 30; display: inline-flex; align-items: center; gap: 10px; }
-    .sticky-compare:hover { opacity: 0.95; }
-    .small-meta { display: flex; gap: 6px; align-items: center; margin-top: 6px; color: var(--muted); font-size: 0.9rem; }
-    .alt-section-header { display: flex; align-items: center; gap: 10px; justify-content: space-between; flex-wrap: wrap; }
-    .reviews-grid { display: grid; gap: 12px; }
-    .review-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 12px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05); }
-    .review-title { margin: 0 0 6px; font-size: 1rem; }
-    .review-meta { color: var(--muted); font-size: 0.9rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; background: #eef2ff; color: #312e81; margin-right: 8px; margin-top: 6px; }
-    .chip.con { background: #fef2f2; color: #991b1b; }
+    :root {
+      --primary: #6366f1;
+      --dark: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto 120px;
+      padding: 0 20px;
+    }
+
+    .hero {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .title-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .title-row h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .badge.cat {
+      background: #eef2ff;
+      color: #312e81;
+    }
+
+    .badge.api {
+      background: #ecfeff;
+      color: #155e75;
+    }
+
+    .badge.price {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .tagline {
+      color: var(--muted);
+      margin: 8px 0 12px;
+    }
+
+    .meta {
+      color: var(--muted);
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      margin-top: 14px;
+    }
+
+    .pill {
+      background: #e2e8f0;
+      color: #0f172a;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section {
+      margin-top: 28px;
+    }
+
+    .section h3 {
+      margin-bottom: 12px;
+    }
+
+    ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .compare-btn {
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      background: #eef2ff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .ghost-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--dark);
+    }
+
+    .pros-cons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .pros-cons-grid h4 {
+      margin: 0 0 8px;
+    }
+
+    .check-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .check-list li {
+      margin-bottom: 8px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .check-list li::before {
+      content: '\2713';
+      color: #16a34a;
+      font-weight: 800;
+    }
+
+    .check-list.cons li::before {
+      content: '\26A0';
+      color: #ea580c;
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .product-card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .product-card img {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .product-card h4 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .product-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .screenshot-grid img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .sticky-compare {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      color: #fff;
+      border-radius: 999px;
+      font-weight: 800;
+      box-shadow: 0 16px 40px rgba(99, 102, 241, 0.2);
+      z-index: 30;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sticky-compare:hover {
+      opacity: 0.95;
+    }
+
+    .small-meta {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .alt-section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .reviews-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .review-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    }
+
+    .review-title {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .review-meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: #eef2ff;
+      color: #312e81;
+      margin-right: 8px;
+      margin-top: 6px;
+    }
+
+    .chip.con {
+      background: #fef2f2;
+      color: #991b1b;
+    }
+
     @media (max-width: 640px) {
-      nav { width: 100%; order: 3; }
-      .sticky-compare { right: 12px; bottom: 12px; left: 12px; justify-content: center; }
+      nav {
+        width: 100%;
+        order: 3;
+      }
+
+      .sticky-compare {
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+        justify-content: center;
+      }
     }
   </style>
   <script src="/assets/js/security.js"></script>
 </head>
+
 <body>
   <div id="site-header"></div>
 
@@ -412,11 +694,15 @@
     if (!productId) {
       renderProduct(null, []);
     } else {
-      fetch('/data/products.json')
+      fetch('/api/v1/catalog/tools')
         .then(res => res.json())
-        .then(list => renderProduct((list || []).find(p => p.id === productId), list || []))
+        .then(data => {
+          const list = data.tools || [];
+          renderProduct(list.find(p => p.id === productId), list);
+        })
         .catch(() => renderProduct(null, []));
     }
   </script>
 </body>
+
 </html>

@@ -346,10 +346,11 @@ if (grid) {
     buildBreadcrumbs(collection.title || collection.h1);
     updateMeta(collection.title || collection.h1, collection.intro);
 
-    fetch("/data/products.json", { cache: "no-store" })
+    fetch("/api/v1/catalog/tools", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
-        const items = (data || []).map(normalizeProduct).filter((item) => item.id);
+        const list = data.tools || [];
+        const items = (list || []).map(normalizeProduct).filter((item) => item.id);
         const selected = resolveProducts(items, aud);
         grid.innerHTML = "";
         if (!selected.length) {
