@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Vendor Login | Kama ZenNext</title>
+  <title>Vendor Registration | Kama ZenNext</title>
   <link rel="stylesheet" href="/assets/css/main-dark.css">
-  
-  
+
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -21,14 +21,24 @@
   <div id="site-header"></div>
 
   <main class="section">
-    <div class="container" style="max-width: 480px;">
+    <div class="container" style="max-width: 520px;">
       <div class="card fade-in-up">
         <div style="text-align:center; margin-bottom:24px;">
-          <h1 class="section-title" style="font-size: 1.75rem;">Vendor Login</h1>
-          <p class="section-subtitle">Manage your listings and view analytics.</p>
+          <h1 class="section-title" style="font-size: 1.75rem;">Create Vendor Account</h1>
+          <p class="section-subtitle">Join our marketplace and reach thousands of users.</p>
         </div>
 
-        <form id="loginForm" class="form-grid">
+        <form id="registerForm" class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Full Name</label>
+            <input type="text" name="name" required placeholder="John Doe">
+          </div>
+
+          <div class="form-group full">
+            <label class="form-label">Company Name</label>
+            <input type="text" name="company" required placeholder="Acme Inc.">
+          </div>
+
           <div class="form-group full">
             <label class="form-label">Email Address</label>
             <input type="email" name="email" required placeholder="you@company.com">
@@ -36,17 +46,17 @@
 
           <div class="form-group full">
             <label class="form-label">Password</label>
-            <input type="password" name="password" required placeholder="••••••••">
+            <input type="password" name="password" required placeholder="••••••••" minlength="8">
           </div>
 
           <div class="form-actions full">
-            <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%;">Log In</button>
+            <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%;">Register</button>
           </div>
 
           <div id="formAlert" role="status" aria-live="polite" class="full"></div>
 
           <div class="full" style="text-align:center; margin-top:16px; font-size:0.9rem;">
-            <a href="/forms/forms/vendor-register.html" class="secondary-link">Don't have an account? Register here</a>
+            <a href="/forms/forms/vendor-login.html" class="secondary-link">Already have an account? Log in</a>
           </div>
         </form>
       </div>
@@ -54,7 +64,7 @@
   </main>
 
   <script>
-    const form = document.getElementById('loginForm');
+    const form = document.getElementById('registerForm');
     const submitBtn = document.getElementById('submitBtn');
     const alertBox = document.getElementById('formAlert');
 
@@ -69,31 +79,34 @@
       alertBox.style.display = 'none';
       alertBox.className = 'full';
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Logging in...';
+      submitBtn.textContent = 'Registering...';
 
       const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
 
       try {
-        const response = await fetch('/api/vendor-login.php', {
+        const response = await fetch('/api/v1/vendor/register', {
           method: 'POST',
-          body: formData
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
         });
-        const result = await response.json().catch(() => ({ status: 'error', message: 'Unexpected response.' }));
 
-        if (response.ok && result.status === 'success') {
-          setAlert('Login successful! Redirecting...', 'success');
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          setAlert('Registration successful! Please log in.', 'success');
           setTimeout(() => {
-            window.location.href = '/vendor/dashboard.html'; // Assuming a dashboard exists
-          }, 1000);
+            window.location.href = '/forms/vendor-login.html';
+          }, 1500);
         } else {
-          setAlert(result.message || 'Login failed.', 'error');
+          setAlert(result.error?.message || result.error || 'Registration failed.', 'error');
         }
       } catch (err) {
         console.error(err);
         setAlert('Network error. Please try again.', 'error');
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Log In';
+        submitBtn.textContent = 'Register';
       }
     });
   </script>

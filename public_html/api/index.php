@@ -17,10 +17,25 @@ spl_autoload_register(function ($class) {
 
     $len = strlen($prefix);
     $relative_class = substr($class, $len);
-    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+    // Convert namespace separators to directory separators
+    $path = str_replace('\\', '/', $relative_class);
 
+    // Try original case first
+    $file = $base_dir . $path . '.php';
     if (file_exists($file)) {
         require $file;
+        return;
+    }
+
+    // Try lowercase directory for the first segment (e.g. Services/Vendor -> services/vendor/VendorService.php)
+    $parts = explode('/', $path);
+    if (count($parts) > 1) {
+        $parts[0] = strtolower($parts[0]);
+        $file_lower = $base_dir . implode('/', $parts) . '.php';
+        if (file_exists($file_lower)) {
+            require $file_lower;
+            return;
+        }
     }
 });
 
@@ -54,6 +69,10 @@ if ($uri === '/health' || $uri === '/health.php') {
 } elseif (strpos($uri, '/catalog') === 0) {
     // Delegate to CatalogController
     $controller = new \Services\Catalog\CatalogController();
+    $controller->handleRequest($uri, $_SERVER['REQUEST_METHOD']);
+} elseif (strpos($uri, '/vendor') === 0) {
+    // Delegate to VendorController
+    $controller = new \Services\Vendor\VendorController();
     $controller->handleRequest($uri, $_SERVER['REQUEST_METHOD']);
 } elseif ($uri === '/' || $uri === '') {
     Response::success(['message' => 'API Gateway v1']);
