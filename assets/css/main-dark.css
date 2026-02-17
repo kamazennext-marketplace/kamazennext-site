@@ -480,8 +480,91 @@ img {
 }
 
 /* ==========================
+   FORMS
+   ========================== */
+.form-control {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 1px var(--primary-glow);
+}
+
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* ==========================
+   CHAT INTERFACE
+   ========================== */
+.chat-response-area {
+  flex: 1;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  color: var(--text-main);
+  line-height: 1.6;
+  overflow-y: auto;
+}
+
+.chat-message {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+.chat-message.user {
+  justify-content: flex-end;
+}
+
+.chat-message-content {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+}
+
+.chat-message.user .chat-message-content {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: 12px 0 12px 12px;
+  color: var(--text-main);
+}
+
+.chat-icon {
+  font-size: 1.5rem;
+  margin-top: 4px;
+}
+
+.chat-icon.bot {
+  color: var(--primary);
+}
+
+.chat-icon.user {
+  color: var(--text-muted);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================
    CATEGORIES & FILTERS
    ========================== */
+
 .catTile {
   display: flex;
   justify-content: space-between;

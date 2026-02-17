@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Assistant - Kama ZenNext</title>
-  <link rel="stylesheet" href="/assets/css/main-dark.css">
+  <link rel="stylesheet" href="/assets/css/main-dark.css?v=4">
 
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,21 +28,21 @@
         comparisons, or how to get the most from Kama ZenNext.</p>
 
       <div class="card" style="min-height: 400px; display: flex; flex-direction: column;">
-        <div class="response" id="response"
-          style="flex: 1; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px; margin-bottom: 20px; color: var(--text-main); line-height: 1.6;">
-          <div style="display: flex; gap: 12px; align-items: flex-start;">
-            <i class="fas fa-robot" style="color: var(--primary); font-size: 1.5rem; margin-top: 4px;"></i>
+        <div class="chat-response-area" id="response">
+          <div class="chat-message">
+            <i class="fas fa-robot chat-icon bot"></i>
             <div>
-              <strong>Kama AI</strong>
-              <p style="margin: 4px 0 0; color: var(--text-muted);">Hello! I can help you find the best software tools,
-                compare features, or answer questions about our marketplace. What's on your mind?</p>
+              <strong style="color: var(--text-main);">Kama AI</strong>
+              <p class="chat-message-content" style="background: transparent; padding: 0;">Hello! I can help you find
+                the best software tools, compare features, or answer questions about our marketplace. What's on your
+                mind?</p>
             </div>
           </div>
         </div>
 
         <div style="position: relative;">
-          <textarea id="question" placeholder="Ask me to suggest tools, compare options, or summarize a product..."
-            style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 16px; color: var(--text-main); font-family: inherit; font-size: 1rem; min-height: 100px; resize: vertical;"></textarea>
+          <textarea id="question" class="form-control"
+            placeholder="Ask me to suggest tools, compare options, or summarize a product..."></textarea>
           <button id="askBtn" class="btn btn-primary" style="margin-top: 16px; width: 100%;">
             <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Ask AI
           </button>
@@ -61,13 +61,13 @@
 
     const appendUserMessage = (msg) => {
       const div = document.createElement('div');
-      div.style.cssText = "display: flex; gap: 12px; align-items: flex-start; margin-top: 24px; justify-content: flex-end;";
+      div.className = "chat-message user";
       div.innerHTML = `
         <div style="text-align: right;">
           <strong style="color: var(--text-main);">You</strong>
-          <p style="margin: 4px 0 0; color: var(--text-muted); background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px 0 12px 12px;">${msg.replace(/</g, '&lt;')}</p>
+          <p class="chat-message-content">${msg.replace(/</g, '&lt;')}</p>
         </div>
-        <i class="fas fa-user-circle" style="color: var(--text-muted); font-size: 1.5rem; margin-top: 4px;"></i>
+        <i class="fas fa-user-circle chat-icon user"></i>
       `;
       responseBox.appendChild(div);
       responseBox.scrollTop = responseBox.scrollHeight;
@@ -79,12 +79,12 @@
     const appendBotMessage = (msg, isWaiting = false) => {
       const div = document.createElement('div');
       if (isWaiting) div.id = 'bot-waiting';
-      div.style.cssText = "display: flex; gap: 12px; align-items: flex-start; margin-top: 24px;";
+      div.className = "chat-message";
       div.innerHTML = `
-        <i class="fas fa-robot" style="color: var(--primary); font-size: 1.5rem; margin-top: 4px;"></i>
+        <i class="fas fa-robot chat-icon bot"></i>
         <div>
           <strong style="color: var(--text-main);">Kama AI</strong>
-          <p style="margin: 4px 0 0; color: var(--text-muted);">${msg}</p>
+          <p class="chat-message-content" style="background: transparent; padding: 0;">${msg}</p>
         </div>
       `;
       responseBox.appendChild(div);
