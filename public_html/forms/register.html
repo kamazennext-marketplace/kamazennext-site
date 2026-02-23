@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register | Kama ZenNext</title>
+    <link rel="stylesheet" href="/assets/css/main-dark.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/assets/js/header.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+
+    <main class="section">
+        <div class="container" style="max-width: 400px;">
+            <div class="card">
+                <h1 style="text-align:center;">Register</h1>
+                <form id="registerForm" class="form-grid">
+                    <div class="form-group full">
+                        <label>Name</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group full">
+                        <label>Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group full">
+                        <label>Password</label>
+                        <input type="password" name="password" required minlength="8">
+                    </div>
+                    <button type="submit" class="btn btn-primary full">Sign Up</button>
+                    <div id="msg" class="full" style="display:none; margin-top:10px;"></div>
+                </form>
+                <p style="text-align:center; margin-top:20px;">
+                    <a href="/forms/login.html">Already have an account?</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const msg = document.getElementById('msg');
+            const btn = this.querySelector('button');
+
+            btn.disabled = true;
+            btn.textContent = 'Signing up...';
+            msg.style.display = 'none';
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const res = await fetch('/api/v1/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+
+                if (res.ok && result.success) {
+                    msg.style.color = 'green';
+                    msg.textContent = 'Account created! Redirecting to login...';
+                    msg.style.display = 'block';
+                    setTimeout(() => window.location.href = '/forms/login.html', 1500);
+                } else {
+                    throw new Error(result.error?.message || result.error || 'Registration failed');
+                }
+            } catch (err) {
+                msg.style.color = 'red';
+                msg.textContent = err.message;
+                msg.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Sign Up';
+            }
+        });
+    </script>
+</body>
+
+</html>

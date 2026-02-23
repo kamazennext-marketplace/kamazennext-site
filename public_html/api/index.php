@@ -74,6 +74,10 @@ if ($uri === '/health' || $uri === '/health.php') {
     // Delegate to VendorController
     $controller = new \Services\Vendor\VendorController();
     $controller->handleRequest($uri, $_SERVER['REQUEST_METHOD']);
+} elseif (strpos($uri, '/auth') === 0) {
+    // Delegate to AuthController
+    $controller = new \Services\Auth\AuthController();
+    $controller->handleRequest($uri, $_SERVER['REQUEST_METHOD']);
 } elseif ($uri === '/' || $uri === '') {
     Response::success(['message' => 'API Gateway v1']);
 } else {
