@@ -65,7 +65,7 @@ class AuthController
             Response::success([
                 'message' => 'Login successful',
                 'user' => $user,
-                'redirect' => '/' // Redirect to home or dashboard
+                'redirect' => '/user/dashboard.php'
             ]);
         } else {
             Response::error('Invalid credentials', 401);
